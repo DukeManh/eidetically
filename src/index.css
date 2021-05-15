@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+  html,body, #root{
+    @apply m-0 p-0 h-full overflow-hidden;
+    font-size: 14px;
+    /* gfs-didot-regular - greek */
+  }
+  @font-face {
+    font-family: 'Didot';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Didot'),
+        url('./fonts/gfs-didot-v10-greek-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('./fonts/gfs-didot-v10-greek-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+}
