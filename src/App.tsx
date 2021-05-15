@@ -1,3 +1,5 @@
+import './app.less';
+
 import Navigation from './components/Navigation';
 import Properties from './components/Properties';
 import Gallery from './components/Gallery';
