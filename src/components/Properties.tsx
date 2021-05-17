@@ -1,3 +1,20 @@
+import { useLayout } from '../contexts/layout';
+
 export default function Properties() {
-  return <div className="w-[250px] bg-sidebar h-full fixed top-0 right-0">Properties</div>;
+  const { propertiesVisible, isMobile, toggleProperties } = useLayout();
+
+  return (
+    <>
+      <button
+        onClick={() => toggleProperties(false)}
+        className={isMobile && propertiesVisible ? 'mask mask-active' : 'mask'}
+      ></button>
+      <aside
+        id="properties"
+        style={{
+          right: !propertiesVisible ? '-18rem' : '0',
+        }}
+      ></aside>
+    </>
+  );
 }

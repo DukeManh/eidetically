@@ -5,8 +5,6 @@ export default function useToggle(on?: boolean) {
 
   return {
     value,
-    toggleOff: useCallback(() => setToggle(false), []),
-    toggleOn: useCallback(() => setToggle(true), []),
-    toggle: useCallback(() => setToggle(!value), [value]),
+    toggle: useCallback((val = !value) => setToggle(val), [value]),
   };
 }

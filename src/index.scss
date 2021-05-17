@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body, 
+  {
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    height: auto;
+    font-size: 14px;
+  }
+  body * {
+    box-sizing: border-box;
+  }
+  @font-face {
+    font-family: 'Didot';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Didot'), url('./fonts/gfs-didot-v10-greek-regular.woff2') format('woff2'),
+      /* Chrome 26+, Opera 23+, Firefox 39+ */ url('./fonts/gfs-didot-v10-greek-regular.woff')
+        format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+}
+
+$lg: 1024px;
+$primary: #3b3b3b;
+$secondary: #414141;
+$maskColor: rgba(0,0,0,.45);
+$transition_duration: 300ms;
+
+@mixin breakpoint {
+  @media (max-width: $lg){
+    @content
+  }
+}
+
+#gallery {
+  transition: all $transition_duration ease-in-out;
+}
+
+/* Images waterfall layout */
+div#figure-container {
+  padding: 1.5rem 1rem 0;
+  column-width: 15rem;
+  column-gap: 1.2rem;
+  
+  figure {
+    margin-bottom: 1.2rem;
+    -webkit-column-break-inside: avoid; 
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  figure img {
+    width: 100%; 
+    height: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  figure figcaption {
+    padding: 0 1rem;
+    overflow: hidden;
+    font-size: .9rem;
+    white-space: nowrap;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    text-align: center;
+    max-height: 3rem;
+  }
+}
+#figure-container .dropzone{
+  text-align: center;
+  margin-bottom: 1.2rem;
+  height: 15rem;
+  display: inline-block;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  @apply border-green-500;
+  width: 100%;
+  background-color: $secondary;
+  @apply rounded-md;
+  @apply border-4;
+  @apply border-dotted;
+  @apply border-green-800;
+}
+#figure-container .dropzone-active{
+  @apply border-green-500;
+}
+
+/* Navigation and Properties sidebar*/
+aside {
+  position: fixed;
+  top: 0;
+  background-color: $secondary;
+  width: 18rem;
+  transition: all $transition_duration ease-in-out;
+  height: 100%;
+}
+
+/* Sidebar mask on mobile*/
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  opacity: 0;
+  background-color: $maskColor;
+  transition: opacity $transition_duration ease,height 0ms linear $transition_duration;
+}
+
+.mask-active {
+  height: 100%;
+  opacity: 1;
+}
+
+
+
+

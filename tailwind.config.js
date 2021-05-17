@@ -1,12 +1,12 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   mode: 'jit',
   darkMode: false, // or 'media' or 'class'
   theme: {
-    fontFamily:{
-      serif: ['Didot', 'serif']
+    fontFamily: {
+      serif: ['Didot', 'serif'],
     },
     screens: {
       sm: '640px',
@@ -20,8 +20,9 @@ module.exports = {
       current: 'currentColor',
       inherit: 'inherit',
 
-      sidebar: '#414141',
-      background: '#3b3b3b',
+      primary: '#3b3b3b',
+      secondary: '#414141',
+      maskColor: 'rgba(0,0,0,.45)',
 
       black: colors.black,
       white: colors.white,
@@ -970,4 +971,4 @@ module.exports = {
     zIndex: ['responsive', 'focus-within', 'focus'],
   },
   plugins: [],
-}
+};
