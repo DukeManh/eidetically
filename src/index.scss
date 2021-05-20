@@ -1,19 +1,19 @@
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
+@tailwind components;
 
 @layer base {
   html,
   body, 
   {
-    padding: 0;
-    margin: 0;
-    min-height: 100%;
-    height: auto;
+    @apply p-0 m-0 min-h-full h-auto;
     font-size: 14px;
+    * {
+      @apply box-border;
+    }
   }
-  body * {
-    box-sizing: border-box;
+  #root{
+    @apply overflow-x-hidden;
   }
   @font-face {
     font-family: 'Didot';
@@ -37,85 +37,43 @@ $transition_duration: 300ms;
   }
 }
 
-#gallery {
-  transition: all $transition_duration ease-in-out;
-}
+@layer components {
 
-/* Images waterfall layout */
-div#figure-container {
-  padding: 1.5rem 1rem 0;
-  column-width: 15rem;
-  column-gap: 1.2rem;
-  
-  figure {
-    margin-bottom: 1.2rem;
-    -webkit-column-break-inside: avoid; 
-    page-break-inside: avoid;
-    break-inside: avoid;
+  #figure-container {
+    @apply pt-6 px-4 pb-0;
+
+    column-width: 15rem;
+    column-gap: 1.2rem;
+    
+    figure {
+      @apply mb-6;
+      -webkit-column-break-inside: avoid; 
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    figure img {
+      @apply w-full h-auto pb-2; 
+    }
+
+    figure figcaption {
+      @apply px-4 overflow-hidden text-sm whitespace-nowrap overflow-ellipsis text-center max-h-12 leading-6;
+    }
   }
 
-  figure img {
-    width: 100%; 
-    height: auto;
-    padding-bottom: 0.5rem;
+  /* Navigation and Properties sidebar*/
+  .sidebar {
+    @apply top-0 bg-secondary z-50;
   }
 
-  figure figcaption {
-    padding: 0 1rem;
-    overflow: hidden;
-    font-size: .9rem;
-    white-space: nowrap;
-    line-height: 1.5;
-    text-overflow: ellipsis;
-    text-align: center;
-    max-height: 3rem;
+  /* Sidebar mask on mobile*/
+  .mask {
+    @apply absolute top-0 left-0 w-full h-0 opacity-0 bg-maskColor;
   }
-}
-#figure-container .dropzone{
-  text-align: center;
-  margin-bottom: 1.2rem;
-  height: 15rem;
-  display: inline-block;
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
-  break-inside: avoid;
-  @apply border-green-500;
-  width: 100%;
-  background-color: $secondary;
-  @apply rounded-md;
-  @apply border-4;
-  @apply border-dotted;
-  @apply border-green-800;
-}
-#figure-container .dropzone-active{
-  @apply border-green-500;
-}
 
-/* Navigation and Properties sidebar*/
-aside {
-  position: fixed;
-  top: 0;
-  background-color: $secondary;
-  width: 18rem;
-  transition: all $transition_duration ease-in-out;
-  height: 100%;
-}
-
-/* Sidebar mask on mobile*/
-.mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
-  opacity: 0;
-  background-color: $maskColor;
-  transition: opacity $transition_duration ease,height 0ms linear $transition_duration;
-}
-
-.mask-active {
-  height: 100%;
-  opacity: 1;
+  .mask-active {
+    @apply h-full opacity-100;
+  }
 }
 
 

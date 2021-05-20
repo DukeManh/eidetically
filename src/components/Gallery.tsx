@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
+import { useDrop } from 'react-use';
 import { LazyLoadImage as Img } from 'react-lazy-load-image-component';
-import { useDropzone } from 'react-dropzone';
 import { Slider } from 'antd';
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
 import { useLayout } from '../contexts/layout';
@@ -12,41 +12,42 @@ interface UploadedFile extends File {
 export default function Gallery() {
   const [files, setFiles] = useState<Array<UploadedFile>>([]);
   const [zoom, setZoom] = useState(15);
-  const { navigationVisible, toggleNavigation, propertiesVisible, toggleProperties, isMobile } =
-    useLayout();
+  const { navigation, updateNavigation, properties, updateProperties, isMobile } = useLayout();
 
   const onDrop = useCallback(
     (acceptedFiles) => {
       setFiles(
         files.concat(
-          acceptedFiles.map((file: File) =>
-            Object.assign(file, {
-              preview: URL.createObjectURL(file),
-            })
-          )
+          acceptedFiles.reduce((images: Array<UploadedFile>, file: File) => {
+            if (file.type.match(/image\/(jpe?g|png|gif|svg\+xml|webp|avif|apng)/gi)) {
+              images.push(Object.assign(file, { preview: URL.createObjectURL(file) }));
+            }
+            return images;
+          }, [])
         )
       );
     },
     [files]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: 'image/*' });
+  useDrop({
+    onFiles: onDrop,
+  });
 
   return (
     <div
       id="gallery"
       style={{
-        marginLeft: navigationVisible && !isMobile ? '250px' : '0',
-        marginRight: propertiesVisible && !isMobile ? '250px' : '0',
+        marginLeft: navigation.visible && !isMobile ? navigation.width : '0',
+        marginRight: properties.visible && !isMobile ? properties.width : '0',
       }}
     >
       <div className="md:px-4 h-10 top-0 flex flex-row justify-between items-center">
         <HiMenuAlt2
-          size={'1.7rem'}
+          size={24}
           className="cursor-pointer"
           onClick={() => {
-            if (isMobile) toggleProperties(false);
-            toggleNavigation();
+            updateNavigation({ visible: !navigation.visible });
           }}
         />
         <div>My workspace</div>
@@ -62,11 +63,10 @@ export default function Gallery() {
         </div>
         <div>Search</div>
         <HiMenuAlt3
-          size={'1.7rem'}
+          size={24}
           className="cursor-pointer"
           onClick={() => {
-            if (isMobile) toggleNavigation(false);
-            toggleProperties();
+            updateProperties({ visible: !properties.visible });
           }}
         />
       </div>
@@ -76,19 +76,9 @@ export default function Gallery() {
           columnWidth: `${zoom}rem`,
         }}
       >
-        <div {...getRootProps()} className={isDragActive ? 'dropzone dropzone-active' : 'dropzone'}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p>Go ahead</p>
-          ) : (
-            <>
-              <p>Drag 'n drop files here</p>
-            </>
-          )}
-        </div>
         {files.map((file) => (
           <figure key={file.preview}>
-            <Img src={file.preview} alt={file.name} loading="lazy" />
+            <Img src={file.preview} alt={file.name} effect="blur" />
             <figcaption>{file.name}</figcaption>
           </figure>
         ))}

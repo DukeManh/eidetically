@@ -1,17 +1,21 @@
 import { createContext } from 'react';
-
-type LayoutContextType = {
-  navigationVisible: boolean;
-  toggleNavigation: (val?: boolean) => void;
-  propertiesVisible: boolean;
-  toggleProperties: (val?: boolean) => void;
-  isMobile: boolean;
-};
+import { LayoutContextType } from '../../interfaces';
 
 export const LayoutContext = createContext<LayoutContextType>({
-  navigationVisible: true,
-  toggleNavigation: () => console.warn('Missing context provider'),
-  propertiesVisible: true,
-  toggleProperties: () => console.warn('Missing context provider'),
+  navigation: {
+    visible: true,
+    width: 0,
+  },
+  updateNavigation: () => console.warn('Missing context provider'),
+
+  properties: {
+    visible: true,
+    width: 0,
+  },
+  updateProperties: () => console.warn('Missing context provider'),
+
   isMobile: false,
+
+  maxNavigationWidth: () => 0,
+  maxPropertiesWidth: () => 0,
 });

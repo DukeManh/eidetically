@@ -1,20 +1,31 @@
+import { useWindowSize } from 'react-use';
 import { useLayout } from '../contexts/layout';
+import Mask from './Mask';
+import SideBar from './Sidebar';
 
 export default function Properties() {
-  const { propertiesVisible, isMobile, toggleProperties } = useLayout();
+  const { properties, updateProperties, maxPropertiesWidth } = useLayout();
+
+  const { width: windowWidth } = useWindowSize();
 
   return (
     <>
-      <button
-        onClick={() => toggleProperties(false)}
-        className={isMobile && propertiesVisible ? 'mask mask-active' : 'mask'}
-      ></button>
-      <aside
-        id="properties"
-        style={{
-          right: !propertiesVisible ? '-18rem' : '0',
+      <Mask visible={properties.visible} onClick={() => updateProperties({ visible: false })} />
+      <SideBar
+        className="sidebar border-l-2 border-gray-900 pl-1"
+        width={properties.width}
+        maxWidth={maxPropertiesWidth()}
+        position={{ x: properties.visible ? windowWidth - properties.width : windowWidth, y: 0 }}
+        resizeSide="left"
+        onResize={(e, dir, ref) => {
+          updateProperties({ width: ref.clientWidth });
         }}
-      ></aside>
+        onResizeStop={(e, dir, ref) => {
+          updateProperties({ width: ref.clientWidth });
+        }}
+      >
+        <p>Hi</p>
+      </SideBar>
     </>
   );
 }

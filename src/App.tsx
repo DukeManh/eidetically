@@ -6,7 +6,7 @@ import Gallery from './components/Gallery';
 function App() {
   return (
     <LayoutProvider>
-      <main className="bg-primary w-full min-h-screen text-gray-50">
+      <main className="bg-primary min-h-screen overflow-x-hidden relative text-gray-50">
         <Navigation />
         <Gallery />
         <Properties />
