@@ -6,14 +6,14 @@
   html,
   body, 
   {
-    @apply p-0 m-0 min-h-full h-auto;
+    @apply p-0 m-0 min-h-full h-auto overflow-hidden max-h-screen;
     font-size: 14px;
     * {
       @apply box-border;
     }
   }
   #root{
-    @apply overflow-x-hidden;
+    @apply overflow-hidden max-h-screen;
   }
   @font-face {
     font-family: 'Didot';

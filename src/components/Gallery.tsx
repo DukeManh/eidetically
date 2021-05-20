@@ -33,9 +33,11 @@ export default function Gallery() {
   useDrop({
     onFiles: onDrop,
   });
+  console.log('Hi');
 
   return (
     <div
+      className="h-screen relative flex flex-col justify-start"
       id="gallery"
       style={{
         marginLeft: navigation.visible && !isMobile ? navigation.width : '0',
@@ -56,7 +58,7 @@ export default function Gallery() {
             value={zoom}
             onChange={(value: number) => setZoom(value)}
             tooltipVisible={false}
-            min={5}
+            min={3}
             max={100}
             step={5}
           />
@@ -70,18 +72,20 @@ export default function Gallery() {
           }}
         />
       </div>
-      <div
-        id="figure-container"
-        style={{
-          columnWidth: `${zoom}rem`,
-        }}
-      >
-        {files.map((file) => (
-          <figure key={file.preview}>
-            <Img src={file.preview} alt={file.name} effect="blur" />
-            <figcaption>{file.name}</figcaption>
-          </figure>
-        ))}
+      <div className="flex-grow overflow-y-auto min-h-0">
+        <div
+          id="figure-container"
+          style={{
+            columnWidth: `${zoom}rem`,
+          }}
+        >
+          {files.map((file) => (
+            <figure key={file.preview}>
+              <Img src={file.preview} alt={file.name} effect="blur" />
+              <figcaption>{file.name}</figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </div>
   );
