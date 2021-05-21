@@ -33,7 +33,6 @@ export default function Gallery() {
   useDrop({
     onFiles: onDrop,
   });
-  console.log('Hi');
 
   return (
     <div

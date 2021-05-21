@@ -68,7 +68,7 @@ $transition_duration: 300ms;
 
   /* Sidebar mask on mobile*/
   .mask {
-    @apply absolute top-0 left-0 w-full h-0 opacity-0 bg-maskColor;
+    @apply absolute top-0 left-0 w-full h-0 opacity-0 bg-maskColor z-10;
   }
 
   .mask-active {

@@ -8,6 +8,7 @@ export default function Navigation() {
   return (
     <>
       <Mask visible={navigation.visible} onClick={() => updateNavigation({ visible: false })} />
+
       <SideBar
         className="sidebar border-r-2 border-gray-900 pr-1 h-full"
         width={navigation.width}
