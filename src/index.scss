@@ -63,7 +63,7 @@ $transition_duration: 300ms;
 
   /* Navigation and Properties sidebar*/
   .sidebar {
-    @apply top-0 bg-secondary z-50;
+    @apply top-0 bg-secondary z-50 pt-2 border-gray-900 h-full border-opacity-70;
   }
 
   /* Sidebar mask on mobile*/
@@ -73,6 +73,12 @@ $transition_duration: 300ms;
 
   .mask-active {
     @apply h-full opacity-100;
+  }
+
+  .menubar {
+    li{
+      @apply leading-8 cursor-pointer;
+    }
   }
 }
 

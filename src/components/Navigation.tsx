@@ -10,11 +10,11 @@ export default function Navigation() {
       <Mask visible={navigation.visible} onClick={() => updateNavigation({ visible: false })} />
 
       <SideBar
-        className="sidebar border-r-2 border-gray-900 pr-1 h-full"
+        className="sidebar border-r-2 pr-1"
         width={navigation.width}
         maxWidth={maxNavigationWidth()}
         position={{ x: navigation.visible ? 0 : -navigation.width, y: 0 }}
-        resizeSide="right"
+        resizableSide="right"
         onResize={(e, dir, ref) => {
           updateNavigation({ width: ref.clientWidth });
         }}

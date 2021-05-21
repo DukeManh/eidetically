@@ -12,11 +12,11 @@ export default function Properties() {
     <>
       <Mask visible={properties.visible} onClick={() => updateProperties({ visible: false })} />
       <SideBar
-        className="sidebar border-l-2 border-gray-900 pl-1"
+        className="sidebar border-l-2 pl-1"
         width={properties.width}
         maxWidth={maxPropertiesWidth()}
         position={{ x: properties.visible ? windowWidth - properties.width : windowWidth, y: 0 }}
-        resizeSide="left"
+        resizableSide="left"
         onResize={(e, dir, ref) => {
           updateProperties({ width: ref.clientWidth });
         }}
