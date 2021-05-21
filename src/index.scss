@@ -9,7 +9,10 @@
     @apply p-0 m-0 min-h-full h-auto overflow-hidden max-h-screen;
     font-size: 14px;
     * {
-      @apply box-border;
+      @apply box-border ;
+    }
+    button {
+      @apply focus:outline-none;
     }
   }
   #root{
@@ -76,8 +79,10 @@ $transition_duration: 300ms;
   }
 
   .menubar {
-    li{
-      @apply leading-8 cursor-pointer;
+    vertical-align: -moz-middle-with-baseline;
+    vertical-align: -webkit-baseline-middle;
+    button{
+      @apply cursor-pointer px-2 pb-1 hover:bg-black hover:bg-opacity-25 rounded-md ;
     }
   }
 }
