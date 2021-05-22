@@ -1,6 +1,6 @@
 import { useImage } from '../../contexts';
 
-export default function MenuBarDropdown({ options }: { options: Array<string> }) {
+export default function Dropdown({ options }: { options: Array<string> }) {
   const { selectFiles } = useImage();
   return (
     <div

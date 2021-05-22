@@ -1,5 +1,5 @@
 import MenuBar from './MenuBar';
-import MenuBarDropdown from './MenuBarDropdown';
+import Dropdown from './Dropdown';
 
-export { MenuBarDropdown };
+export { Dropdown };
 export default MenuBar;

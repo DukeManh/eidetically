@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import Dropdown from './Dropdown';
 import { BsDropletHalf } from 'react-icons/bs';
-import MenuBarDropdown from './MenuBarDropdown';
 
 const MenuItems = [
   {
@@ -46,7 +46,7 @@ export default function MenuBar() {
           <div key={item.name} className="menu-item">
             <button onClick={() => setActiveItem(item.name)}>{item.button}</button>
             {item?.options.length > 0 && activeItem === item.name && (
-              <MenuBarDropdown options={item.options} />
+              <Dropdown options={item.options} />
             )}
           </div>
         ))}
