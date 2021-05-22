@@ -22,6 +22,7 @@ module.exports = {
 
       primary: '#3b3b3b',
       secondary: '#414141',
+      tertiary: '#525252',
       maskColor: 'rgba(0,0,0,.45)',
 
       black: colors.black,

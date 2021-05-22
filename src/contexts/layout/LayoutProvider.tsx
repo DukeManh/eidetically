@@ -1,15 +1,11 @@
-import React, { useContext, useEffect } from 'react';
-import { LayoutContext } from './LayoutContext';
+import React, { useEffect } from 'react';
+import LayoutContext from './LayoutContext';
 import { useLocalStorage, useMedia } from 'react-use';
-import { SidebarLayout } from '../../interfaces';
+import { SidebarLayout, ProviderProps } from '../../interfaces';
 
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };
 
-type PropsType = {
-  children: React.ReactNode;
-};
-
-export function LayoutProvider({ children }: PropsType) {
+export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);
 
   const DefaultSidebarLayout: SidebarLayout = {
@@ -119,5 +115,3 @@ export function LayoutProvider({ children }: PropsType) {
     </LayoutContext.Provider>
   );
 }
-
-export const useLayout = () => useContext(LayoutContext);

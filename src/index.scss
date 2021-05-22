@@ -66,7 +66,7 @@ $transition_duration: 300ms;
 
   /* Navigation and Properties sidebar*/
   .sidebar {
-    @apply top-0 bg-secondary z-50 pt-2 border-gray-900 h-full border-opacity-70;
+    @apply top-0 bg-secondary z-20 pt-2 border-gray-900 h-full border-opacity-70;
   }
 
   /* Sidebar mask on mobile*/
@@ -81,8 +81,8 @@ $transition_duration: 300ms;
   .menubar {
     vertical-align: -moz-middle-with-baseline;
     vertical-align: -webkit-baseline-middle;
-    button{
-      @apply cursor-pointer px-2 pb-1 hover:bg-black hover:bg-opacity-25 rounded-md ;
+    & > div{
+      @apply px-2 p-1 hover:bg-black hover:bg-opacity-25 rounded-md ;
     }
   }
 }

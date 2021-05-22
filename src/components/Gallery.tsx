@@ -1,37 +1,17 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useDrop } from 'react-use';
 import { LazyLoadImage as Img } from 'react-lazy-load-image-component';
 import { Slider } from 'antd';
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
-import { useLayout } from '../contexts/layout';
-
-interface UploadedFile extends File {
-  preview: string;
-}
+import { useLayout, useImage } from '../contexts';
 
 export default function Gallery() {
-  const [files, setFiles] = useState<Array<UploadedFile>>([]);
-  const [zoom, setZoom] = useState(15);
+  const { images, uploadFiles } = useImage();
+  const [zoom, setZoom] = useState(200);
   const { navigation, updateNavigation, properties, updateProperties, isMobile } = useLayout();
 
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      setFiles(
-        files.concat(
-          acceptedFiles.reduce((images: Array<UploadedFile>, file: File) => {
-            if (file.type.match(/image\/(jpe?g|png|gif|svg\+xml|webp|avif|apng)/gi)) {
-              images.push(Object.assign(file, { preview: URL.createObjectURL(file) }));
-            }
-            return images;
-          }, [])
-        )
-      );
-    },
-    [files]
-  );
-
   useDrop({
-    onFiles: onDrop,
+    onFiles: uploadFiles,
   });
 
   return (
@@ -57,9 +37,9 @@ export default function Gallery() {
             value={zoom}
             onChange={(value: number) => setZoom(value)}
             tooltipVisible={false}
-            min={3}
-            max={100}
-            step={5}
+            min={100}
+            max={900}
+            step={50}
           />
         </div>
         <div>Search</div>
@@ -75,10 +55,10 @@ export default function Gallery() {
         <div
           id="figure-container"
           style={{
-            columnWidth: `${zoom}rem`,
+            columnWidth: `${zoom}px`,
           }}
         >
-          {files.map((file) => (
+          {images.map((file) => (
             <figure key={file.preview}>
               <Img src={file.preview} alt={file.name} effect="blur" />
               <figcaption>{file.name}</figcaption>

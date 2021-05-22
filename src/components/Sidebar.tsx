@@ -1,8 +1,8 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Rnd, Props as RndProps } from 'react-rnd';
 
 interface SideBarProps extends RndProps {
-  children: React.ReactNode;
+  children: ReactNode;
   resizableSide: 'left' | 'right';
 }
 
