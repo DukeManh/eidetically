@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDrop } from 'react-use';
 import { LazyLoadImage as Img } from 'react-lazy-load-image-component';
-import { Slider } from 'antd';
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
 import { useLayout, useImage } from '../contexts';
 
@@ -32,16 +31,15 @@ export default function Gallery() {
           }}
         />
         <div>My workspace</div>
-        <div className="w-36">
-          <Slider
-            value={zoom}
-            onChange={(value: number) => setZoom(value)}
-            tooltipVisible={false}
-            min={100}
-            max={900}
-            step={50}
-          />
-        </div>
+        <input
+          className="w-36"
+          type="range"
+          value={zoom}
+          onChange={(e) => setZoom(parseInt(e.target.value))}
+          min={100}
+          max={900}
+          step={50}
+        />
         <div>Search</div>
         <HiMenuAlt3
           size={24}

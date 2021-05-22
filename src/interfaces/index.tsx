@@ -26,6 +26,7 @@ export interface UploadedFile extends File {
 export type ImageContextType = {
   images: Array<UploadedFile>;
   uploadFiles: (acceptedFiles: Array<File>) => void;
+  selectFiles: () => void;
 };
 
 export type ProviderProps = {

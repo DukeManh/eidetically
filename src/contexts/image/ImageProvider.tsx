@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { ImageContext } from './ImageContext';
 import { ProviderProps, UploadedFile } from '../../interfaces';
 
@@ -21,7 +21,29 @@ export default function ImageProvider({ children }: ProviderProps) {
     [files]
   );
 
+  const ref = useRef<HTMLInputElement>(null);
+
+  const selectFiles = () => {
+    if (ref?.current) {
+      ref.current.click();
+    }
+  };
+
   return (
-    <ImageContext.Provider value={{ images: files, uploadFiles }}>{children}</ImageContext.Provider>
+    <ImageContext.Provider value={{ images: files, uploadFiles, selectFiles }}>
+      {children}
+      <input
+        ref={ref}
+        multiple
+        type="file"
+        name="select"
+        className="invisible w-0 h-0"
+        onChange={() => {
+          if (ref?.current?.files) {
+            uploadFiles(Array.from(ref.current.files));
+          }
+        }}
+      />
+    </ImageContext.Provider>
   );
 }

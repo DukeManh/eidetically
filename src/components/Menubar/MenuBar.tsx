@@ -30,7 +30,7 @@ export default function MenuBar() {
 
   useEffect(() => {
     if (document) {
-      const main = document.querySelector('main');
+      const main = document.querySelector<HTMLElement>('main');
       if (main) {
         main.onclick = () => {
           setActiveItem('');
@@ -43,7 +43,7 @@ export default function MenuBar() {
     <nav className="h-9 bg-secondary relative text-gray-100 border-b border-gray-500 z-100">
       <span className="align-text-top menubar pl-2 inline-flex flex-row justify-start items-center">
         {MenuItems.map((item) => (
-          <div key={item.name}>
+          <div key={item.name} className="menu-item">
             <button onClick={() => setActiveItem(item.name)}>{item.button}</button>
             {item?.options.length > 0 && activeItem === item.name && (
               <MenuBarDropdown options={item.options} />

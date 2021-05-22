@@ -25,21 +25,18 @@ export default function SideBar({
   };
 
   const onResizeStart = () => {
-    if (document) {
-      const body = document.querySelector('body');
-      if (body) {
-        body.style.cursor = 'ew-resize';
+    const body = document?.body;
+    if (body) {
+      body.style.cursor = 'ew-resize';
 
-        document.addEventListener('mouseup', () => {
-          body.style.cursor = 'default';
-        });
-      }
+      document.addEventListener('mouseup', () => {
+        body.style.cursor = 'default';
+      });
     }
   };
 
   return (
     <Rnd
-      resizeAxis="x"
       className={className}
       size={{ width, height: '100%' }}
       minWidth={250}

@@ -1,8 +1,10 @@
-import React from 'react';
+import { useImage } from '../../contexts';
+
 export default function MenuBarDropdown({ options }: { options: Array<string> }) {
+  const { selectFiles } = useImage();
   return (
     <div
-      className="absolute z-50 bg-tertiary rounded-b-lg w-56 text-white min-h"
+      className="menu-dropdown absolute z-50 bg-tertiary rounded-b-lg w-56 text-white min-h"
       style={{ top: 'calc(100% + 1px)' }}
     >
       <div className="flex flex-col py-2">
@@ -11,9 +13,9 @@ export default function MenuBarDropdown({ options }: { options: Array<string> })
             {option}
           </button>
         ))}
-        <div>
-          <input type="file" name="select" className="" />
-        </div>
+        <button onClick={selectFiles} className="w-full hover:bg-blue-500 text-left pl-4 mt-1">
+          UploadFile
+        </button>
       </div>
     </div>
   );
