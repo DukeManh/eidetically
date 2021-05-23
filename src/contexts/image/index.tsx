@@ -1,13 +1,13 @@
 import { useContext } from 'react';
-import { ImageContext } from './ImageContext';
-import ImageProvider from './ImageProvider';
+import { StorageContext } from './StorageContext';
+import StorageProvider from './StorageProvider';
 
-const useImage = () => {
-  const image = useContext(ImageContext);
+const useStorage = () => {
+  const image = useContext(StorageContext);
   if (image === undefined) {
     throw new Error('Missing image context provider');
   }
   return image;
 };
 
-export { useImage, ImageProvider };
+export { useStorage, StorageProvider };

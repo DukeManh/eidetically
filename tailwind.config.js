@@ -22,8 +22,10 @@ module.exports = {
 
       primary: '#3b3b3b',
       secondary: '#414141',
-      tertiary: '#525252',
-      maskColor: 'rgba(0,0,0,.45)',
+      dropdown: '#525252',
+      tabActive: '#535353',
+      tabFocus: '#666666',
+      mask: 'rgba(0,0,0,.45)',
 
       black: colors.black,
       white: colors.white,

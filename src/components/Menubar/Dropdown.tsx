@@ -1,10 +1,10 @@
-import { useImage } from '../../contexts';
+import { useStorage } from '../../contexts';
 
-export default function Dropdown({ options }: { options: Array<string> }) {
-  const { selectFiles } = useImage();
+export default function Dropdown({ options }: { options: string[] }) {
+  const { selectFiles } = useStorage();
   return (
     <div
-      className="menu-dropdown absolute z-50 bg-tertiary rounded-b-lg w-56 text-white min-h"
+      className="menu-dropdown absolute z-50 bg-dropdown rounded-b-lg w-56 text-white min-h"
       style={{ top: 'calc(100% + 1px)' }}
     >
       <div className="flex flex-col py-2">
@@ -14,7 +14,7 @@ export default function Dropdown({ options }: { options: Array<string> }) {
           </button>
         ))}
         <button onClick={selectFiles} className="w-full hover:bg-blue-500 text-left pl-4 mt-1">
-          UploadFile
+          Upload Files
         </button>
       </div>
     </div>

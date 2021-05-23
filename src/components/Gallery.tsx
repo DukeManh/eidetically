@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useDrop } from 'react-use';
-import { LazyLoadImage as Img } from 'react-lazy-load-image-component';
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
-import { useLayout, useImage } from '../contexts';
+import { useLayout, useStorage } from '../contexts';
 
 export default function Gallery() {
-  const { images, uploadFiles } = useImage();
-  const [zoom, setZoom] = useState(200);
+  const { storage, uploadFiles, activeLibrary } = useStorage();
   const { navigation, updateNavigation, properties, updateProperties, isMobile } = useLayout();
+  const [zoom, setZoom] = useState(isMobile ? 100 : 300);
 
   useDrop({
     onFiles: uploadFiles,
@@ -53,12 +52,12 @@ export default function Gallery() {
         <div
           id="figure-container"
           style={{
-            columnWidth: `${zoom}px`,
+            columnWidth: zoom,
           }}
         >
-          {images.map((file) => (
+          {storage[activeLibrary].images.map((file) => (
             <figure key={file.preview}>
-              <Img src={file.preview} alt={file.name} effect="blur" />
+              <img src={file.preview} alt={file.name} loading="lazy" />
               <figcaption>{file.name}</figcaption>
             </figure>
           ))}

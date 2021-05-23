@@ -1,5 +1,9 @@
 import { ReactNode } from 'react';
 
+export type ProviderProps = {
+  children: ReactNode;
+};
+
 export type SidebarLayout = {
   visible: boolean;
   width: number;
@@ -23,12 +27,20 @@ export interface UploadedFile extends File {
   preview: string;
 }
 
-export type ImageContextType = {
-  images: Array<UploadedFile>;
-  uploadFiles: (acceptedFiles: Array<File>) => void;
-  selectFiles: () => void;
+export type Library = {
+  id: string;
+  images: UploadedFile[];
+  name: string;
 };
 
-export type ProviderProps = {
-  children: ReactNode;
+export type Storage = {
+  [id: string]: Library;
+};
+
+export type StorageContextType = {
+  storage: Storage;
+  uploadFiles: (acceptedFiles: File[]) => void;
+  selectFiles: () => void;
+  activeLibrary: string;
+  setActiveLibrary: (id: string) => void;
 };

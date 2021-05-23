@@ -31,7 +31,7 @@
 $lg: 1024px;
 $primary: #3b3b3b;
 $secondary: #414141;
-$maskColor: rgba(0,0,0,.45);
+$mask: rgba(0,0,0,.45);
 $transition_duration: 300ms;
 
 @mixin breakpoint {
@@ -71,7 +71,7 @@ $transition_duration: 300ms;
 
   /* Sidebar mask on mobile*/
   .mask {
-    @apply absolute top-0 left-0 w-full h-0 opacity-0 bg-maskColor z-10;
+    @apply absolute top-0 left-0 w-full h-0 opacity-0 bg-mask z-10;
   }
 
   .mask-active {
@@ -82,8 +82,14 @@ $transition_duration: 300ms;
     vertical-align: -moz-middle-with-baseline;
     vertical-align: -webkit-baseline-middle;
     & > div{
-      @apply px-2 p-1 hover:bg-black hover:bg-opacity-25 rounded-md ;
+      @apply px-2 p-1 hover:bg-black hover:bg-opacity-25 rounded-md;
     }
+  }
+  .tab {
+      @apply w-full cursor-pointer focus:bg-tabFocus px-2 py-1 mb-1 rounded-lg;
+  }
+  .tabActive {
+      @apply bg-tabActive;
   }
 }
 

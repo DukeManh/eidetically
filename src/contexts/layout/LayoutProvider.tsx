@@ -25,15 +25,7 @@ export default function LayoutProvider({ children }: ProviderProps) {
     if (!window) {
       return 0;
     }
-
     return window.innerWidth - (visible ? properties.width : 0) - BreakPoints.sm;
-  };
-  const maxPropertiesWidth = (visible = navigation.visible) => {
-    if (!window) {
-      return 0;
-    }
-
-    return window.innerWidth - (visible ? navigation.width : 0) - BreakPoints.sm;
   };
 
   const [propertiesLayout, setPropertiesLayout] = useLocalStorage(
@@ -43,11 +35,15 @@ export default function LayoutProvider({ children }: ProviderProps) {
 
   const properties = propertiesLayout || DefaultSidebarLayout;
 
-  const updateProperties = (props: Partial<SidebarLayout>) => {
-    const adjustedNavigationWidth = maxNavigationWidth(true);
-    if (props.visible && navigation.width > adjustedNavigationWidth) {
-      updateNavigation({ width: adjustedNavigationWidth });
+  // Make sure gallery has a min width of 768px when resizing sidebars
+  const maxPropertiesWidth = (visible = navigation.visible) => {
+    if (!window) {
+      return 0;
     }
+    return window.innerWidth - (visible ? navigation.width : 0) - BreakPoints.sm;
+  };
+
+  const updateProperties = (props: Partial<SidebarLayout>) => {
     setPropertiesLayout({
       ...properties,
       ...props,
@@ -56,11 +52,6 @@ export default function LayoutProvider({ children }: ProviderProps) {
   };
 
   const updateNavigation = (props: Partial<SidebarLayout>) => {
-    const adjustedPropertiesWidth = maxPropertiesWidth(true);
-    if (props.visible && properties.width > adjustedPropertiesWidth) {
-      updateProperties({ width: adjustedPropertiesWidth });
-    }
-
     setNavigationLayout({
       ...navigation,
       ...props,
@@ -68,25 +59,20 @@ export default function LayoutProvider({ children }: ProviderProps) {
     });
   };
 
-  // Toggle sidebar on and off if isMobile
-  useEffect(
-    () => {
-      updateNavigation({ visible: !isMobile });
-      updateProperties({ visible: !isMobile });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isMobile]
-  );
-
   useEffect(() => {
     const adjustWidthOnWindowResize = () => {
       if (!isMobile) {
-        if (navigation.width > maxNavigationWidth()) {
-          updateNavigation({ width: maxNavigationWidth() });
-        }
-        if (properties.width > maxPropertiesWidth()) {
-          updateProperties({ width: maxPropertiesWidth() });
-        }
+        updateNavigation({
+          width: Math.min(maxNavigationWidth(), navigation.width),
+          visible: true,
+        });
+        updateProperties({
+          width: Math.min(maxPropertiesWidth(), properties.width),
+          visible: true,
+        });
+      } else {
+        updateProperties({ visible: false });
+        updateNavigation({ visible: false });
       }
     };
     if (window) {
