@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import { ReactNode } from 'react';
 
 export type ProviderProps = {
@@ -23,24 +24,31 @@ export type LayoutContextType = {
   maxPropertiesWidth: () => number;
 };
 
-export interface UploadedFile extends File {
-  preview: string;
-}
-
-export type Library = {
-  id: string;
-  images: UploadedFile[];
+export type User = {
   name: string;
+  library_count: number;
 };
 
-export type Storage = {
-  [id: string]: Library;
+export type Library = {
+  user: firebase.firestore.DocumentReference<User>;
+  id: string;
+  name: string;
+  image_count: number;
+};
+
+export type Image = {
+  library: firebase.firestore.DocumentReference<Library>;
+  name: string;
+  src: string;
+  note: string;
 };
 
 export type StorageContextType = {
-  storage: Storage;
+  libraries: Library[];
+
   uploadFiles: (acceptedFiles: File[]) => void;
   selectFiles: () => void;
-  activeLibrary: string;
+
+  activeLibrary: Library | undefined;
   setActiveLibrary: (id: string) => void;
 };

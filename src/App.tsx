@@ -1,3 +1,4 @@
+import 'firebase/firestore';
 import { LayoutProvider, StorageProvider } from './contexts/';
 import Navigation from './components/Navigation';
 import Properties from './components/Properties';

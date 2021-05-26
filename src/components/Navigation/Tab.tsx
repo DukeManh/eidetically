@@ -12,7 +12,7 @@ export default function Tab({ lib }: LibraryProps) {
     <div
       role="tab"
       tabIndex={0}
-      className={activeLibrary === lib.id ? 'tab tabActive' : 'tab'}
+      className={activeLibrary?.id === lib.id ? 'tab tabActive' : 'tab'}
       onClick={() => setActiveLibrary(lib.id)}
       onKeyDown={() => setActiveLibrary(lib.id)}
     >

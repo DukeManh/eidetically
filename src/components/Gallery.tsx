@@ -4,7 +4,7 @@ import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
 import { useLayout, useStorage } from '../contexts';
 
 export default function Gallery() {
-  const { storage, uploadFiles, activeLibrary } = useStorage();
+  const { activeLibrary, uploadFiles } = useStorage();
   const { navigation, updateNavigation, properties, updateProperties, isMobile } = useLayout();
   const [zoom, setZoom] = useState(isMobile ? 100 : 300);
 
@@ -55,12 +55,12 @@ export default function Gallery() {
             columnWidth: zoom,
           }}
         >
-          {storage[activeLibrary].images.map((file) => (
+          {/* {activeLibrary].images.map((file) => (
             <figure key={file.preview}>
               <img src={file.preview} alt={file.name} loading="lazy" />
               <figcaption>{file.name}</figcaption>
             </figure>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

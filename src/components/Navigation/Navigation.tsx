@@ -5,7 +5,7 @@ import Tab from './Tab';
 
 export default function Navigation() {
   const { navigation, updateNavigation, maxNavigationWidth } = useLayout();
-  const { storage } = useStorage();
+  const { libraries } = useStorage();
 
   return (
     <>
@@ -25,8 +25,8 @@ export default function Navigation() {
         }}
       >
         <div className="px-4 w-full h-full flex flex-col justify-start items-start">
-          {Object.entries(storage).map(([id, lib]) => (
-            <Tab key={id} lib={lib} />
+          {(libraries || []).map((lib) => (
+            <Tab key={lib.id} lib={lib} />
           ))}
         </div>
       </SideBar>

@@ -1,31 +1,47 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StorageContext } from './StorageContext';
-import { ProviderProps, UploadedFile, Storage } from '../../interfaces';
-
-const SampleStorage: Storage = {
-  '1': { name: 'Personal website', images: [], id: '1' },
-  '2': { name: 'High Def images', images: [], id: '2' },
-};
+import { ProviderProps, Library } from '../../interfaces';
+import { useFirestoreCollectionData, useFirestore } from 'reactfire';
 
 export default function StorageProvider({ children }: ProviderProps) {
-  const [storage, setStorage] = useState<Storage>(SampleStorage);
-  const [activeLibrary, setActiveLibrary] = useState('1');
+  const librariesRef = useFirestore().collection('libraries').orderBy('name');
+  const { data: libraries } = useFirestoreCollectionData<Library>(librariesRef, {
+    idField: 'id',
+  });
 
-  const uploadFiles = (acceptedFiles: File[]) => {
-    setStorage({
-      ...storage,
+  const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
 
-      [activeLibrary]: {
-        ...storage[activeLibrary],
+  useEffect(() => {
+    if (libraries?.length && !activeLibrary) {
+      setActive(libraries[0]);
+    }
+  }, [activeLibrary, libraries]);
 
-        images: acceptedFiles.reduce((images: Array<UploadedFile>, file: File) => {
-          if (file.type.match(/image\/(jpe?g|png|gif|svg\+xml|webp|avif|apng)/gi)) {
-            images.push(Object.assign(file, { preview: URL.createObjectURL(file) }));
-          }
-          return images;
-        }, []),
-      },
-    });
+  const setActiveLibrary = (id: string) => {
+    const active = libraries.find((lib) => lib.id === id);
+    if (active) {
+      setActive(active);
+    }
+  };
+
+  const uploadFiles = (uploadedFiles: File[]) => {
+    // const acceptableFiles = uploadedFiles.reduce((images: Array<UploadedFile>, file: File) => {
+    //       if (file.type.match(/image\/(jpe?g|png|gif|svg\+xml|webp|avif|apng)/gi)) {
+    //         images.push(Object.assign(file, { preview: URL.createObjectURL(file) }));
+    //       }
+    //       return images;
+    // setStorage({
+    //   ...storage,
+    //   [activeLibrary]: {
+    //     ...storage[activeLibrary],
+    //     images: acceptedFiles.reduce((images: Array<UploadedFile>, file: File) => {
+    //       if (file.type.match(/image\/(jpe?g|png|gif|svg\+xml|webp|avif|apng)/gi)) {
+    //         images.push(Object.assign(file, { preview: URL.createObjectURL(file) }));
+    //       }
+    //       return images;
+    //     }, []),
+    //   },
+    // });
   };
 
   const ref = useRef<HTMLInputElement>(null);
@@ -38,7 +54,7 @@ export default function StorageProvider({ children }: ProviderProps) {
 
   return (
     <StorageContext.Provider
-      value={{ storage, uploadFiles, selectFiles, activeLibrary, setActiveLibrary }}
+      value={{ libraries, uploadFiles, selectFiles, activeLibrary, setActiveLibrary }}
     >
       {children}
       <input
@@ -46,7 +62,7 @@ export default function StorageProvider({ children }: ProviderProps) {
         multiple
         type="file"
         name="select"
-        className="invisible w-0 h-0"
+        className="hidden"
         onChange={() => {
           if (ref?.current?.files) {
             uploadFiles(Array.from(ref.current.files));
