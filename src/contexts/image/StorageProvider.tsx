@@ -25,6 +25,7 @@ export default function StorageProvider({ children }: ProviderProps) {
   };
 
   const uploadFiles = (uploadedFiles: File[]) => {
+    console.log(uploadedFiles);
     // const acceptableFiles = uploadedFiles.reduce((images: Array<UploadedFile>, file: File) => {
     //       if (file.type.match(/image\/(jpe?g|png|gif|svg\+xml|webp|avif|apng)/gi)) {
     //         images.push(Object.assign(file, { preview: URL.createObjectURL(file) }));

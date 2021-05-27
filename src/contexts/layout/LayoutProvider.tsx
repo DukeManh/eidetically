@@ -7,6 +7,8 @@ const BreakPoints = { sm: 640, md: 768, lg: 1024 };
 
 export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);
+  const defaultZoom = isMobile ? 100 : 300;
+  const [zoom, setZoom] = useLocalStorage('zoom', defaultZoom);
 
   const DefaultSidebarLayout: SidebarLayout = {
     visible: !isMobile,
@@ -95,6 +97,8 @@ export default function LayoutProvider({ children }: ProviderProps) {
         isMobile,
         maxNavigationWidth,
         maxPropertiesWidth,
+        zoom: zoom || defaultZoom,
+        setZoom,
       }}
     >
       {children}

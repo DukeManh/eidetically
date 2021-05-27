@@ -20,8 +20,10 @@ export type LayoutContextType = {
   isMobile: boolean;
 
   maxNavigationWidth: () => number;
-
   maxPropertiesWidth: () => number;
+
+  zoom: number;
+  setZoom: (value: number) => void;
 };
 
 export type User = {
