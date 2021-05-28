@@ -1,13 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StorageContext } from './StorageContext';
 import { ProviderProps, Library } from '../../interfaces';
-import { useFirestoreCollectionData, useFirestore } from 'reactfire';
 
 export default function StorageProvider({ children }: ProviderProps) {
-  const librariesRef = useFirestore().collection('libraries').orderBy('name');
-  const { data: libraries } = useFirestoreCollectionData<Library>(librariesRef, {
-    idField: 'id',
-  });
+  const [libraries] = useState<Library[]>([]);
 
   const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
 
@@ -45,31 +41,9 @@ export default function StorageProvider({ children }: ProviderProps) {
     // });
   };
 
-  const ref = useRef<HTMLInputElement>(null);
-
-  const selectFiles = () => {
-    if (ref?.current) {
-      ref.current.click();
-    }
-  };
-
   return (
-    <StorageContext.Provider
-      value={{ libraries, uploadFiles, selectFiles, activeLibrary, setActiveLibrary }}
-    >
+    <StorageContext.Provider value={{ libraries, uploadFiles, activeLibrary, setActiveLibrary }}>
       {children}
-      <input
-        ref={ref}
-        multiple
-        type="file"
-        name="select"
-        className="hidden"
-        onChange={() => {
-          if (ref?.current?.files) {
-            uploadFiles(Array.from(ref.current.files));
-          }
-        }}
-      />
     </StorageContext.Provider>
   );
 }

@@ -1,11 +1,12 @@
 import { useWindowSize } from 'react-use';
-import { useLayout } from '../contexts';
-import Mask from './Mask';
-import SideBar from './Sidebar';
+import { useLayout } from '../../contexts';
+import Mask from '../Mask';
+import SideBar from '../Sidebar';
+import { auth } from '../../server/firebase';
 
 export default function Properties() {
-  const { properties, updateProperties, maxPropertiesWidth } = useLayout();
-
+  const { properties, updateProperties, maxPropertiesWidth, setLoginVisible, loginVisible } =
+    useLayout();
   const { width: windowWidth } = useWindowSize();
 
   return (
@@ -24,7 +25,10 @@ export default function Properties() {
           updateProperties({ width: ref.clientWidth });
         }}
       >
-        <p>Hi</p>
+        <div>
+          <button onClick={() => setLoginVisible(!loginVisible)}>Login here</button>
+          <button onClick={() => auth.signOut()}>Logout</button>
+        </div>
       </SideBar>
     </>
   );

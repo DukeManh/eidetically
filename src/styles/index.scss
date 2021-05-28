@@ -43,8 +43,6 @@ $transition_duration: 300ms;
 @layer components {
 
   #figure-container {
-    @apply pt-6 px-4 pb-16;
-
     column-width: 15rem;
     column-gap: 1.2rem;
     

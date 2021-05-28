@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LayoutContext from './LayoutContext';
 import { useLocalStorage, useMedia } from 'react-use';
 import { SidebarLayout, ProviderProps } from '../../interfaces';
+import Login from '../../components/Login';
 
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };
 
@@ -9,6 +10,7 @@ export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);
   const defaultZoom = isMobile ? 100 : 300;
   const [zoom, setZoom] = useLocalStorage('zoom', defaultZoom);
+  const [loginVisible, setLoginVisible] = useState(false);
 
   const DefaultSidebarLayout: SidebarLayout = {
     visible: !isMobile,
@@ -22,7 +24,7 @@ export default function LayoutProvider({ children }: ProviderProps) {
 
   const navigation = navigationLayout || DefaultSidebarLayout;
 
-  // Make sure gallery has a min width of 768px when resizing sidebars
+  // Make sure gallery has a min width of 768px when resizing
   const maxNavigationWidth = (visible = properties.visible) => {
     if (!window) {
       return 0;
@@ -37,7 +39,7 @@ export default function LayoutProvider({ children }: ProviderProps) {
 
   const properties = propertiesLayout || DefaultSidebarLayout;
 
-  // Make sure gallery has a min width of 768px when resizing sidebars
+  // Make sure gallery has a min width of 768px when resizing
   const maxPropertiesWidth = (visible = navigation.visible) => {
     if (!window) {
       return 0;
@@ -99,8 +101,11 @@ export default function LayoutProvider({ children }: ProviderProps) {
         maxPropertiesWidth,
         zoom: zoom || defaultZoom,
         setZoom,
+        loginVisible,
+        setLoginVisible,
       }}
     >
+      <Login />
       {children}
     </LayoutContext.Provider>
   );

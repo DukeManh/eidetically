@@ -24,6 +24,9 @@ export type LayoutContextType = {
 
   zoom: number;
   setZoom: (value: number) => void;
+
+  loginVisible: boolean;
+  setLoginVisible: (value: boolean) => void;
 };
 
 export type User = {
@@ -49,8 +52,11 @@ export type StorageContextType = {
   libraries: Library[];
 
   uploadFiles: (acceptedFiles: File[]) => void;
-  selectFiles: () => void;
 
   activeLibrary: Library | undefined;
   setActiveLibrary: (id: string) => void;
+};
+
+export type AuthContextType = {
+  user: any;
 };

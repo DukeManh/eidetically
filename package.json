@@ -12,6 +12,7 @@
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.5",
     "firebase": "^8.6.2",
+    "firebaseui": "^4.8.0",
     "node-sass": "^6.0.0",
     "postcss-import": "^14.0.2",
     "postcss-nested": "^4.2.3",
@@ -24,7 +25,6 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-use": "^17.2.4",
-    "reactfire": "*",
     "typescript": "^4.2.4",
     "web-vitals": "^1.1.2"
   },
