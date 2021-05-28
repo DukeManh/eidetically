@@ -29,23 +29,23 @@ export type LayoutContextType = {
   setLoginVisible: (value: boolean) => void;
 };
 
-export type User = {
-  name: string;
-  library_count: number;
-};
-
 export type Library = {
-  user: firebase.firestore.DocumentReference<User>;
-  id: string;
+  id?: string;
   name: string;
   image_count: number;
+  owner: string;
 };
+
+export interface UploadedFile extends File {
+  downloadURL: string;
+}
 
 export type Image = {
   library: firebase.firestore.DocumentReference<Library>;
   name: string;
   src: string;
   note: string;
+  upload_date: firebase.firestore.FieldValue;
 };
 
 export type StorageContextType = {
@@ -54,9 +54,9 @@ export type StorageContextType = {
   uploadFiles: (acceptedFiles: File[]) => void;
 
   activeLibrary: Library | undefined;
-  setActiveLibrary: (id: string) => void;
+  setActiveLibrary: (id: string | undefined) => void;
 };
 
 export type AuthContextType = {
-  user: any;
+  user: firebase.User | null;
 };

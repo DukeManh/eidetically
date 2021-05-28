@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import * as firebaseui from 'firebaseui';
-import { User, Library, Image } from '../interfaces';
+import { Library, Image } from '../interfaces';
 
 const {
   REACT_APP_API_KEY,
@@ -33,12 +33,13 @@ const dataPoint = <T>(collectionPath: string) =>
   firebase.firestore().collection(collectionPath).withConverter(typeConverter<T>());
 
 export const db = {
-  users: dataPoint<User>('users'),
   libraries: dataPoint<Library>('libraries'),
   images: dataPoint<Image>('images'),
 };
 
+export { firebase };
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const storage = firebase.storage();
 
 export const authUI = new firebaseui.auth.AuthUI(auth);

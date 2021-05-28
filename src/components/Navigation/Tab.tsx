@@ -13,8 +13,8 @@ export default function Tab({ lib }: LibraryProps) {
       role="tab"
       tabIndex={0}
       className={activeLibrary?.id === lib.id ? 'tab tabActive' : 'tab'}
-      onClick={() => setActiveLibrary(lib.id)}
-      onKeyDown={() => setActiveLibrary(lib.id)}
+      onClick={() => setActiveLibrary(lib?.id)}
+      onKeyDown={() => setActiveLibrary(lib?.id)}
     >
       {lib.name}
     </div>

@@ -35,7 +35,7 @@ module.exports = {
         // No need to import React when using Next.js
         'react/react-in-jsx-scope': 'off',
 
-        // This rule is not compatible with Next.js's <Link /> components
+        // This rule is not compatible with Next.jss <Link /> components
         'jsx-a11y/anchor-is-valid': 'off',
 
         // Why would you want unused vars?

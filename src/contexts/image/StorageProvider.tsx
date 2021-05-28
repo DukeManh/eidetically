@@ -13,7 +13,10 @@ export default function StorageProvider({ children }: ProviderProps) {
     }
   }, [activeLibrary, libraries]);
 
-  const setActiveLibrary = (id: string) => {
+  const setActiveLibrary = (id: string | undefined) => {
+    if (!id) {
+      setActive(undefined);
+    }
     const active = libraries.find((lib) => lib.id === id);
     if (active) {
       setActive(active);
