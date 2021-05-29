@@ -1,11 +1,13 @@
-import { useLayout, useStorage } from '../../contexts';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { useLayout, useLibrary } from '../../contexts';
 import Mask from '../Mask';
 import SideBar from '../Sidebar';
 import Tab from './Tab';
+import { createLibrary } from '../../server/service';
 
 export default function Navigation() {
   const { navigation, updateNavigation, maxNavigationWidth } = useLayout();
-  const { libraries } = useStorage();
+  const { libraries } = useLibrary();
 
   return (
     <>
@@ -24,8 +26,17 @@ export default function Navigation() {
           updateNavigation({ width: ref.clientWidth });
         }}
       >
-        <div className="px-4 w-full h-full flex flex-col justify-start items-start">
-          {(libraries || []).map((lib) => (
+        <div className="px-6 w-full h-full flex flex-col justify-start items-start">
+          <div className="w-full">
+            <span>Libraries</span>
+            <span className="float-right cursor-pointer">
+              <AiOutlinePlus
+                className="inline align-middle"
+                onClick={() => createLibrary('random')}
+              />
+            </span>
+          </div>
+          {libraries.map((lib) => (
             <Tab key={lib.id} lib={lib} />
           ))}
         </div>

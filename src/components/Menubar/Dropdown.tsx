@@ -1,9 +1,11 @@
 import { useRef } from 'react';
-import { useStorage } from '../../contexts';
+import { useLibrary } from '../../contexts';
+import { uploadImages } from '../../server/service';
 
 export default function Dropdown({ options }: { options: string[] }) {
+  const { activeLibrary } = useLibrary();
+
   const ref = useRef<HTMLInputElement>(null);
-  const { uploadFiles } = useStorage();
   return (
     <div
       className="menu-dropdown absolute z-50 bg-dropdown rounded-b-lg w-56 text-white min-h"
@@ -16,10 +18,10 @@ export default function Dropdown({ options }: { options: string[] }) {
           </button>
         ))}
         <button
+          className="w-full hover:bg-blue-500 text-left pl-4 mt-1"
           onClick={() => {
             if (ref?.current) ref.current.click();
           }}
-          className="w-full hover:bg-blue-500 text-left pl-4 mt-1"
         >
           <input
             ref={ref}
@@ -27,9 +29,9 @@ export default function Dropdown({ options }: { options: string[] }) {
             type="file"
             accept="image/*"
             className="hidden"
-            onChange={() => {
-              if (ref?.current?.files) {
-                uploadFiles(Array.from(ref.current.files));
+            onChange={async () => {
+              if (ref?.current?.files && activeLibrary) {
+                await uploadImages(Array.from(ref.current.files), activeLibrary.id);
               }
             }}
           />

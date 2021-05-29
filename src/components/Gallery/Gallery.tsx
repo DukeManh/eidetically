@@ -1,16 +1,19 @@
-import { Switch, Route } from 'react-router-dom';
 import { useDrop } from 'react-use';
-import { useLayout, useStorage } from '../../contexts';
+import { useLayout, useLibrary } from '../../contexts';
+import { uploadImages } from '../../server/service';
 import Images from './Images';
 import TopBar from './TopBar';
-import Welcome from './Welcome';
 
 export default function Gallery() {
-  const { uploadFiles } = useStorage();
   const { navigation, properties, isMobile } = useLayout();
+  const { activeLibrary } = useLibrary();
 
   useDrop({
-    onFiles: uploadFiles,
+    onFiles: (files) => {
+      if (activeLibrary) {
+        uploadImages(files, activeLibrary.id);
+      }
+    },
   });
 
   return (
@@ -23,14 +26,15 @@ export default function Gallery() {
       }}
     >
       <TopBar />
-      <Switch>
+      <Images />
+      {/* <Switch>
         <Route path="/" exact>
           <Welcome />
         </Route>
         <Route path="/:libraryID">
           <Images />
         </Route>
-      </Switch>
+      </Switch> */}
     </div>
   );
 }

@@ -5,26 +5,20 @@
 @layer base {
   html,
   body, 
+  #root,
   {
     @apply p-0 m-0 min-h-full h-auto overflow-hidden max-h-screen;
     font-size: 14px;
     * {
-      @apply box-border ;
+      @apply box-border focus:outline-none;
     }
-    button {
-      @apply focus:outline-none;
-    }
-  }
-  #root{
-    @apply overflow-hidden max-h-screen;
   }
   @font-face {
     font-family: 'Didot';
     font-style: normal;
     font-weight: 400;
-    src: local('Didot'), url('./fonts/gfs-didot-v10-greek-regular.woff2') format('woff2'),
-      /* Chrome 26+, Opera 23+, Firefox 39+ */ url('./fonts/gfs-didot-v10-greek-regular.woff')
-        format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    src: local('Didot'), url('./fonts/gfs-didot-v10-greek-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('./fonts/gfs-didot-v10-greek-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   }
 }
 
@@ -41,7 +35,6 @@ $transition_duration: 300ms;
 }
 
 @layer components {
-
   #figure-container {
     column-width: 15rem;
     column-gap: 1.2rem;
@@ -83,9 +76,11 @@ $transition_duration: 300ms;
       @apply px-2 p-1 hover:bg-black hover:bg-opacity-25 rounded-md;
     }
   }
+
   .tab {
-      @apply w-full cursor-pointer focus:bg-tabFocus px-2 py-1 mb-1 rounded-lg;
+      @apply w-full cursor-pointer focus:bg-tabFocus py-1 mb-1 mx-2 rounded-lg;
   }
+
   .tabActive {
       @apply bg-tabActive;
   }

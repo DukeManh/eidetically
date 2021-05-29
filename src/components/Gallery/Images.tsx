@@ -1,12 +1,11 @@
-import { useParams } from 'react-router-dom';
-import { useLayout } from '../../contexts';
+import { useLayout, useLibrary } from '../../contexts';
 
-type LibraryParams = {
-  libraryID: string;
-};
+// type LibraryParams = {
+//   libraryID: string;
+// };
 
 export default function Images() {
-  const { libraryID }: LibraryParams = useParams();
+  const { images, activeLibrary } = useLibrary();
   const { zoom } = useLayout();
 
   return (
@@ -17,13 +16,13 @@ export default function Images() {
           columnWidth: zoom,
         }}
       >
-        {libraryID}
-        {/* {activeLibrary].images.map((file) => (
-            <figure key={file.preview}>
-              <img src={file.preview} alt={file.name} loading="lazy" />
+        {activeLibrary &&
+          (images[activeLibrary.id] || []).map((file) => (
+            <figure key={file.id}>
+              <img src={file.src} alt={file.name} loading="lazy" />
               <figcaption>{file.name}</figcaption>
             </figure>
-          ))} */}
+          ))}
       </div>
     </div>
   );

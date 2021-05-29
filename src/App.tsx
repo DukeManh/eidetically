@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { LayoutProvider, StorageProvider, AuthProvider } from './contexts/';
+import { LayoutProvider, LibraryProvider, AuthProvider } from './contexts/';
 import Navigation from './components/Navigation';
 import Properties from './components/Properties';
 import Gallery from './components/Gallery';
@@ -10,14 +10,14 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <LayoutProvider>
-          <StorageProvider>
+          <LibraryProvider>
             <MenuBar />
             <main className="bg-primary max-h-screen overflow-hidden relative text-gray-50">
               <Navigation />
               <Gallery />
               <Properties />
             </main>
-          </StorageProvider>
+          </LibraryProvider>
         </LayoutProvider>
       </AuthProvider>
     </BrowserRouter>

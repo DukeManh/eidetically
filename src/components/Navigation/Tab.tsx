@@ -1,12 +1,12 @@
 import { Library } from '../../interfaces';
-import { useStorage } from '../../contexts';
+import { useLibrary } from '../../contexts';
 
 type LibraryProps = {
   lib: Library;
 };
 
 export default function Tab({ lib }: LibraryProps) {
-  const { activeLibrary, setActiveLibrary } = useStorage();
+  const { activeLibrary, setActiveLibrary } = useLibrary();
 
   return (
     <div

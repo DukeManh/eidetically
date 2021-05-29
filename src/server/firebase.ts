@@ -33,8 +33,8 @@ const dataPoint = <T>(collectionPath: string) =>
   firebase.firestore().collection(collectionPath).withConverter(typeConverter<T>());
 
 export const db = {
-  libraries: dataPoint<Library>('libraries'),
-  images: dataPoint<Image>('images'),
+  libraries: dataPoint<Library | Partial<Library>>('libraries'),
+  images: dataPoint<Image | Partial<Image>>('images'),
 };
 
 export { firebase };

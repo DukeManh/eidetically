@@ -19,13 +19,6 @@ export default function Login() {
         popupMode: true,
         signInFlow: 'popup',
         signInSuccessUrl: 'http://localhost:8000/',
-        callbacks: {
-          signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-            console.log(authResult);
-            console.log(redirectUrl);
-            return true;
-          },
-        },
       });
     }
   }, [loginVisible, user]);

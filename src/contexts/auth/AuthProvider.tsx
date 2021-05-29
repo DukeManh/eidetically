@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 import { ProviderProps } from '../../interfaces';
 import { auth } from '../../server/firebase';
@@ -8,9 +8,7 @@ export default function StorageProvider({ children }: ProviderProps) {
 
   useEffect(() => {
     auth.onAuthStateChanged((firebaseUser) => {
-      if (firebaseUser) {
-        setUser(firebaseUser);
-      }
+      setUser(firebaseUser);
     });
   }, []);
 

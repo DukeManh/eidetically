@@ -30,7 +30,7 @@ export type LayoutContextType = {
 };
 
 export type Library = {
-  id?: string;
+  id: string;
   name: string;
   image_count: number;
   owner: string;
@@ -41,17 +41,17 @@ export interface UploadedFile extends File {
 }
 
 export type Image = {
-  library: firebase.firestore.DocumentReference<Library>;
+  id: string;
+  library: firebase.firestore.DocumentReference<Partial<Library>>;
   name: string;
   src: string;
   note: string;
   upload_date: firebase.firestore.FieldValue;
 };
 
-export type StorageContextType = {
+export type LibraryContextType = {
   libraries: Library[];
-
-  uploadFiles: (acceptedFiles: File[]) => void;
+  images: { [key: string]: Image[] };
 
   activeLibrary: Library | undefined;
   setActiveLibrary: (id: string | undefined) => void;
