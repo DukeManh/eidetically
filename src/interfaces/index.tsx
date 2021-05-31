@@ -24,9 +24,6 @@ export type LayoutContextType = {
 
   zoom: number;
   setZoom: (value: number) => void;
-
-  loginVisible: boolean;
-  setLoginVisible: (value: boolean) => void;
 };
 
 export type Library = {
@@ -59,4 +56,7 @@ export type LibraryContextType = {
 
 export type AuthContextType = {
   user: firebase.User | null;
+
+  loginVisible: boolean;
+  setLoginVisible: (value: boolean) => void;
 };

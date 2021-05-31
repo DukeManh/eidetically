@@ -5,7 +5,7 @@ export default function TopBar() {
   const { navigation, updateNavigation, properties, updateProperties, zoom, setZoom } = useLayout();
 
   return (
-    <div className="md:px-4 h-10 top-0 flex flex-row justify-between items-center">
+    <div className="md:px-4 min-h-[2rem] max-h-8 h-10 top-0 flex flex-row justify-between items-center">
       <HiMenuAlt2
         size={24}
         className="cursor-pointer"
