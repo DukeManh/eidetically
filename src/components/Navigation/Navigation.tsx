@@ -14,6 +14,7 @@ export default function Navigation() {
   const [newLibName, setNewLibName] = useState(DEFAULT_LIB_NAME);
   const [creatingNewLib, setCreatingNewLib] = useState(false);
   const form = useRef<HTMLInputElement | null>(null);
+  const container = useRef<HTMLDivElement | null>(null);
 
   const enterLibraryName = () => {
     setCreatingNewLib(true);
@@ -24,7 +25,8 @@ export default function Navigation() {
   };
 
   useEffect(() => {
-    if (form?.current && creatingNewLib) {
+    if (form?.current && creatingNewLib && container?.current) {
+      container.current.scrollTo(0, 0);
       form.current.select();
       form.current.focus();
     }
@@ -68,32 +70,36 @@ export default function Navigation() {
             left: 0,
           }}
         />
-        <div className="px-4 w-full h-full flex flex-col justify-start items-start">
-          <div className="w-full pt-3 pb-2">
+        <div className="flex flex-col pb-8 navigation-wrap">
+          <div className="px-6 pt-3 pb-2 w-full max-h-12">
             <span className=" font-medium text-lg">Libraries</span>
             <span className="float-right cursor-pointer">
               <AiOutlinePlus className="inline align-middle" size={18} onClick={enterLibraryName} />
             </span>
           </div>
-          <form
-            className="tab z-50 mb-2 border border-blue-500"
-            onSubmit={newLibrary}
-            style={{
-              display: creatingNewLib ? 'block' : 'none',
-            }}
-          >
-            <input
-              ref={form}
-              value={newLibName}
-              onChange={(e) => setNewLibName(e.target.value)}
-              type="text"
-              placeholder="Library name"
-              className="text-inherit bg-inherit"
-            ></input>
-          </form>
-          {libraries.map((lib) => (
-            <Tab key={lib.id} lib={lib} />
-          ))}
+          <div className="w-full min-h-0 flex-grow overflow-y-scroll" ref={container}>
+            <div className="px-4 flex flex-col justify-start items-start">
+              <form
+                className="tab z-50 mb-2 border border-blue-500"
+                onSubmit={newLibrary}
+                style={{
+                  display: creatingNewLib ? 'block' : 'none',
+                }}
+              >
+                <input
+                  ref={form}
+                  value={newLibName}
+                  onChange={(e) => setNewLibName(e.target.value)}
+                  type="text"
+                  placeholder="Library name"
+                  className="text-inherit bg-inherit"
+                ></input>
+              </form>
+              {libraries.map((lib) => (
+                <Tab key={lib.id} lib={lib} />
+              ))}
+            </div>
+          </div>
         </div>
       </SideBar>
     </>

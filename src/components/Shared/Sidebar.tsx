@@ -45,6 +45,9 @@ export default function SideBar({
       bound="window"
       onResizeStart={onResizeStart}
       {...props}
+      style={{
+        overflow: 'hidden',
+      }}
     >
       {children}
     </Rnd>

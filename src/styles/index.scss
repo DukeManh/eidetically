@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
+@use "sass:math";
 
 @layer base {
   html,
@@ -27,6 +28,7 @@ $primary: #3b3b3b;
 $secondary: #414141;
 $mask: rgba(0,0,0,.45);
 $transition_duration: 300ms;
+$menubar_height: 2.25rem;
 
 @mixin breakpoint {
   @media (max-width: $lg){
@@ -91,8 +93,13 @@ $transition_duration: 300ms;
     @apply absolute w-full h-full top-[90%] bg-gradient-to-r from-blue-300 to-blue-700;
     transition: right 0.5s cubic-bezier(0, 0.55, 0.45, 1);
   }
+
 }
 
+.navigation-wrap {
+max-height: calc(100vh -  #{$menubar_height});
+}
 
-
-
+#gallery {
+max-height: calc(100vh -  #{$menubar_height});
+}

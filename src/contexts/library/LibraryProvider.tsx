@@ -28,10 +28,13 @@ export default function LibraryProvider({ children }: ProviderProps) {
       };
 
       const onComplete = (count: number) => {
-        console.log('uploaded ', count, ' files');
-        setUploading(false);
-        setUploadingMessage('');
-        setUploadingProgress(0);
+        console.log('successfully uploaded ', count, ' files');
+
+        setTimeout(() => {
+          setUploading(false);
+          setUploadingMessage('');
+          setUploadingProgress(0);
+        }, 500);
       };
 
       if (libraryID) {
