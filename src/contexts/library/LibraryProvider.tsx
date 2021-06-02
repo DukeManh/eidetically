@@ -3,12 +3,44 @@ import { ProviderProps, Library, Image } from '../../interfaces';
 import { LibraryContext } from './LibraryContext';
 import { useAuth } from '../auth';
 import { db } from '../../server/firebase';
+import ProgressBar from '../../components/ProgressBar';
+import { uploadImages } from '../../server/service';
 
 export default function LibraryProvider({ children }: ProviderProps) {
+  const { user } = useAuth();
   const [libraries, setLibraries] = useState<Library[]>([]);
   const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
   const [images, setImages] = useState<{ [key: string]: Image[] }>({});
-  const { user } = useAuth();
+  const [uploading, setUploading] = useState(false);
+  const [uploadingProgress, setUploadingProgress] = useState(0);
+  const [uploadingMessage, setUploadingMessage] = useState('');
+
+  const upload = (acceptedFiles: File[], libraryID?: string) => {
+    if (activeLibrary?.id || libraryID) {
+      setUploading(true);
+      let uploadedCount = 0;
+      setUploadingMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+
+      const onNext = () => {
+        uploadedCount += 1;
+        setUploadingProgress(Math.floor((uploadedCount / acceptedFiles.length) * 100));
+        setUploadingMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+      };
+
+      const onComplete = (count: number) => {
+        console.log('uploaded ', count, ' files');
+        setUploading(false);
+        setUploadingMessage('');
+        setUploadingProgress(0);
+      };
+
+      if (libraryID) {
+        uploadImages(acceptedFiles, libraryID, onNext, onComplete);
+      } else if (activeLibrary?.id) {
+        uploadImages(acceptedFiles, activeLibrary.id, onNext, onComplete);
+      }
+    }
+  };
 
   // Load a library's images if it's active
   useEffect(() => {
@@ -24,13 +56,6 @@ export default function LibraryProvider({ children }: ProviderProps) {
       });
     }
   }, [activeLibrary, images]);
-
-  // Make the first lib the default active lib
-  useEffect(() => {
-    if (libraries?.length && !activeLibrary) {
-      setActive(libraries[0]);
-    }
-  }, [activeLibrary, libraries]);
 
   const setActiveLibrary = (id: string | undefined) => {
     const active = libraries.find((lib) => lib.id === id);
@@ -66,7 +91,14 @@ export default function LibraryProvider({ children }: ProviderProps) {
   }, [user]);
 
   return (
-    <LibraryContext.Provider value={{ libraries, activeLibrary, setActiveLibrary, images }}>
+    <LibraryContext.Provider
+      value={{ libraries, activeLibrary, setActiveLibrary, images, uploadImages: upload }}
+    >
+      {uploading && (
+        <ProgressBar progress={uploadingProgress}>
+          <div className="text-center my-auto">{uploadingMessage}</div>
+        </ProgressBar>
+      )}
       {children}
     </LibraryContext.Provider>
   );

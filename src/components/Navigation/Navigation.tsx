@@ -1,8 +1,8 @@
 import { useState, useRef, FormEvent, useEffect } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useLayout, useLibrary } from '../../contexts';
-import Mask from '../Mask';
-import SideBar from '../Sidebar';
+import Mask from '../Shared/Mask';
+import SideBar from '../Shared/Sidebar';
 import Tab from './Tab';
 import { createLibrary } from '../../server/service';
 
@@ -76,7 +76,7 @@ export default function Navigation() {
             </span>
           </div>
           <form
-            className="tab z-50 mb-2"
+            className="tab z-50 mb-2 border border-blue-500"
             onSubmit={newLibrary}
             style={{
               display: creatingNewLib ? 'block' : 'none',

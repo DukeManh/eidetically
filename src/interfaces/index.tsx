@@ -52,6 +52,8 @@ export type LibraryContextType = {
 
   activeLibrary: Library | undefined;
   setActiveLibrary: (id: string | undefined) => void;
+
+  uploadImages: (acceptedFiles: File[]) => void;
 };
 
 export type AuthContextType = {

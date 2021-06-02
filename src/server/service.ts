@@ -13,33 +13,51 @@ export async function createLibrary(name: string) {
   }
 }
 
-export async function uploadImages(acceptedFiles: File[], libraryID: string): Promise<void> {
+export async function uploadImages(
+  acceptedFiles: File[],
+  libraryID: string,
+  onNext?: (fileName: string) => void,
+  onComplete?: (success: number) => void
+): Promise<void> {
   if (auth.currentUser) {
     const libRef = db.libraries.doc(libraryID);
     let successfulUploads = 0;
     const uploadedFiles: UploadedFile[] = [];
-    const promises: firebase.storage.UploadTask[] = [];
+    const promises: Promise<string>[] = [];
 
     // upload files first
     acceptedFiles.forEach((file) => {
       const filePath = `${auth.currentUser?.uid}/${libraryID}/${file.name}`;
 
-      const upload = storage.ref(filePath).put(file);
-      promises.push(upload);
-      upload.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
-        () => {},
-        (error) => console.error(error),
-        async () => {
-          const imageURL = await upload.snapshot.ref.getDownloadURL();
-          uploadedFiles.push(Object.assign(file, { downloadURL: imageURL }));
-          successfulUploads += 1;
-        }
+      promises.push(
+        new Promise((resolve, reject) => {
+          const upload = storage.ref(filePath).put(file);
+          upload.on(
+            firebase.storage.TaskEvent.STATE_CHANGED,
+            () => {},
+            (error) => reject(error),
+            async () => {
+              const downloadURL = await upload.snapshot.ref.getDownloadURL();
+              uploadedFiles.push(Object.assign(file, { downloadURL }));
+              successfulUploads += 1;
+              if (onNext) {
+                onNext(file.name);
+              }
+
+              resolve(downloadURL);
+            }
+          );
+        })
       );
     });
+
     await Promise.all(promises);
 
-    // create new image documents for each uploaded file
+    if (onComplete) {
+      onComplete(successfulUploads);
+    }
+
+    // create a new image document for each uploaded file
     const batch = firestore.batch();
     uploadedFiles.forEach((image) => {
       const imageRef = db.images.doc(`${libraryID}_${image.name}`);

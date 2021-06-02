@@ -1,9 +1,5 @@
 import { useLayout, useLibrary } from '../../contexts';
 
-// type LibraryParams = {
-//   libraryID: string;
-// };
-
 export default function Images() {
   const { images, activeLibrary } = useLibrary();
   const { zoom } = useLayout();

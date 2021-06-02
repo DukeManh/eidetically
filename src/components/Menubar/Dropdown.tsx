@@ -1,9 +1,8 @@
 import { useRef } from 'react';
 import { useLibrary } from '../../contexts';
-import { uploadImages } from '../../server/service';
 
 export default function Dropdown({ options }: { options: string[] }) {
-  const { activeLibrary } = useLibrary();
+  const { activeLibrary, uploadImages } = useLibrary();
 
   const ref = useRef<HTMLInputElement>(null);
   return (
@@ -31,7 +30,7 @@ export default function Dropdown({ options }: { options: string[] }) {
             className="hidden"
             onChange={async () => {
               if (ref?.current?.files && activeLibrary) {
-                await uploadImages(Array.from(ref.current.files), activeLibrary.id);
+                uploadImages(Array.from(ref.current.files));
               }
             }}
           />

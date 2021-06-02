@@ -86,6 +86,11 @@ $transition_duration: 300ms;
   .profile-stat{
       @apply flex-grow flex flex-col items-center w-20;
   }
+
+  .progress {
+    @apply absolute w-full h-full top-[90%] bg-gradient-to-r from-blue-300 to-blue-700;
+    transition: right 0.5s cubic-bezier(0, 0.55, 0.45, 1);
+  }
 }
 
 

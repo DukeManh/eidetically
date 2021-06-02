@@ -3,9 +3,9 @@ import { GrClose } from 'react-icons/gr';
 import firebase from 'firebase/app';
 import { authUI } from '../../server/firebase';
 import { useAuth } from '../../contexts';
-import Mask from '../Mask';
+import Mask from '../Shared/Mask';
 
-export default function Login() {
+export default function LoginPopup() {
   const { loginVisible, setLoginVisible } = useAuth();
   const { user } = useAuth();
 

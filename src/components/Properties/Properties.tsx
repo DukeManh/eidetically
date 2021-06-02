@@ -1,7 +1,7 @@
 import { useWindowSize } from 'react-use';
 import { useLayout } from '../../contexts';
-import Mask from '../Mask';
-import SideBar from '../Sidebar';
+import Mask from '../Shared/Mask';
+import SideBar from '../Shared/Sidebar';
 import Profile from './Profile';
 
 export default function Properties() {
