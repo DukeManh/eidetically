@@ -1,4 +1,4 @@
-import { Library, UploadedFile } from '../interfaces';
+import { Library, UploadedFile, MetaData } from '../interfaces';
 import { auth, db, storage, firebase, firestore } from './firebase';
 
 export async function createLibrary(name: string) {
@@ -38,7 +38,9 @@ export async function uploadImages(
             (error) => reject(error),
             async () => {
               const downloadURL = await upload.snapshot.ref.getDownloadURL();
-              uploadedFiles.push(Object.assign(file, { downloadURL }));
+              const { contentType, size, fullPath } =
+                (await upload.snapshot.ref.getMetadata()) as MetaData;
+              uploadedFiles.push({ name: file.name, downloadURL, contentType, size, fullPath });
               successfulUploads += 1;
               if (onNext) {
                 onNext(file.name);
@@ -60,13 +62,12 @@ export async function uploadImages(
     // create a new image document for each uploaded file
     const batch = firestore.batch();
     uploadedFiles.forEach((image) => {
-      const imageRef = db.images.doc(`${libraryID}_${image.name}`);
+      const imageRef = libRef.collection('images').doc();
       batch.set(imageRef, {
-        name: image.name,
         note: '',
         library: libRef,
-        src: image.downloadURL,
         upload_date: firebase.firestore.FieldValue.serverTimestamp(),
+        ...image,
       });
     });
     await batch.commit();

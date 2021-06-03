@@ -1,7 +1,9 @@
-import { useLayout, useLibrary } from '../../contexts';
+import { useLayout, useLibrary, useImage } from '../../contexts';
+import Figure from './Figure';
 
 export default function Images() {
-  const { images, activeLibrary } = useLibrary();
+  const { activeLibrary } = useLibrary();
+  const { images } = useImage();
   const { zoom } = useLayout();
 
   return (
@@ -13,11 +15,8 @@ export default function Images() {
         }}
       >
         {activeLibrary &&
-          (images[activeLibrary.id] || []).map((file) => (
-            <figure key={file.id}>
-              <img src={file.src} alt={file.name} loading="lazy" />
-              <figcaption>{file.name}</figcaption>
-            </figure>
+          Object.values(images[activeLibrary.id] || {}).map((image) => (
+            <Figure key={image.id} image={image} />
           ))}
       </div>
     </div>

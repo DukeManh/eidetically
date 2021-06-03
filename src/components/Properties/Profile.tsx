@@ -22,7 +22,7 @@ export default function Profile() {
           <div className="w-[1px] bg-gray-300"></div>
           <div className="profile-stat">
             <VscFileMedia className="h-full" />
-            <div>28</div>
+            <div>{libraries.reduce((count, lib) => count + lib.image_count, 0)}</div>
           </div>
           <div className="w-[1px] bg-gray-300"></div>
           <div className="profile-stat">

@@ -17,6 +17,7 @@ export default function Tab({ lib }: LibraryProps) {
       onKeyDown={() => setActiveLibrary(lib?.id)}
     >
       {lib.name}
+      <span className="float-right text-gray-400">{lib.image_count}</span>
     </div>
   );
 }

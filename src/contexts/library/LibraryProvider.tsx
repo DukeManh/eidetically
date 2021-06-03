@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ProviderProps, Library, Image } from '../../interfaces';
+import { ProviderProps, Library } from '../../interfaces';
 import { LibraryContext } from './LibraryContext';
 import { useAuth } from '../auth';
 import { db } from '../../server/firebase';
@@ -10,7 +10,6 @@ export default function LibraryProvider({ children }: ProviderProps) {
   const { user } = useAuth();
   const [libraries, setLibraries] = useState<Library[]>([]);
   const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
-  const [images, setImages] = useState<{ [key: string]: Image[] }>({});
   const [uploading, setUploading] = useState(false);
   const [uploadingProgress, setUploadingProgress] = useState(0);
   const [uploadingMessage, setUploadingMessage] = useState('');
@@ -24,7 +23,9 @@ export default function LibraryProvider({ children }: ProviderProps) {
       const onNext = () => {
         uploadedCount += 1;
         setUploadingProgress(Math.floor((uploadedCount / acceptedFiles.length) * 100));
-        setUploadingMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+        if (uploadedCount < acceptedFiles.length) {
+          setUploadingMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+        }
       };
 
       const onComplete = (count: number) => {
@@ -34,7 +35,7 @@ export default function LibraryProvider({ children }: ProviderProps) {
           setUploading(false);
           setUploadingMessage('');
           setUploadingProgress(0);
-        }, 500);
+        }, 2000);
       };
 
       if (libraryID) {
@@ -44,21 +45,6 @@ export default function LibraryProvider({ children }: ProviderProps) {
       }
     }
   };
-
-  // Load a library's images if it's active
-  useEffect(() => {
-    if (activeLibrary && !images[activeLibrary.id]) {
-      const imagesRef = db.images
-        .where('library', '==', db.libraries.doc(activeLibrary.id))
-        .orderBy('upload_date');
-      imagesRef.onSnapshot((snapshot) => {
-        const libImages = snapshot.docs.map((image) => {
-          return { id: image.id, ...image.data() } as Image;
-        });
-        setImages({ ...images, [activeLibrary.id]: libImages });
-      });
-    }
-  }, [activeLibrary, images]);
 
   const setActiveLibrary = (id: string | undefined) => {
     const active = libraries.find((lib) => lib.id === id);
@@ -95,7 +81,12 @@ export default function LibraryProvider({ children }: ProviderProps) {
 
   return (
     <LibraryContext.Provider
-      value={{ libraries, activeLibrary, setActiveLibrary, images, uploadImages: upload }}
+      value={{
+        libraries,
+        activeLibrary,
+        setActiveLibrary,
+        uploadImages: upload,
+      }}
     >
       {uploading && (
         <ProgressBar progress={uploadingProgress}>

@@ -3,6 +3,7 @@ import { useLayout } from '../../contexts';
 import Mask from '../Shared/Mask';
 import SideBar from '../Shared/Sidebar';
 import Profile from './Profile';
+import ImageProperties from './ImageProperties';
 
 export default function Properties() {
   const { properties, updateProperties, maxPropertiesWidth, isMobile } = useLayout();
@@ -27,7 +28,11 @@ export default function Properties() {
           updateProperties({ width: ref.clientWidth });
         }}
       >
-        <Profile />
+        <div className="flex flex-col gap-y-6">
+          <Profile />
+          <div className="h-[1px] w-1/2 mx-auto bg-gray-300"></div>
+          <ImageProperties />
+        </div>
       </SideBar>
     </>
   );

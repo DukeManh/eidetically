@@ -29,12 +29,12 @@ const typeConverter = <T>() => ({
   fromFirestore: (snapshot: firebase.firestore.QueryDocumentSnapshot) => snapshot.data() as T,
 });
 
-const dataPoint = <T>(collectionPath: string) =>
+const collection = <T>(collectionPath: string) =>
   firebase.firestore().collection(collectionPath).withConverter(typeConverter<T>());
 
 export const db = {
-  libraries: dataPoint<Library | Partial<Library>>('libraries'),
-  images: dataPoint<Image | Partial<Image>>('images'),
+  libraries: collection<Library | Partial<Library>>('libraries'),
+  images: collection<Image | Partial<Image>>('images'),
 };
 
 export { firebase };

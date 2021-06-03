@@ -1,4 +1,4 @@
-import { useState, useRef, FormEvent, useEffect } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useLayout, useLibrary } from '../../contexts';
 import Mask from '../Shared/Mask';
@@ -18,19 +18,12 @@ export default function Navigation() {
 
   const enterLibraryName = () => {
     setCreatingNewLib(true);
-    if (form?.current) {
-      form.current.select();
+    if (form?.current && container?.current) {
+      container.current.scrollTo(0, 0);
       form.current.focus();
+      form.current.select();
     }
   };
-
-  useEffect(() => {
-    if (form?.current && creatingNewLib && container?.current) {
-      container.current.scrollTo(0, 0);
-      form.current.select();
-      form.current.focus();
-    }
-  }, [creatingNewLib]);
 
   const newLibrary = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,11 +73,12 @@ export default function Navigation() {
           <div className="w-full min-h-0 flex-grow overflow-y-scroll" ref={container}>
             <div className="px-4 flex flex-col justify-start items-start">
               <form
-                className="tab z-50 mb-2 border border-blue-500"
+                className={
+                  creatingNewLib
+                    ? 'tab z-50 mb-2 border border-blue-500'
+                    : 'w-0 h-0 overflow-hidden'
+                }
                 onSubmit={newLibrary}
-                style={{
-                  display: creatingNewLib ? 'block' : 'none',
-                }}
               >
                 <input
                   ref={form}

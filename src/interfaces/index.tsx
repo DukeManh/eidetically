@@ -33,27 +33,50 @@ export type Library = {
   owner: string;
 };
 
-export interface UploadedFile extends File {
+export type MetaData = {
+  contentType: string;
+  size: number;
+  fullPath: string;
+};
+export interface UploadedFile extends MetaData {
+  name: string;
   downloadURL: string;
 }
-
-export type Image = {
+export interface Image extends UploadedFile {
   id: string;
   library: firebase.firestore.DocumentReference<Partial<Library>>;
-  name: string;
-  src: string;
   note: string;
   upload_date: firebase.firestore.FieldValue;
-};
+}
 
 export type LibraryContextType = {
   libraries: Library[];
-  images: { [key: string]: Image[] };
 
   activeLibrary: Library | undefined;
   setActiveLibrary: (id: string | undefined) => void;
 
   uploadImages: (acceptedFiles: File[]) => void;
+};
+
+export type Images = {
+  [libId: string]: {
+    [imageID: string]: Image;
+  };
+};
+
+export type ImageContextType = {
+  images: Images;
+
+  selecting: boolean;
+  startSelecting: () => void;
+  cancelSelecting: () => void;
+
+  selected: Image[];
+  select: (image: Image) => void;
+  deselect: (image: Image) => void;
+
+  focused: Image | undefined;
+  focus: (image: Image) => void;
 };
 
 export type AuthContextType = {

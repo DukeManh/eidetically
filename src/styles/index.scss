@@ -49,7 +49,7 @@ $menubar_height: 2.25rem;
     }
 
     figure img {
-      @apply w-full h-auto pb-2; 
+      @apply w-full h-auto pb-2 cursor-pointer; 
     }
 
     figure figcaption {
@@ -94,6 +94,10 @@ $menubar_height: 2.25rem;
     transition: right 0.5s cubic-bezier(0, 0.55, 0.45, 1);
   }
 
+  .topbar-button {
+    @apply py-1 px-2 bg-tabFocus rounded-md bg-opacity-25 hover:bg-opacity-50 flex flex-row gap-x-1 items-center;   
+    height: min-content;
+  }
 }
 
 .navigation-wrap {
