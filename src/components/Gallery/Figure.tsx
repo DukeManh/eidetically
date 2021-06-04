@@ -8,11 +8,20 @@ type FigureProps = {
 };
 
 export default function Figure({ image }: FigureProps) {
-  const { focus } = useImage();
+  const { focus, selected, select, selecting } = useImage();
+
+  const handleClick = () => {
+    focus(image);
+    if (selecting) {
+      select(image);
+    }
+  };
 
   return (
-    <figure key={image.id}>
-      <img src={image.downloadURL} alt={image.name} loading="lazy" onClick={() => focus(image)} />
+    <figure key={image.id} className={selected[image.id] ? 'image-selected' : ''}>
+      <div className="image-container">
+        <img src={image.downloadURL} alt={image.name} loading="lazy" onClick={handleClick} />
+      </div>
       <figcaption>{image.name}</figcaption>
     </figure>
   );

@@ -1,4 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
+import { IconContext } from 'react-icons';
 import { LayoutProvider, LibraryProvider, AuthProvider, ImageProvider } from './contexts/';
 import Home from './pages/Home';
 
@@ -9,7 +10,11 @@ function App() {
         <LayoutProvider>
           <LibraryProvider>
             <ImageProvider>
-              <Home />
+              <IconContext.Provider
+                value={{ color: 'white', className: 'react-icons', size: '18' }}
+              >
+                <Home />
+              </IconContext.Provider>
             </ImageProvider>
           </LibraryProvider>
         </LayoutProvider>

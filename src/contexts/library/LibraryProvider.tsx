@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ProviderProps, Library } from '../../interfaces';
 import { LibraryContext } from './LibraryContext';
 import { useAuth } from '../auth';
@@ -10,38 +10,35 @@ export default function LibraryProvider({ children }: ProviderProps) {
   const { user } = useAuth();
   const [libraries, setLibraries] = useState<Library[]>([]);
   const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
-  const [uploading, setUploading] = useState(false);
-  const [uploadingProgress, setUploadingProgress] = useState(0);
-  const [uploadingMessage, setUploadingMessage] = useState('');
+  const [progressing, setProgressing] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressMessage, setProgressMessage] = useState('');
+  const onProgressComplete = useCallback(() => {
+    setTimeout(() => {
+      setProgressing(false);
+      setProgressMessage('');
+      setProgress(0);
+    }, 2000);
+  }, []);
 
   const upload = (acceptedFiles: File[], libraryID?: string) => {
     if (activeLibrary?.id || libraryID) {
-      setUploading(true);
+      setProgressing(true);
       let uploadedCount = 0;
-      setUploadingMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+      setProgressMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
 
       const onNext = () => {
         uploadedCount += 1;
-        setUploadingProgress(Math.floor((uploadedCount / acceptedFiles.length) * 100));
+        setProgress(Math.floor((uploadedCount / acceptedFiles.length) * 100));
         if (uploadedCount < acceptedFiles.length) {
-          setUploadingMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+          setProgressMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
         }
       };
 
-      const onComplete = (count: number) => {
-        console.log('successfully uploaded ', count, ' files');
-
-        setTimeout(() => {
-          setUploading(false);
-          setUploadingMessage('');
-          setUploadingProgress(0);
-        }, 2000);
-      };
-
       if (libraryID) {
-        uploadImages(acceptedFiles, libraryID, onNext, onComplete);
+        uploadImages(acceptedFiles, libraryID, onNext, onProgressComplete);
       } else if (activeLibrary?.id) {
-        uploadImages(acceptedFiles, activeLibrary.id, onNext, onComplete);
+        uploadImages(acceptedFiles, activeLibrary.id, onNext, onProgressComplete);
       }
     }
   };
@@ -88,9 +85,9 @@ export default function LibraryProvider({ children }: ProviderProps) {
         uploadImages: upload,
       }}
     >
-      {uploading && (
-        <ProgressBar progress={uploadingProgress}>
-          <div className="text-center my-auto">{uploadingMessage}</div>
+      {progressing && (
+        <ProgressBar progress={progress}>
+          <div className="text-center my-auto">{progressMessage}</div>
         </ProgressBar>
       )}
       {children}

@@ -30,30 +30,43 @@ $mask: rgba(0,0,0,.45);
 $transition_duration: 300ms;
 $menubar_height: 2.25rem;
 
-@mixin breakpoint {
-  @media (max-width: $lg){
-    @content
-  }
-}
+
 
 @layer components {
+  @mixin breakpoint {
+    @media (max-width: $lg){
+      @content
+    }
+  }
+
+  @mixin button-disabled {
+    &:disabled {
+      @apply text-gray-400 bg-tabActive;
+    }
+  }
+
   #figure-container {
     column-width: 15rem;
     column-gap: 1.2rem;
     
     figure {
-      @apply mb-6;
+      @apply mb-6 overflow-hidden flex flex-col gap-y-3;
       -webkit-column-break-inside: avoid; 
       page-break-inside: avoid;
       break-inside: avoid;
     }
 
     figure img {
-      @apply w-full h-auto pb-2 cursor-pointer; 
+      @apply w-full h-auto cursor-pointer; 
     }
 
     figure figcaption {
       @apply px-4 overflow-hidden text-sm whitespace-nowrap overflow-ellipsis text-center max-h-12 leading-6;
+    }
+
+    figure.image-selected .image-container{
+      @apply border-2 border-blue-500;
+      padding: 2px;
     }
   }
 
@@ -94,9 +107,22 @@ $menubar_height: 2.25rem;
     transition: right 0.5s cubic-bezier(0, 0.55, 0.45, 1);
   }
 
-  .topbar-button {
-    @apply py-1 px-2 bg-tabFocus rounded-md bg-opacity-25 hover:bg-opacity-50 flex flex-row gap-x-1 items-center;   
-    height: min-content;
+  .toolbox-button {
+    min-height: 3.5rem;
+    min-width: 3.5rem;
+    @apply m-1;
+    button {
+      @apply bg-tabFocus transform hover:scale-95 w-full h-full flex flex-col justify-center items-center;   
+
+      @include button-disabled;
+
+      &:disabled {
+        @apply transform-none;
+        .react-icons {
+          fill: #9CA3AF;
+        }
+      }
+    }
   }
 }
 

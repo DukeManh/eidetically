@@ -1,5 +1,5 @@
-import { Library, UploadedFile, MetaData } from '../interfaces';
-import { auth, db, storage, firebase, firestore } from './firebase';
+import { Library, MetaData, Image } from '../interfaces';
+import { auth, db, storage, firebase } from './firebase';
 
 export async function createLibrary(name: string) {
   if (auth.currentUser) {
@@ -22,7 +22,6 @@ export async function uploadImages(
   if (auth.currentUser) {
     const libRef = db.libraries.doc(libraryID);
     let successfulUploads = 0;
-    const uploadedFiles: UploadedFile[] = [];
     const promises: Promise<string>[] = [];
 
     // upload files first
@@ -40,8 +39,21 @@ export async function uploadImages(
               const downloadURL = await upload.snapshot.ref.getDownloadURL();
               const { contentType, size, fullPath } =
                 (await upload.snapshot.ref.getMetadata()) as MetaData;
-              uploadedFiles.push({ name: file.name, downloadURL, contentType, size, fullPath });
               successfulUploads += 1;
+
+              // create a new image document for each uploaded file
+              const imageRef = libRef.collection('images').doc();
+              imageRef.set({
+                note: '',
+                library: libRef,
+                upload_date: firebase.firestore.FieldValue.serverTimestamp(),
+                name: file.name,
+                downloadURL,
+                contentType,
+                size,
+                fullPath,
+              });
+
               if (onNext) {
                 onNext(file.name);
               }
@@ -54,27 +66,68 @@ export async function uploadImages(
     });
 
     await Promise.all(promises);
-
     if (onComplete) {
       onComplete(successfulUploads);
     }
 
-    // create a new image document for each uploaded file
-    const batch = firestore.batch();
-    uploadedFiles.forEach((image) => {
-      const imageRef = libRef.collection('images').doc();
-      batch.set(imageRef, {
-        note: '',
-        library: libRef,
-        upload_date: firebase.firestore.FieldValue.serverTimestamp(),
-        ...image,
-      });
-    });
-    await batch.commit();
-
     // update the library's image_count
     await libRef.update({
       image_count: firebase.firestore.FieldValue.increment(successfulUploads),
+    });
+  }
+}
+
+export async function deleteImages(
+  images: Image[],
+  onNext?: (fileName: string) => void,
+  onComplete?: (success: number) => void
+): Promise<void> {
+  if (auth.currentUser && images.length) {
+    let successfulDeletes = 0;
+    const promises: Promise<Image>[] = [];
+    const libRef = images[0].library;
+
+    // upload files first
+    images.forEach((image) => {
+      promises.push(
+        new Promise((resolve, reject) => {
+          storage
+            .ref(image.fullPath)
+            .delete()
+            .catch((error) => {
+              console.error();
+              reject(error);
+            })
+            .finally(() => {
+              const imageRef = libRef.collection('images').doc(image.id);
+              imageRef
+                .delete()
+                .then(() => {
+                  successfulDeletes += 1;
+                  if (onNext) {
+                    onNext(image.name);
+                  }
+                  resolve(image);
+                })
+                .catch((error) => {
+                  console.error(error);
+                  reject(error);
+                });
+            });
+        })
+      );
+    });
+
+    await Promise.all(promises).catch((error) => {
+      console.error(error);
+    });
+    if (onComplete) {
+      onComplete(successfulDeletes);
+    }
+
+    // update the library's image_count
+    await libRef.update({
+      image_count: firebase.firestore.FieldValue.increment(-successfulDeletes),
     });
   }
 }

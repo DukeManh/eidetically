@@ -71,12 +71,13 @@ export type ImageContextType = {
   startSelecting: () => void;
   cancelSelecting: () => void;
 
-  selected: Image[];
+  selected: { [imageID: string]: Image | undefined };
   select: (image: Image) => void;
-  deselect: (image: Image) => void;
 
   focused: Image | undefined;
   focus: (image: Image) => void;
+
+  deleteSelection: () => void;
 };
 
 export type AuthContextType = {

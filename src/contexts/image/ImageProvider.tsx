@@ -3,13 +3,25 @@ import { ProviderProps, Image, Images } from '../../interfaces';
 import { ImageContext } from './ImageContext';
 import { useLibrary } from '../library';
 import { db } from '../../server/firebase';
+import { deleteImages } from '../../server/service';
+import ProgressBar from '../../components/ProgressBar';
 
 export default function ImageProvider({ children }: ProviderProps) {
   const [selecting, setSelecting] = useState(false);
-  const [selected, setSelected] = useState<Image[]>([]);
+  const [selected, setSelected] = useState<{ [imageID: string]: Image | undefined }>({});
   const [images, setImages] = useState<Images>({});
   const { activeLibrary } = useLibrary();
   const [focused, setFocused] = useState<Image | undefined>(undefined);
+  const [progressing, setProgressing] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressMessage, setProgressMessage] = useState('');
+  const onProgressComplete = useCallback(() => {
+    setTimeout(() => {
+      setProgressing(false);
+      setProgressMessage('');
+      setProgress(0);
+    }, 2000);
+  }, []);
 
   // Load a library's images if it's active
   useEffect(() => {
@@ -20,6 +32,13 @@ export default function ImageProvider({ children }: ProviderProps) {
         .orderBy('upload_date');
       imagesRef.onSnapshot((snapshot) => {
         const libImages: { [imageID: string]: Image } = {};
+        snapshot.docChanges().every((change) => {
+          if (change.type === 'added') {
+            setFocused({ id: change.doc.id, ...change.doc.data() } as Image);
+            return false;
+          }
+          return true;
+        });
         snapshot.docs.forEach((image) => {
           libImages[image.id] = { id: image.id, ...image.data() } as Image;
         });
@@ -33,25 +52,36 @@ export default function ImageProvider({ children }: ProviderProps) {
   }, []);
 
   const cancelSelecting = useCallback(() => {
-    setSelected([]);
+    setSelected({});
     setSelecting(false);
   }, []);
 
   const select = useCallback(
     (image: Image) => {
-      if (!selected.some((i) => i.id === image.id)) {
-        setSelected(selected.concat(image));
-      }
+      setSelected({ ...selected, [image.id]: !selected[image.id] ? image : undefined });
     },
     [selected]
   );
 
-  const deselect = useCallback(
-    (image: Image) => {
-      setSelected(selected.filter((i) => i.id !== image.id));
-    },
-    [selected]
-  );
+  const deleteSelection = () => {
+    const images = Object.values(selected).filter((image) => !!image) as Image[];
+    if (images.length) {
+      setProgressing(true);
+      let deleteCount = 0;
+      setProgressMessage(`Deleting (${deleteCount + 1}/${images.length})`);
+
+      const onNext = () => {
+        deleteCount += 1;
+        setProgress(Math.floor((deleteCount / images.length) * 100));
+        if (deleteCount < images.length) {
+          setProgressMessage(`Deleting (${deleteCount + 1}/${images.length})`);
+        }
+      };
+
+      deleteImages(images, onNext, onProgressComplete);
+      cancelSelecting();
+    }
+  };
 
   return (
     <ImageContext.Provider
@@ -61,12 +91,17 @@ export default function ImageProvider({ children }: ProviderProps) {
         cancelSelecting,
         selected,
         select,
-        deselect,
         images,
-        focused: focused ? images[focused.library.id][focused.id] : undefined,
+        focused: focused ? images?.[focused.library.id]?.[focused.id] : undefined,
         focus: setFocused,
+        deleteSelection,
       }}
     >
+      {progressing && (
+        <ProgressBar progress={progress}>
+          <div className="text-center my-auto">{progressMessage}</div>
+        </ProgressBar>
+      )}
       {children}
     </ImageContext.Provider>
   );

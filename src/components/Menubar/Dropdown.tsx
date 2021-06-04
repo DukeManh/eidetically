@@ -16,25 +16,23 @@ export default function Dropdown({ options }: { options: string[] }) {
             {option}
           </button>
         ))}
-        <button
-          className="w-full hover:bg-blue-500 text-left pl-4 mt-1"
-          onClick={() => {
-            if (ref?.current) ref.current.click();
-          }}
-        >
+        <button className="w-full hover:bg-blue-500 text-left pl-4 mt-1">
           <input
             ref={ref}
             multiple
+            id="select-files"
             type="file"
             accept="image/*"
-            className="hidden"
+            className="w-0 h-0 overflow-hidden cursor-pointer"
             onChange={async () => {
               if (ref?.current?.files && activeLibrary) {
                 uploadImages(Array.from(ref.current.files));
               }
             }}
           />
-          Upload Files
+          <label htmlFor="select-files" className="cursor-pointer">
+            Upload Files
+          </label>
         </button>
       </div>
     </div>

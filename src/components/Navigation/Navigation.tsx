@@ -4,6 +4,7 @@ import { useLayout, useLibrary } from '../../contexts';
 import Mask from '../Shared/Mask';
 import SideBar from '../Shared/Sidebar';
 import Tab from './Tab';
+import Profile from './Profile';
 import { createLibrary } from '../../server/service';
 
 const DEFAULT_LIB_NAME = 'Untitled library';
@@ -63,7 +64,7 @@ export default function Navigation() {
             left: 0,
           }}
         />
-        <div className="flex flex-col pb-8 navigation-wrap">
+        <div className="flex-grow flex flex-col h-full pb-8 navigation-wrap">
           <div className="px-6 pt-3 pb-2 w-full max-h-12">
             <span className=" font-medium text-lg">Libraries</span>
             <span className="float-right cursor-pointer">
@@ -94,6 +95,8 @@ export default function Navigation() {
               ))}
             </div>
           </div>
+
+          <Profile />
         </div>
       </SideBar>
     </>
