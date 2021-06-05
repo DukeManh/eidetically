@@ -22,7 +22,7 @@ export default function ImageProperties() {
           />
           <textarea
             placeholder="notes..."
-            rows={3.5}
+            rows={4}
             className="w-full bg-[#2D2D2D] rounded-md border border-mask p-2 max-w-sm"
           />
           <textarea

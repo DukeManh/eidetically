@@ -39,10 +39,17 @@ $menubar_height: 2.25rem;
     }
   }
 
-  @mixin button-disabled {
+  @mixin buttonDisabled {
     &:disabled {
       @apply text-gray-400 bg-tabActive;
     }
+  }
+
+  @mixin sliderThumb {
+    @apply appearance-none w-4 h-6 rounded-sm border-none transform;
+    background: linear-gradient(to right, #5E5E5E, #5E5E5E 10%, #151515 10%, #606060 90%, #151515 90%);
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
 
   #figure-container {
@@ -112,16 +119,36 @@ $menubar_height: 2.25rem;
     min-width: 3.5rem;
     @apply m-1;
     button {
-      @apply bg-tabFocus transform hover:scale-95 w-full h-full flex flex-col justify-center items-center;   
+      @apply bg-tabFocus transition-all transform hover:scale-95 hover:shadow-none w-full h-full flex flex-col justify-center items-center duration-75 rounded-lg rounded-bl-md rounded-tr-md;   
+      box-shadow: 1px 1px 1px 0px #9CA3AF;
 
-      @include button-disabled;
+      @include buttonDisabled;
 
       &:disabled {
-        @apply transform-none;
+        @apply transform-none shadow-none cursor-default;
         .react-icons {
           fill: #9CA3AF;
         }
       }
+    }
+  }
+
+  .zoom-slider {
+    cursor: grab;
+    &:active {
+      cursor: grabbing;
+    }
+
+    &::-ms-thumb {
+      @include sliderThumb;
+    }
+
+    &::-webkit-slider-thumb {
+      @include sliderThumb;
+    }
+
+    &::-moz-range-thumb {
+      @include sliderThumb;
     }
   }
 }

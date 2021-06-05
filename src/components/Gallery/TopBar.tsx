@@ -18,15 +18,17 @@ export default function TopBar() {
 
         {activeLibrary && <div className="text-md">{activeLibrary.name}</div>}
 
-        <input
-          className="w-36"
-          type="range"
-          value={zoom}
-          onChange={(e) => setZoom(parseInt(e.target.value))}
-          min={100}
-          max={900}
-          step={50}
-        />
+        <div className="max-w-xs">
+          <input
+            className="zoom-slider w-ful h-1 appearance-none bg-gray-300 rounded-lg"
+            type="range"
+            value={zoom}
+            onChange={(e) => setZoom(parseInt(e.target.value))}
+            min={100}
+            max={900}
+            step={50}
+          ></input>
+        </div>
 
         <div>Search</div>
 
