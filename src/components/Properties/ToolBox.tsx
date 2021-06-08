@@ -4,11 +4,12 @@ import { MdCreateNewFolder } from 'react-icons/md';
 import { BiCut } from 'react-icons/bi';
 import { GoCloudUpload, GoCloudDownload } from 'react-icons/go';
 import { BiEdit, BiSlideshow } from 'react-icons/bi';
-import { useImage } from '../../contexts';
+import { useImage, useAuth } from '../../contexts';
 
 export default function ToolBox() {
   const { startSelecting, cancelSelecting, selecting, focused, deleteSelection, toggleSlide } =
     useImage();
+  const { user } = useAuth();
 
   const Tools = [
     {
@@ -81,7 +82,7 @@ export default function ToolBox() {
         {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
           <div key={name} className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}>
             {!hidden ? (
-              <button disabled={disabled} onClick={() => handleClick()}>
+              <button disabled={!user || disabled} onClick={() => handleClick()}>
                 {children}
                 {name}
               </button>

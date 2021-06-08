@@ -93,6 +93,8 @@ export type AuthContextType = {
 
   loginVisible: boolean;
   setLoginVisible: (value: boolean) => void;
+
+  logout: () => void;
 };
 
 export type RouterParams = {

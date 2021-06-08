@@ -1,9 +1,7 @@
-import { auth } from '../../server/firebase';
 import { useAuth } from '../../contexts';
 
 export default function LoginButton() {
-  const { user } = useAuth();
-  const { setLoginVisible, loginVisible } = useAuth();
+  const { setLoginVisible, loginVisible, user, logout } = useAuth();
 
   return (
     <div>
@@ -17,12 +15,7 @@ export default function LoginButton() {
       ) : (
         <button
           className="px-4 py-1 bg-primary opacity-70 hover:opacity-100 active:bg-black"
-          onClick={() => {
-            auth.signOut();
-            if (window) {
-              window.location.href = '/';
-            }
-          }}
+          onClick={logout}
         >
           Sign out
         </button>
