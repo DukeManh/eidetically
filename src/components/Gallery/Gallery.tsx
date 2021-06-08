@@ -1,7 +1,9 @@
 import { useDrop } from 'react-use';
 import { useLayout, useLibrary } from '../../contexts';
+import { Switch, Route } from 'react-router-dom';
 import Images from './Images';
 import TopBar from './TopBar';
+import Welcome from './Welcome';
 
 export default function Gallery() {
   const { navigation, properties, isMobile } = useLayout();
@@ -21,7 +23,17 @@ export default function Gallery() {
       }}
     >
       <TopBar />
-      <Images />
+
+      <div className="flex-grow overflow-y-auto min-h-0 pt-6 px-4 pb-16">
+        <Switch>
+          <Route path="/" exact>
+            <Welcome />
+          </Route>
+          <Route path="/:libParam">
+            <Images />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 }

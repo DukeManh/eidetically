@@ -16,7 +16,7 @@ export default function TopBar() {
           }}
         />
 
-        {activeLibrary && <div className="text-md">{activeLibrary.name}</div>}
+        <div className="text-md">{activeLibrary?.name || 'Drop it'}</div>
 
         <div className="max-w-xs">
           <input

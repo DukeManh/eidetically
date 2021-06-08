@@ -17,7 +17,12 @@ export default function LoginButton() {
       ) : (
         <button
           className="px-4 py-1 bg-primary opacity-70 hover:opacity-100 active:bg-black"
-          onClick={() => auth.signOut()}
+          onClick={() => {
+            auth.signOut();
+            if (window) {
+              window.location.href = '/';
+            }
+          }}
         >
           Sign out
         </button>

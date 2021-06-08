@@ -18,7 +18,7 @@ export default function Figure({ image }: FigureProps) {
   return (
     <figure key={image.id} className={selected[image.id] ? 'image-selected' : ''}>
       <button className="image-container" onClick={handleClick} onDoubleClick={toggleSlide}>
-        <img src={image.downloadURL} alt={image.name} loading="lazy" />
+        <img src={image.downloadURL} alt={image.name} />
       </button>
       <figcaption>{image.name}</figcaption>
     </figure>

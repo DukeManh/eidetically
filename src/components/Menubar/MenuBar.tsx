@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import { BsDropletHalf } from 'react-icons/bs';
 
 const MenuItems = [
   {
     name: 'logo',
-    button: <BsDropletHalf />,
+    button: (
+      <Link to="/">
+        <BsDropletHalf />
+      </Link>
+    ),
     options: [],
   },
   {

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Library } from '../../interfaces';
 import { useLibrary } from '../../contexts';
 
@@ -6,18 +7,12 @@ type LibraryProps = {
 };
 
 export default function Tab({ lib }: LibraryProps) {
-  const { activeLibrary, setActiveLibrary } = useLibrary();
+  const { activeLibrary } = useLibrary();
 
   return (
-    <div
-      role="tab"
-      tabIndex={0}
-      className={activeLibrary?.id === lib.id ? 'tab tabActive' : 'tab'}
-      onClick={() => setActiveLibrary(lib?.id)}
-      onKeyDown={() => setActiveLibrary(lib?.id)}
-    >
+    <Link className={activeLibrary?.id === lib.id ? 'tab tabActive' : 'tab'} to={`/${lib.id}`}>
       {lib.name}
       <span className="float-right text-gray-400">{lib.image_count}</span>
-    </div>
+    </Link>
   );
 }

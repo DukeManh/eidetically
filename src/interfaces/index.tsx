@@ -1,13 +1,46 @@
 import firebase from 'firebase';
 import { ReactNode } from 'react';
 
+// Common props of Context Providers
 export type ProviderProps = {
   children: ReactNode;
 };
 
+// Navigation and Properties sidebar
 export type SidebarLayout = {
   visible: boolean;
   width: number;
+};
+
+// Each library consists of many individual images
+export type Library = {
+  id: string;
+  name: string;
+  image_count: number;
+  owner: string;
+};
+
+// Metadata of uploaded Image
+export type MetaData = {
+  contentType: string;
+  size: number;
+  fullPath: string;
+};
+
+// Uploaded image
+export interface Image extends MetaData {
+  name: string;
+  downloadURL: string;
+  id: string;
+  library: firebase.firestore.DocumentReference<Partial<Library>>;
+  note: string;
+  upload_date: firebase.firestore.FieldValue;
+}
+
+export type Images = {
+  [libId: string]: {
+    [imageID: string]: Image;
+  };
 };
 
 export type LayoutContextType = {
@@ -26,29 +59,6 @@ export type LayoutContextType = {
   setZoom: (value: number) => void;
 };
 
-export type Library = {
-  id: string;
-  name: string;
-  image_count: number;
-  owner: string;
-};
-
-export type MetaData = {
-  contentType: string;
-  size: number;
-  fullPath: string;
-};
-export interface UploadedFile extends MetaData {
-  name: string;
-  downloadURL: string;
-}
-export interface Image extends UploadedFile {
-  id: string;
-  library: firebase.firestore.DocumentReference<Partial<Library>>;
-  note: string;
-  upload_date: firebase.firestore.FieldValue;
-}
-
 export type LibraryContextType = {
   libraries: Library[];
 
@@ -56,12 +66,6 @@ export type LibraryContextType = {
   setActiveLibrary: (id: string | undefined) => void;
 
   uploadImages: (acceptedFiles: File[]) => void;
-};
-
-export type Images = {
-  [libId: string]: {
-    [imageID: string]: Image;
-  };
 };
 
 export type ImageContextType = {
@@ -89,4 +93,8 @@ export type AuthContextType = {
 
   loginVisible: boolean;
   setLoginVisible: (value: boolean) => void;
+};
+
+export type RouterParams = {
+  libParam: string;
 };

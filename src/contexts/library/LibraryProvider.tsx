@@ -59,13 +59,6 @@ export default function LibraryProvider({ children }: ProviderProps) {
           (lib) => ({ ...lib.data(), id: lib.id } as Library)
         );
         setLibraries(nextLibraries);
-        snapshot.docChanges().every((change) => {
-          if (change.type === 'added') {
-            setActive({ ...change.doc.data(), id: change.doc.id } as Library);
-            return false;
-          }
-          return true;
-        });
       });
     } else {
       setLibraries([]);
