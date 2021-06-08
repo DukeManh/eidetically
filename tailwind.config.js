@@ -22,7 +22,7 @@ module.exports = {
 
       primary: '#3b3b3b',
       secondary: '#414141',
-      dropdown: '#525252',
+      dropdown: '#282828',
       progressBar: '#2E2E30',
       tabActive: '#535353',
       tabFocus: '#666666',

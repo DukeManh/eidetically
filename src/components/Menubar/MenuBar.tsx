@@ -35,14 +35,15 @@ export default function MenuBar() {
 
   useEffect(() => {
     if (document) {
-      const main = document.querySelector<HTMLElement>('main');
-      if (main) {
-        main.onclick = () => {
+      if (activeItem) {
+        document.onclick = () => {
           setActiveItem('');
         };
+        return;
       }
+      document.onclick = null;
     }
-  }, []);
+  }, [activeItem]);
 
   return (
     <nav className="h-9 bg-secondary relative text-gray-100 border-b border-gray-500 z-100">

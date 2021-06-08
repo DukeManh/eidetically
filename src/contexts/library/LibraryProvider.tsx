@@ -47,7 +47,9 @@ export default function LibraryProvider({ children }: ProviderProps) {
     const active = libraries.find((lib) => lib.id === id);
     if (active) {
       setActive(active);
+      return;
     }
+    setActive(undefined);
   };
 
   useEffect(() => {

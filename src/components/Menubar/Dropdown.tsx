@@ -7,6 +7,13 @@ export default function Dropdown({ options }: { options: string[] }) {
   const ref = useRef<HTMLInputElement>(null);
   return (
     <div
+      ref={(r) => {
+        if (r) {
+          r.onclick = (e) => {
+            e.stopPropagation();
+          };
+        }
+      }}
       className="menu-dropdown absolute z-50 bg-dropdown rounded-b-lg w-56 text-white min-h"
       style={{ top: 'calc(100% + 1px)' }}
     >

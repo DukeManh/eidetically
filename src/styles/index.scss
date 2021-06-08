@@ -102,7 +102,28 @@ $menubar_height: 2.25rem;
   }
 
   .tab {
-      @apply w-full cursor-pointer focus:bg-tabFocus py-1 px-3 rounded-lg;
+      @apply w-full focus:bg-tabFocus rounded-lg flex flex-row items-center;
+
+      .image-count{
+        @apply  text-gray-400 pr-2;
+      }
+      .edit-library {
+        @apply text-gray-400 hover:bg-tabFocus rounded-lg h-full w-6 block;
+        display: none;
+        
+        .react-icons {
+          @apply h-full mx-auto;
+        }
+      }
+
+      &:hover {
+        .edit-library {
+          @apply py-1 block;
+        }
+        .image-count {
+          display: none;
+        }
+      }
   }
 
   .tabActive {
