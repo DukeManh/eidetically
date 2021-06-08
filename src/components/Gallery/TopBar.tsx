@@ -9,7 +9,7 @@ export default function TopBar() {
     <div className="md:px-4 min-h-[6rem] max-h-24 h-10 top-0 gap-y-2">
       <div className="h-1/2 flex flex-row justify-between items-center">
         <HiMenuAlt2
-          size={24}
+          size={28}
           className="cursor-pointer"
           onClick={() => {
             updateNavigation({ visible: !navigation.visible });
@@ -20,7 +20,7 @@ export default function TopBar() {
 
         <div className="max-w-xs">
           <input
-            className="zoom-slider w-ful h-1 appearance-none bg-gray-300 rounded-lg"
+            className="zoom-slider"
             type="range"
             value={zoom}
             onChange={(e) => setZoom(parseInt(e.target.value))}
@@ -33,7 +33,7 @@ export default function TopBar() {
         <div>Search</div>
 
         <HiMenuAlt3
-          size={24}
+          size={28}
           className="cursor-pointer"
           onClick={() => {
             updateProperties({ visible: !properties.visible });

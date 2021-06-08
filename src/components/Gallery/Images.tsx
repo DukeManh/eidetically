@@ -1,9 +1,8 @@
-import { useLayout, useLibrary, useImage } from '../../contexts';
+import { useLayout, useImage } from '../../contexts';
 import Figure from './Figure';
 
 export default function Images() {
-  const { activeLibrary } = useLibrary();
-  const { images } = useImage();
+  const { activeImages } = useImage();
   const { zoom } = useLayout();
 
   return (
@@ -14,10 +13,9 @@ export default function Images() {
           columnWidth: zoom,
         }}
       >
-        {activeLibrary &&
-          Object.values(images[activeLibrary.id] || {}).map((image) => (
-            <Figure key={image.id} image={image} />
-          ))}
+        {Object.values(activeImages).map((image) => (
+          <Figure key={image.id} image={image} />
+        ))}
       </div>
     </div>
   );

@@ -66,6 +66,7 @@ export type Images = {
 
 export type ImageContextType = {
   images: Images;
+  activeImages: { [imageID: string]: Image };
 
   selecting: boolean;
   startSelecting: () => void;
@@ -78,6 +79,9 @@ export type ImageContextType = {
   focus: (image: Image) => void;
 
   deleteSelection: () => void;
+
+  slideVisible: boolean;
+  toggleSlide: () => void;
 };
 
 export type AuthContextType = {

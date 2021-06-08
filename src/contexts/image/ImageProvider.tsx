@@ -5,6 +5,7 @@ import { useLibrary } from '../library';
 import { db } from '../../server/firebase';
 import { deleteImages } from '../../server/service';
 import ProgressBar from '../../components/ProgressBar';
+import Slide from '../../components/Slide';
 
 export default function ImageProvider({ children }: ProviderProps) {
   const [selecting, setSelecting] = useState(false);
@@ -15,6 +16,7 @@ export default function ImageProvider({ children }: ProviderProps) {
   const [progressing, setProgressing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [progressMessage, setProgressMessage] = useState('');
+  const [slideVisible, toggleSlide] = useState(false);
   const onProgressComplete = useCallback(() => {
     setTimeout(() => {
       setProgressing(false);
@@ -95,6 +97,9 @@ export default function ImageProvider({ children }: ProviderProps) {
         focused: focused ? images?.[focused.library.id]?.[focused.id] : undefined,
         focus: setFocused,
         deleteSelection,
+        slideVisible,
+        toggleSlide: () => toggleSlide(!slideVisible),
+        activeImages: activeLibrary ? images?.[activeLibrary.id] || {} : {},
       }}
     >
       {progressing && (
@@ -102,6 +107,7 @@ export default function ImageProvider({ children }: ProviderProps) {
           <div className="text-center my-auto">{progressMessage}</div>
         </ProgressBar>
       )}
+      {slideVisible && <Slide />}
       {children}
     </ImageContext.Provider>
   );

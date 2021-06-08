@@ -42,12 +42,16 @@ $menubar_height: 2.25rem;
   @mixin buttonDisabled {
     &:disabled {
       @apply text-gray-400 bg-tabActive;
+      @apply transform-none shadow-none cursor-default;
+      .react-icons {
+        fill: #9CA3AF;
+      }
     }
   }
 
   @mixin sliderThumb {
-    @apply appearance-none w-4 h-6 rounded-sm border-none transform;
-    background: linear-gradient(to right, #5E5E5E, #5E5E5E 10%, #151515 10%, #606060 90%, #151515 90%);
+    @apply appearance-none w-4 h-5 rounded-sm border-none transform;
+    background: linear-gradient(to right, #5E5E5E, #5E5E5E 15%, #151515 15%, #606060 85%, #151515 85%);
     -webkit-appearance: none;
     -moz-appearance: none;
   }
@@ -118,22 +122,18 @@ $menubar_height: 2.25rem;
     min-height: 3.5rem;
     min-width: 3.5rem;
     @apply m-1;
+    padding: 1px;
     button {
-      @apply bg-tabFocus transition-all transform hover:scale-95 hover:shadow-none w-full h-full flex flex-col justify-center items-center duration-75 rounded-lg rounded-bl-md rounded-tr-md;   
-      box-shadow: 1px 1px 1px 0px #9CA3AF;
+      @apply bg-tabFocus transition-all transform hover:scale-95 hover:shadow-none w-full h-full flex flex-col
+      justify-center items-center duration-75 rounded-lg rounded-bl-md rounded-tr-md active:delay-700;   
 
       @include buttonDisabled;
-
-      &:disabled {
-        @apply transform-none shadow-none cursor-default;
-        .react-icons {
-          fill: #9CA3AF;
-        }
-      }
     }
   }
 
   .zoom-slider {
+    @apply bg-black w-full border-2 appearance-none border-gray-300 rounded-lg;
+    height: 6px; 
     cursor: grab;
     &:active {
       cursor: grabbing;
@@ -149,6 +149,12 @@ $menubar_height: 2.25rem;
 
     &::-moz-range-thumb {
       @include sliderThumb;
+    }
+  }
+
+  .slider-button {
+    svg {
+      @apply w-full;
     }
   }
 }

@@ -8,11 +8,20 @@ type MaskProps = {
 };
 
 export default function Mask({ onClick, visible, zIndex }: MaskProps) {
+  if (onClick) {
+    return (
+      <button
+        onClick={onClick}
+        className={visible ? 'mask mask-active' : 'mask'}
+        style={{ zIndex: zIndex ? zIndex : 10 }}
+      ></button>
+    );
+  }
+
   return (
-    <button
-      onClick={onClick}
+    <div
       className={visible ? 'mask mask-active' : 'mask'}
       style={{ zIndex: zIndex ? zIndex : 10 }}
-    ></button>
+    ></div>
   );
 }

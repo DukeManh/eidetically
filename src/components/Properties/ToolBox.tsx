@@ -5,10 +5,10 @@ import { BiCut } from 'react-icons/bi';
 import { GoCloudUpload, GoCloudDownload } from 'react-icons/go';
 import { BiEdit, BiSlideshow } from 'react-icons/bi';
 import { useImage } from '../../contexts';
-import React from 'react';
 
 export default function ToolBox() {
-  const { startSelecting, cancelSelecting, selecting, focused, deleteSelection } = useImage();
+  const { startSelecting, cancelSelecting, selecting, focused, deleteSelection, toggleSlide } =
+    useImage();
 
   const Tools = [
     {
@@ -44,6 +44,18 @@ export default function ToolBox() {
       disabled: !selecting,
     },
     {
+      name: 'Save',
+      handleClick: () => {},
+      children: <GoCloudDownload />,
+      disabled: !selecting,
+    },
+    {
+      name: 'Slide',
+      handleClick: () => toggleSlide(),
+      children: <BiSlideshow />,
+      disabled: !focused && !selecting,
+    },
+    {
       name: 'Upload',
       handleClick: () => {},
       children: <GoCloudUpload />,
@@ -56,39 +68,29 @@ export default function ToolBox() {
       disabled: !focused || selecting,
     },
     {
-      name: 'Save',
-      handleClick: () => {},
-      children: <GoCloudDownload />,
-      disabled: !selecting,
-    },
-    {
       name: 'Copy',
       handleClick: () => {},
       children: <AiOutlineLink />,
       disabled: !focused || selecting,
     },
-    {
-      name: 'Slide',
-      handleClick: () => {},
-      children: <BiSlideshow />,
-      disabled: !selecting,
-    },
   ];
 
   return (
-    <div className="flex flex-wrap justify-center">
-      {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
-        <div key={name} className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}>
-          {!hidden ? (
-            <button disabled={disabled} onClick={() => handleClick()}>
-              {children}
-              {name}
-            </button>
-          ) : (
-            <div className="hidden w-0 h-0"></div>
-          )}
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="flex flex-wrap justify-center">
+        {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
+          <div key={name} className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}>
+            {!hidden ? (
+              <button disabled={disabled} onClick={() => handleClick()}>
+                {children}
+                {name}
+              </button>
+            ) : (
+              <div className="hidden w-0 h-0"></div>
+            )}
+          </div>
+        ))}
+      </div>
+    </>
   );
 }

@@ -8,11 +8,11 @@ export default function ImageProperties() {
     <>
       {focused && (
         <div className="flex flex-col items-center gap-y-3">
-          <div className="w-3/4 mb-4 h-min transition-all duration-1000">
+          <div className="w-3/4 mb-4 h-min">
             <img
               src={focused.downloadURL}
               alt={focused.name}
-              className="object-contain max-h-64 w-full h-full rounded-md"
+              className="object-contain max-h-64 w-full h-full rounded-sm"
             ></img>
           </div>
           <textarea
