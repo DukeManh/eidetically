@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ProviderProps, Library } from '../../interfaces';
 import { LibraryContext } from './LibraryContext';
 import { useAuth } from '../auth';
@@ -8,6 +9,7 @@ import { uploadImages } from '../../server/service';
 
 export default function LibraryProvider({ children }: ProviderProps) {
   const { user } = useAuth();
+  const location = useLocation();
   const [libraries, setLibraries] = useState<Library[]>([]);
   const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
   const [progressing, setProgressing] = useState(false);
@@ -20,6 +22,12 @@ export default function LibraryProvider({ children }: ProviderProps) {
       setProgress(0);
     }, 2000);
   }, []);
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setActive(undefined);
+    }
+  }, [location]);
 
   const upload = (acceptedFiles: File[], libraryID?: string) => {
     if (activeLibrary?.id || libraryID) {

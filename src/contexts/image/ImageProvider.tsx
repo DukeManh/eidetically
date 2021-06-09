@@ -25,7 +25,7 @@ export default function ImageProvider({ children }: ProviderProps) {
     }, 2000);
   }, []);
 
-  // Load a library's images if it's active
+  // Load the active lib's images
   useEffect(() => {
     if (activeLibrary && !images[activeLibrary.id]) {
       const imagesRef = db.libraries
@@ -34,13 +34,6 @@ export default function ImageProvider({ children }: ProviderProps) {
         .orderBy('upload_date');
       imagesRef.onSnapshot((snapshot) => {
         const libImages: { [imageID: string]: Image } = {};
-        snapshot.docChanges().every((change) => {
-          if (change.type === 'added') {
-            setFocused({ id: change.doc.id, ...change.doc.data() } as Image);
-            return false;
-          }
-          return true;
-        });
         snapshot.docs.forEach((image) => {
           libImages[image.id] = { id: image.id, ...image.data() } as Image;
         });
