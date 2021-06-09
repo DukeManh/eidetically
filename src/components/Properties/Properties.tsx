@@ -1,7 +1,7 @@
 import { useWindowSize } from 'react-use';
 import { useLayout } from '../../contexts';
-import Mask from '../Shared/Mask';
-import SideBar from '../Shared/Sidebar';
+import Mask from '../Mask';
+import SideBar from '../Sidebar';
 import ImageProperties from './ImageProperties';
 import ToolBox from './ToolBox';
 

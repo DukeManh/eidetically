@@ -24,8 +24,8 @@ module.exports = {
       secondary: '#414141',
       dropdown: '#282828',
       progressBar: '#2E2E30',
-      tabActive: '#535353',
-      tabFocus: '#666666',
+      tabActive: '#666666',
+      tabFocus: '#535353',
       mask: 'rgba(0,0,0,.45)',
 
       black: colors.black,

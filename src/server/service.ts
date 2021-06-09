@@ -13,6 +13,46 @@ export async function createLibrary(name: string) {
   }
 }
 
+export async function deleteLibrary(libID: string) {
+  if (auth.currentUser) {
+    try {
+      const libRef = db.libraries.doc(libID);
+      await libRef.delete();
+
+      const storageRef = storage.ref(`${auth.currentUser.uid}/${libID}`);
+      const filesRef = await storageRef.listAll();
+      filesRef.items.forEach((file) => {
+        file.delete();
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+export async function renameLibrary(libID: string, name: string) {
+  if (auth.currentUser) {
+    const libRef = db.libraries.doc(libID);
+    const lib = await libRef.get();
+    if (lib.exists && lib.data()?.name !== name) {
+      const sameNameLib = await db.libraries
+        .where('owner', '==', auth.currentUser.uid)
+        .where('name', '==', name)
+        .get();
+
+      if (sameNameLib.empty) {
+        libRef.update({
+          name,
+        });
+      } else {
+        throw new Error(
+          'A library with the same name already exists, please choose a different name'
+        );
+      }
+    }
+  }
+}
+
 export async function uploadImages(
   acceptedFiles: File[],
   libraryID: string,

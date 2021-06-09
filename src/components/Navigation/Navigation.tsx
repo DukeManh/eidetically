@@ -1,8 +1,8 @@
 import { useState, useRef, FormEvent } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useLayout, useLibrary } from '../../contexts';
-import Mask from '../Shared/Mask';
-import SideBar from '../Shared/Sidebar';
+import Mask from '../Mask';
+import Sidebar from '../Sidebar';
 import Tab from './Tab';
 import Profile from './Profile';
 import { createLibrary } from '../../server/service';
@@ -13,6 +13,7 @@ export default function Navigation() {
   const { navigation, updateNavigation, maxNavigationWidth, isMobile } = useLayout();
   const { libraries } = useLibrary();
   const [newLibName, setNewLibName] = useState(DEFAULT_LIB_NAME);
+  const [renaming, setRenaming] = useState('');
   const [creatingNewLib, setCreatingNewLib] = useState(false);
   const form = useRef<HTMLInputElement | null>(null);
   const container = useRef<HTMLDivElement | null>(null);
@@ -42,7 +43,7 @@ export default function Navigation() {
         onClick={() => updateNavigation({ visible: false })}
       />
 
-      <SideBar
+      <Sidebar
         className="sidebar border-r-2 pr-1"
         width={navigation.width}
         maxWidth={maxNavigationWidth()}
@@ -56,8 +57,11 @@ export default function Navigation() {
         }}
       >
         <Mask
-          visible={creatingNewLib}
-          onClick={() => setCreatingNewLib(false)}
+          visible={!!creatingNewLib || !!renaming}
+          onClick={() => {
+            setCreatingNewLib(false);
+            setRenaming('');
+          }}
           style={{
             position: 'absolute',
             top: 0,
@@ -72,12 +76,10 @@ export default function Navigation() {
             </span>
           </div>
           <div className="w-full min-h-0 flex-grow overflow-y-scroll" ref={container}>
-            <div className="px-4 flex flex-col justify-start items-start">
+            <div className="px-4 flex flex-col gap-y-[1px] justify-start items-start">
               <form
                 className={
-                  creatingNewLib
-                    ? 'tab z-50 mb-2 border border-blue-500'
-                    : 'w-0 h-0 overflow-hidden'
+                  creatingNewLib ? 'tab z-50 mb-2 py-1 px-3 border border-blue-500' : 'tab-hidden'
                 }
                 onSubmit={newLibrary}
               >
@@ -91,14 +93,14 @@ export default function Navigation() {
                 ></input>
               </form>
               {libraries.map((lib) => (
-                <Tab key={lib.id} lib={lib} />
+                <Tab key={lib.id} lib={lib} renaming={renaming} setRenaming={setRenaming} />
               ))}
             </div>
           </div>
 
           <Profile />
         </div>
-      </SideBar>
+      </Sidebar>
     </>
   );
 }

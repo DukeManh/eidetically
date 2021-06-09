@@ -1,5 +1,5 @@
 import Avatar from './Avatar';
-import LoginButton from '../Login/LoginButton';
+import { LoginButton } from '../Login';
 import { useAuth, useLibrary } from '../../contexts';
 import { VscLibrary, VscFileMedia, VscAccount } from 'react-icons/vsc';
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 import { ProviderProps } from '../../interfaces';
 import { auth } from '../../server/firebase';
-import LoginPopup from '../../components/Login/LoginPopup';
+import { LoginPopup } from '../../components/Login';
 
 export default function StorageProvider({ children }: ProviderProps) {
   const [user, setUser] = useState(auth.currentUser);

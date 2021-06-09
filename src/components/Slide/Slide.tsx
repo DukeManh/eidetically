@@ -3,7 +3,7 @@ import { Rnd } from 'react-rnd';
 import { useWindowSize } from 'react-use';
 import { ImZoomIn, ImZoomOut, ImExit } from 'react-icons/im';
 import { MdAspectRatio } from 'react-icons/md';
-import Mask from '../Shared/Mask';
+import Mask from '../Mask';
 import { useImage } from '../../contexts';
 
 export default function Slides() {

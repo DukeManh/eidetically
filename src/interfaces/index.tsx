@@ -100,3 +100,11 @@ export type AuthContextType = {
 export type RouterParams = {
   libParam: string;
 };
+
+export type MenuItem = {
+  name: string;
+  handler: () => void;
+  subMenu?: MenuItem;
+  content: JSX.Element;
+  icon?: JSX.Element;
+};

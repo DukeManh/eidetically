@@ -5,14 +5,14 @@ import Gallery from '../components/Gallery';
 
 export default function Home() {
   return (
-    <div className="text-gray-50 bg-primary ">
-      <div id="relative-div"></div>
+    <main className="text-gray-50 bg-primary ">
+      <div id="contextmenu-container"></div>
       <MenuBar />
-      <main className="max-h-screen overflow-hidden relative">
+      <div className="max-h-screen overflow-hidden relative">
         <Navigation />
         <Gallery />
         <Properties />
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
