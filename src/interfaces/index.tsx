@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { ReactNode } from 'react';
+import { ReactNode, Dispatch, SetStateAction } from 'react';
 
 // Common props of Context Providers
 export type ProviderProps = {
@@ -38,9 +38,10 @@ export interface Image extends MetaData {
 }
 
 export type Images = {
-  [libId: string]: {
-    [imageID: string]: Image;
+  images: {
+    [imageID: string]: Image | undefined;
   };
+  cursor?: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>;
 };
 
 export type LayoutContextType = {
@@ -56,7 +57,7 @@ export type LayoutContextType = {
   maxPropertiesWidth: () => number;
 
   zoom: number;
-  setZoom: (value: number) => void;
+  setZoom: Dispatch<SetStateAction<number | undefined>>;
 };
 
 export type LibraryContextType = {
@@ -69,8 +70,8 @@ export type LibraryContextType = {
 };
 
 export type ImageContextType = {
-  images: Images;
-  activeImages: { [imageID: string]: Image };
+  images?: Images;
+  setImages: Dispatch<SetStateAction<Images | undefined>>;
 
   selecting: boolean;
   startSelecting: () => void;
@@ -92,7 +93,7 @@ export type AuthContextType = {
   user: firebase.User | null;
 
   loginVisible: boolean;
-  setLoginVisible: (value: boolean) => void;
+  setLoginVisible: Dispatch<SetStateAction<boolean>>;
 
   logout: () => void;
 };

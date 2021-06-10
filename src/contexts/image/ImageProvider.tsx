@@ -1,8 +1,6 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { ProviderProps, Image, Images } from '../../interfaces';
 import { ImageContext } from './ImageContext';
-import { useLibrary } from '../library';
-import { db } from '../../server/firebase';
 import { deleteImages } from '../../server/service';
 import ProgressBar from '../../components/ProgressBar';
 import Slide from '../../components/Slide';
@@ -10,13 +8,13 @@ import Slide from '../../components/Slide';
 export default function ImageProvider({ children }: ProviderProps) {
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<{ [imageID: string]: Image | undefined }>({});
-  const [images, setImages] = useState<Images>({});
-  const { activeLibrary } = useLibrary();
+  const [images, setImages] = useState<Images>();
   const [focused, setFocused] = useState<Image | undefined>(undefined);
   const [progressing, setProgressing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [progressMessage, setProgressMessage] = useState('');
   const [slideVisible, toggleSlide] = useState(false);
+
   const onProgressComplete = useCallback(() => {
     setTimeout(() => {
       setProgressing(false);
@@ -24,23 +22,6 @@ export default function ImageProvider({ children }: ProviderProps) {
       setProgress(0);
     }, 2000);
   }, []);
-
-  // Load the active lib's images
-  useEffect(() => {
-    if (activeLibrary && !images[activeLibrary.id]) {
-      const imagesRef = db.libraries
-        .doc(activeLibrary.id)
-        .collection('images')
-        .orderBy('upload_date');
-      imagesRef.onSnapshot((snapshot) => {
-        const libImages: { [imageID: string]: Image } = {};
-        snapshot.docs.forEach((image) => {
-          libImages[image.id] = { id: image.id, ...image.data() } as Image;
-        });
-        setImages({ ...images, [activeLibrary.id]: libImages });
-      });
-    }
-  }, [activeLibrary, images]);
 
   const startSelecting = useCallback(() => {
     setSelecting(true);
@@ -87,12 +68,12 @@ export default function ImageProvider({ children }: ProviderProps) {
         selected,
         select,
         images,
-        focused: focused ? images?.[focused.library.id]?.[focused.id] : undefined,
+        setImages,
+        focused: focused ? images?.images?.[focused.id] : undefined,
         focus: setFocused,
         deleteSelection,
         slideVisible,
         toggleSlide: () => toggleSlide(!slideVisible),
-        activeImages: activeLibrary ? images?.[activeLibrary.id] || {} : {},
       }}
     >
       {progressing && (
