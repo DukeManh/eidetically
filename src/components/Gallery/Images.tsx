@@ -75,15 +75,11 @@ export default function Images() {
           columnWidth: zoom,
         }}
       >
-        {Object.values(images?.images || {}).map((image, i) => (
-          <>
-            {image ? (
-              <Figure key={image.id} image={image} />
-            ) : (
-              <div key={i} className="hidden"></div>
-            )}
-          </>
-        ))}
+        {Object.values(images?.images || {})
+          .filter((image) => !!image)
+          .map((image) => (
+            <>{image && <Figure key={image.id} image={image} />}</>
+          ))}
       </div>
       <div className="py-4 mx-auto flex flex-row justify-center">
         {images?.cursor && (

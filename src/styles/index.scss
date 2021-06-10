@@ -185,7 +185,15 @@ $menubar_height: 2.25rem;
     }
   }
 
-  .slider-button {
+  .slides {
+    @apply fixed top-0 left-0 w-full h-full z-[1000];
+  }
+
+  .slides-hidden {
+    @apply hidden scale-0;
+  }
+
+  .slides-button {
     svg {
       @apply w-full;
     }
