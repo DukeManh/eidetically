@@ -6,7 +6,7 @@ export default function TopBar() {
   const { activeLibrary } = useLibrary();
 
   return (
-    <div className="md:px-4 min-h-[6rem] max-h-24 h-10 top-0 gap-y-2">
+    <div className="md:px-4 min-h-[6rem] max-h-24 h-10 top-0 space-y-2">
       <div className="h-1/2 flex flex-row justify-between items-center">
         <HiMenuAlt2
           size={28}

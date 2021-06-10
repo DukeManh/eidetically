@@ -28,7 +28,7 @@ export default function Properties() {
           updateProperties({ width: ref.clientWidth });
         }}
       >
-        <div className="mx-auto px-6 pt-6 flex flex-col gap-y-6 max-w-lg">
+        <div className="mx-auto px-6 pt-6 flex flex-col space-y-6 max-w-lg">
           <ToolBox />
           <div className="h-[1px] w-1/2 mx-auto bg-gray-300"></div>
           <ImageProperties />

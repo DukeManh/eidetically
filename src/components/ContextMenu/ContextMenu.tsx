@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, Dispatch, SetStateAction } from 'react';
 import ReactDOM from 'react-dom';
 import { MenuItem } from '../../interfaces';
 
@@ -12,7 +12,7 @@ type MenuProps = {
 
 interface ContextMenuProps extends MenuProps {
   visible: boolean;
-  setVisible: (val: boolean) => void;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 function Menu({ position, items }: MenuProps) {
@@ -21,7 +21,7 @@ function Menu({ position, items }: MenuProps) {
       style={{ ...position }}
       className="fixed z-50 top-0 left-0 min-w-[14rem] bg-dropdown rounded-md"
     >
-      <div className="w-full h-full py-2 flex flex-col gap-y-1">
+      <div className="w-full h-full py-2 flex flex-col space-y-1">
         {items.map(({ handler, name, content, icon }) => (
           <button
             className="text-left px-4 hover:bg-blue-500 flex flew-row items-center"

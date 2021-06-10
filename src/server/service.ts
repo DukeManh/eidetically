@@ -1,15 +1,30 @@
 import { Library, MetaData, Image } from '../interfaces';
 import { auth, db, storage, firebase } from './firebase';
 
+const errors = {
+  libExists: new Error(
+    'A library with the same name already exists, please choose a different name'
+  ),
+};
+
 export async function createLibrary(name: string) {
   if (auth.currentUser) {
-    const libRef = await db.libraries.add({
-      name,
-      image_count: 0,
-      owner: auth.currentUser.uid,
-    });
-    const lib = await libRef.get();
-    return { ...lib.data(), id: libRef.id } as Library;
+    const existingLib = await db.libraries
+      .where('owner', '==', auth.currentUser.uid)
+      .where('name', '==', name)
+      .get();
+
+    if (existingLib.empty) {
+      const libRef = await db.libraries.add({
+        name,
+        image_count: 0,
+        owner: auth.currentUser.uid,
+      });
+      const lib = await libRef.get();
+      return { ...lib.data(), id: libRef.id } as Library;
+    } else {
+      throw errors.libExists;
+    }
   }
 }
 
@@ -105,7 +120,10 @@ export async function uploadImages(
       );
     });
 
-    await Promise.all(promises);
+    await Promise.all(promises).catch((error) => {
+      console.error(error);
+    });
+
     if (onComplete) {
       onComplete(successfulUploads);
     }
@@ -127,7 +145,6 @@ export async function deleteImages(
     const promises: Promise<Image>[] = [];
     const libRef = images[0].library;
 
-    // upload files first
     images.forEach((image) => {
       promises.push(
         new Promise((resolve, reject) => {

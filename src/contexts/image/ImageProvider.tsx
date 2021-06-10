@@ -32,12 +32,9 @@ export default function ImageProvider({ children }: ProviderProps) {
     setSelecting(false);
   }, []);
 
-  const select = useCallback(
-    (image: Image) => {
-      setSelected({ ...selected, [image.id]: !selected[image.id] ? image : undefined });
-    },
-    [selected]
-  );
+  const select = useCallback((image: Image) => {
+    setSelected((prev) => ({ ...prev, [image.id]: !prev[image.id] ? image : undefined }));
+  }, []);
 
   const deleteSelection = () => {
     const images = Object.values(selected).filter((image) => !!image) as Image[];

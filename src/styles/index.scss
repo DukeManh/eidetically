@@ -61,7 +61,7 @@ $menubar_height: 2.25rem;
     column-gap: 1.2rem;
     
     figure {
-      @apply mb-6 overflow-hidden flex flex-col gap-y-3;
+      @apply mb-6 overflow-hidden flex flex-col space-y-3;
       -webkit-column-break-inside: avoid; 
       page-break-inside: avoid;
       break-inside: avoid;

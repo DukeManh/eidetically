@@ -14,6 +14,7 @@ export default function Navigation() {
   const { libraries } = useLibrary();
   const [newLibName, setNewLibName] = useState(DEFAULT_LIB_NAME);
   const [renaming, setRenaming] = useState('');
+  const [error, setError] = useState('');
   const [creatingNewLib, setCreatingNewLib] = useState(false);
   const form = useRef<HTMLInputElement | null>(null);
   const container = useRef<HTMLDivElement | null>(null);
@@ -30,9 +31,13 @@ export default function Navigation() {
   const newLibrary = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newLibName) {
-      await createLibrary(newLibName);
-      setCreatingNewLib(false);
-      setNewLibName(DEFAULT_LIB_NAME);
+      try {
+        await createLibrary(newLibName);
+        setCreatingNewLib(false);
+        setNewLibName(DEFAULT_LIB_NAME);
+      } catch (error) {
+        setError(error);
+      }
     }
   };
 
@@ -76,10 +81,14 @@ export default function Navigation() {
             </span>
           </div>
           <div className="w-full min-h-0 flex-grow overflow-y-scroll" ref={container}>
-            <div className="px-4 flex flex-col gap-y-[1px] justify-start items-start">
+            <div className="px-4 flex flex-col space-y-[1px] justify-start items-start">
               <form
                 className={
-                  creatingNewLib ? 'tab z-50 mb-2 py-1 px-3 border border-blue-500' : 'tab-hidden'
+                  creatingNewLib
+                    ? error
+                      ? 'tab tab-editing tab-editing-error'
+                      : 'tab tab-editing'
+                    : 'tab-hidden'
                 }
                 onSubmit={newLibrary}
               >

@@ -7,10 +7,19 @@ import { BiEdit, BiSlideshow } from 'react-icons/bi';
 import { useImage, useAuth } from '../../contexts';
 
 export default function ToolBox() {
-  const { startSelecting, cancelSelecting, selecting, focused, deleteSelection, toggleSlide } =
-    useImage();
+  const {
+    startSelecting,
+    cancelSelecting,
+    selecting,
+    focused,
+    deleteSelection,
+    toggleSlide,
+    selected,
+  } = useImage();
   const { user } = useAuth();
 
+  const atLeastOneSelected = !!Object.values(selected).filter((image) => !!image).length;
+  const oneFocused = !selecting && !!focused;
   const Tools = [
     {
       name: 'Select',
@@ -30,49 +39,49 @@ export default function ToolBox() {
       name: 'Delete',
       handleClick: deleteSelection,
       children: <AiOutlineDelete />,
-      disabled: !selecting,
+      disabled: !atLeastOneSelected,
     },
     {
       name: 'Group',
       handleClick: () => {},
       children: <MdCreateNewFolder />,
-      disabled: !selecting,
+      disabled: !atLeastOneSelected,
     },
     {
       name: 'Move',
       handleClick: () => {},
       children: <BiCut />,
-      disabled: !selecting,
+      disabled: !atLeastOneSelected,
     },
     {
       name: 'Save',
       handleClick: () => {},
       children: <GoCloudDownload />,
-      disabled: !selecting,
+      disabled: !atLeastOneSelected,
     },
     {
       name: 'Slide',
       handleClick: () => toggleSlide(),
       children: <BiSlideshow />,
-      disabled: !focused && !selecting,
+      disabled: !atLeastOneSelected,
     },
     {
       name: 'Upload',
       handleClick: () => {},
       children: <GoCloudUpload />,
-      disabled: selecting,
+      disabled: false,
     },
     {
       name: 'Edit',
       handleClick: () => {},
       children: <BiEdit />,
-      disabled: !focused || selecting,
+      disabled: !oneFocused,
     },
     {
       name: 'Copy',
       handleClick: () => {},
       children: <AiOutlineLink />,
-      disabled: !focused || selecting,
+      disabled: !oneFocused,
     },
   ];
 

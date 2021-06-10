@@ -7,7 +7,7 @@ export default function ImageProperties() {
   return (
     <>
       {focused && (
-        <div className="flex flex-col items-center gap-y-3">
+        <div className="flex flex-col items-center space-y-3">
           <div className="w-3/4 mb-4 h-min">
             <img
               src={focused.downloadURL}
@@ -16,21 +16,24 @@ export default function ImageProperties() {
             ></img>
           </div>
           <textarea
+            onChange={() => {}}
             value={focused.name}
             rows={2}
             className="w-full bg-[#2D2D2D] rounded-md border border-mask px-1 max-w-sm"
           />
           <textarea
+            onChange={() => {}}
             placeholder="notes..."
             rows={4}
             className="w-full bg-[#2D2D2D] rounded-md border border-mask p-2 max-w-sm"
           />
           <textarea
+            onChange={() => {}}
             placeholder="source"
             rows={1}
             className="w-full bg-[#2D2D2D] rounded-md border border-mask p-2 max-w-sm"
           />
-          <div className="w-full flex flex-col gap-y-1">
+          <div className="w-full flex flex-col space-y-1">
             <h3 className="text-lg font-md">Information</h3>
             <p>
               Size<span className="float-right">{focused.size} KB</span>
@@ -40,7 +43,7 @@ export default function ImageProperties() {
             </p>
             <p>
               Link
-              <button className="float-right inline-flex flex-row items-center gap-x-2">
+              <button className="float-right inline-flex flex-row items-center space-x-2">
                 <span>Copy</span>
                 <AiOutlineCopy />
               </button>

@@ -15,6 +15,7 @@ export default function LibraryProvider({ children }: ProviderProps) {
   const [progressing, setProgressing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [progressMessage, setProgressMessage] = useState('');
+
   const onProgressComplete = useCallback(() => {
     setTimeout(() => {
       setProgressing(false);
@@ -29,27 +30,30 @@ export default function LibraryProvider({ children }: ProviderProps) {
     }
   }, [location]);
 
-  const upload = (acceptedFiles: File[], libraryID?: string) => {
-    if (activeLibrary?.id || libraryID) {
-      setProgressing(true);
-      let uploadedCount = 0;
-      setProgressMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+  const upload = useCallback(
+    (acceptedFiles: File[], libraryID?: string) => {
+      if (activeLibrary?.id || libraryID) {
+        setProgressing(true);
+        let uploadedCount = 0;
+        setProgressMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
 
-      const onNext = () => {
-        uploadedCount += 1;
-        setProgress(Math.floor((uploadedCount / acceptedFiles.length) * 100));
-        if (uploadedCount < acceptedFiles.length) {
-          setProgressMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+        const onNext = () => {
+          uploadedCount += 1;
+          setProgress(Math.floor((uploadedCount / acceptedFiles.length) * 100));
+          if (uploadedCount < acceptedFiles.length) {
+            setProgressMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
+          }
+        };
+
+        if (libraryID) {
+          uploadImages(acceptedFiles, libraryID, onNext, onProgressComplete);
+        } else if (activeLibrary?.id) {
+          uploadImages(acceptedFiles, activeLibrary.id, onNext, onProgressComplete);
         }
-      };
-
-      if (libraryID) {
-        uploadImages(acceptedFiles, libraryID, onNext, onProgressComplete);
-      } else if (activeLibrary?.id) {
-        uploadImages(acceptedFiles, activeLibrary.id, onNext, onProgressComplete);
       }
-    }
-  };
+    },
+    [activeLibrary, onProgressComplete]
+  );
 
   const setActiveLibrary = (id: string | undefined) => {
     const active = libraries.find((lib) => lib.id === id);

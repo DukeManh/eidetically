@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Rnd } from 'react-rnd';
 import { useWindowSize } from 'react-use';
 import { ImZoomIn, ImZoomOut, ImExit } from 'react-icons/im';
@@ -14,26 +14,24 @@ export default function Slides() {
   const image = useRef<HTMLDivElement | null>(null);
   const [position, setPosition] = useState({ x: 100, y: -100 });
 
-  useEffect(() => {
-    if (image?.current) {
-      setPosition({ y: 0, x: (windowWidth - image?.current.offsetWidth) / 2 });
-    }
-  }, [image, windowWidth]);
+  const zoomIn = useCallback(() => {
+    setZoom((prev) => Math.min(prev + 0.25, 5));
+  }, []);
 
-  const zoomIn = () => {
-    setZoom(Math.min(zoom + 0.25, 5));
-  };
+  const zoomOut = useCallback(() => {
+    setZoom((prev) => Math.max(prev - 0.25, 0.25));
+  }, []);
 
-  const zoomOut = () => {
-    setZoom(Math.max(zoom - 0.25, 0.25));
-  };
-
-  const reset = () => {
+  const reset = useCallback(() => {
     if (image?.current) {
       setPosition({ y: 0, x: (windowWidth - image?.current.offsetWidth) / 2 });
     }
     setZoom(0.8);
-  };
+  }, [windowWidth]);
+
+  useEffect(() => {
+    reset();
+  }, [reset]);
 
   const Buttons = [
     {
@@ -72,7 +70,7 @@ export default function Slides() {
           >
             <div
               ref={image}
-              className="w-full h-full"
+              className="w-full h-full transition-transform"
               style={{
                 transform: `scale(${zoom})`,
               }}
@@ -85,7 +83,7 @@ export default function Slides() {
             </div>
           </Rnd>
           <div className="fixed top-0 left-1/2 transform -translate-x-1/2 w-80 h-12 bg-black bg-opacity-60 z-[99]">
-            <div className="slider-button w-full h-full flex flex-row justify-around gap-3 text-gray-100">
+            <div className="slider-button w-full h-full flex flex-row justify-around space-3 text-gray-100">
               {Buttons.map(({ name, onClick, content }) => (
                 <button onClick={onClick} key={name} className="h-full hover:bg-primary flex-grow">
                   {content}
