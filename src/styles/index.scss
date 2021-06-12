@@ -198,6 +198,10 @@ $menubar_height: 2.25rem;
       @apply w-full;
     }
   }
+
+  .image-properties-input { 
+    @apply w-full bg-textArea rounded-md border border-mask p-2 max-w-sm
+  }
 }
 
 .navigation-wrap {

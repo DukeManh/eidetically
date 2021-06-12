@@ -19,19 +19,19 @@ export default function ImageProperties() {
             onChange={() => {}}
             value={focused.name}
             rows={2}
-            className="w-full bg-[#2D2D2D] rounded-md border border-mask px-1 max-w-sm"
+            className="image-properties-input"
           />
           <textarea
             onChange={() => {}}
             placeholder="notes..."
             rows={4}
-            className="w-full bg-[#2D2D2D] rounded-md border border-mask p-2 max-w-sm"
+            className="image-properties-input"
           />
           <textarea
             onChange={() => {}}
             placeholder="source"
             rows={1}
-            className="w-full bg-[#2D2D2D] rounded-md border border-mask p-2 max-w-sm"
+            className="image-properties-input"
           />
           <div className="w-full flex flex-col space-y-1">
             <h3 className="text-lg font-md">Information</h3>

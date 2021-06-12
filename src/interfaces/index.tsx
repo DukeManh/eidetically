@@ -106,6 +106,6 @@ export type MenuItem = {
   name: string;
   handler: () => void;
   subMenu?: MenuItem;
-  content: JSX.Element;
+  content: JSX.Element | string;
   icon?: JSX.Element;
 };

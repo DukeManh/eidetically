@@ -27,6 +27,7 @@ module.exports = {
       tabActive: '#666666',
       tabFocus: '#535353',
       mask: 'rgba(0,0,0,.45)',
+      textArea: '#2D2D2D',
 
       black: colors.black,
       white: colors.white,
