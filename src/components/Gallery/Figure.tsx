@@ -1,9 +1,9 @@
 import { Image } from '../../interfaces';
 import { useImage } from '../../contexts';
 
-type FigureProps = {
+export interface FigureProps {
   image: Image;
-};
+}
 
 export default function Figure({ image }: FigureProps) {
   const { focus, selected, select, selecting, toggleSlide } = useImage();

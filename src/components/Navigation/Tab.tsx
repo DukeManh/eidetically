@@ -1,13 +1,15 @@
-import { useState, MouseEvent, useRef, FormEvent } from 'react';
+import { useState, useRef, FormEvent } from 'react';
+import { useKey } from 'react-use';
 import { Link, useHistory } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { HiExternalLink } from 'react-icons/hi';
 import { BiRename } from 'react-icons/bi';
 import { AiOutlineDelete, AiOutlineShareAlt } from 'react-icons/ai';
-import ContextMenu from '../ContextMenu';
-import { Library } from '../../interfaces';
+import Trigger from 'rc-trigger';
+
+import Menu from '../Menu';
+import { Library, MenuItem } from '../../interfaces';
 import { useLibrary } from '../../contexts';
-import { MenuItem } from '../../interfaces';
 import { renameLibrary, deleteLibrary } from '../../server/service';
 
 type TabProps = {
@@ -19,17 +21,12 @@ type TabProps = {
 export default function Tab({ lib, renaming, setRenaming }: TabProps) {
   const history = useHistory();
   const { activeLibrary } = useLibrary();
-  const [menu, toggleMenu] = useState(false);
-  const [position, setPosition] = useState({ top: 0, left: 0 });
   const [newLibName, setNewLibName] = useState(lib.name);
   const [error, setError] = useState('');
   const form = useRef<HTMLInputElement | null>(null);
-  const openMenu = (e: MouseEvent) => {
-    e.preventDefault();
-    setPosition({ left: e.clientX, top: e.clientY });
-    toggleMenu(!menu);
-  };
+  const [vi, setVi] = useState(false);
 
+  useKey('Escape', () => setVi(false));
   const rename = () => {
     setRenaming(lib.id);
     if (form?.current) {
@@ -66,7 +63,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
   const MenuItems: MenuItem[] = [
     {
       name: 'Open',
-      handler: () => {},
+      handler: () => setVi(false),
       content: (
         <a href={`/${lib.id}`} target="_blank" rel="noreferrer">
           Open in new tab
@@ -116,26 +113,33 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
         ></input>
       </form>
       {!(renaming === lib.id) && (
-        <>
-          <ContextMenu
-            items={MenuItems}
-            visible={menu}
-            setVisible={toggleMenu}
-            position={position}
-          />
-          <div
-            className={activeLibrary?.id === lib.id ? 'tab tab-active' : 'tab'}
-            onContextMenu={openMenu}
+        <div className={activeLibrary?.id === lib.id ? 'tab tab-active' : 'tab'}>
+          <Link to={`/${lib.id}`} className="w-3/4 h-full inline-block py-1 px-3 flex-grow">
+            {lib.name}
+          </Link>
+          <span className="image-count">{lib.image_count}</span>
+          <Trigger
+            popupPlacement="bottomLeft"
+            action={['click']}
+            autoDestroy
+            hideAction={['contextMenu', 'click']}
+            destroyPopupOnHide
+            onPopupVisibleChange={(i) => setVi(i)}
+            builtinPlacements={{
+              bottomLeft: {
+                points: ['tl', 'bl'],
+              },
+            }}
+            getPopupContainer={() => document.querySelector('main') || document.body}
+            popupClassName="absolute z-50"
+            popupVisible={vi}
+            popup={<Menu items={MenuItems} />}
           >
-            <Link to={`/${lib.id}`} className="w-3/4 h-full inline-block py-1 px-3 flex-grow">
-              {lib.name}
-            </Link>
-            <span className="image-count">{lib.image_count}</span>
-            <button className="edit-library" onClick={openMenu}>
+            <button className="edit-library">
               <AiOutlineEdit />
             </button>
-          </div>
-        </>
+          </Trigger>
+        </div>
       )}
     </>
   );

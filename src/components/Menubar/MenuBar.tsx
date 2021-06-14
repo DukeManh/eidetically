@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Dropdown from './Dropdown';
 import { BsDropletHalf } from 'react-icons/bs';
@@ -32,18 +32,6 @@ const MenuItems = [
 
 export default function MenuBar() {
   const [activeItem, setActiveItem] = useState('');
-
-  useEffect(() => {
-    if (document) {
-      if (activeItem) {
-        document.onclick = () => {
-          setActiveItem('');
-        };
-        return;
-      }
-      document.onclick = null;
-    }
-  }, [activeItem]);
 
   return (
     <nav className="h-9 bg-secondary relative text-gray-100 border-b border-gray-500 z-100">
