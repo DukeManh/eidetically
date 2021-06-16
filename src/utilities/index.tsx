@@ -1,13 +1,12 @@
-export const noop = () => {};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const noop = (...args: unknown[]) => {};
 
 export function on<T extends Window | Document | HTMLElement | EventTarget>(
   obj: T | null,
   event: string,
   handler: (e: Event) => void
 ): void {
-  if (obj?.addEventListener) {
-    obj.addEventListener(event, handler);
-  }
+  (obj?.addEventListener || noop)(event, handler);
 }
 
 export function off<T extends Window | Document | HTMLElement | EventTarget>(
@@ -15,9 +14,7 @@ export function off<T extends Window | Document | HTMLElement | EventTarget>(
   event: string,
   handler: (e: Event) => void
 ): void {
-  if (obj?.removeEventListener) {
-    obj.removeEventListener(event, handler);
-  }
+  (obj?.removeEventListener || noop)(event, handler);
 }
 
 export const isBrowser = typeof window !== 'undefined';

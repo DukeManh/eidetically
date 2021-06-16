@@ -1,6 +1,8 @@
 import { Library, MetaData, Image } from '../interfaces';
 import { auth, db, storage, firebase } from './firebase';
 
+import { noop } from '../utilities';
+
 const errors = {
   libExists: new Error(
     'A library with the same name already exists, please choose a different name'
@@ -15,13 +17,11 @@ export async function createLibrary(name: string) {
       .get();
 
     if (existingLib.empty) {
-      const libRef = await db.libraries.add({
+      await db.libraries.add({
         name,
         image_count: 0,
         owner: auth.currentUser.uid,
       });
-      const lib = await libRef.get();
-      return { ...lib.data(), id: libRef.id } as Library;
     } else {
       throw errors.libExists;
     }
@@ -107,9 +107,7 @@ export async function uploadImages(
                   fullPath,
                 });
 
-                if (onNext) {
-                  onNext(file.name);
-                }
+                (onNext || noop)(file.name);
 
                 resolve(downloadURL);
               },
@@ -125,9 +123,7 @@ export async function uploadImages(
       console.error(error);
     });
 
-    if (onComplete) {
-      onComplete(successfulUploads);
-    }
+    (onComplete || noop)(successfulUploads);
 
     // update the library's image_count
     await libRef.update({
@@ -179,9 +175,8 @@ export async function deleteImages(
     await Promise.all(promises).catch((error) => {
       console.error(error);
     });
-    if (onComplete) {
-      onComplete(successfulDeletes);
-    }
+
+    (onComplete || noop)(successfulDeletes);
 
     // update the library's image_count
     await libRef.update({

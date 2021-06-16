@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import { ReactNode, Dispatch, SetStateAction } from 'react';
+import { TriggerProps } from 'rc-trigger';
 
 // Common props of Context Providers
 export interface ProviderProps {
@@ -104,6 +105,15 @@ export interface RouterParams {
   libParam: string;
 }
 
+export interface ConfirmProps {
+  content: ReactNode;
+  cancelText?: string;
+  confirmText?: string;
+  onCancel?: () => void;
+  onConfirm?: () => void;
+  placement?: TriggerProps['popupPlacement'];
+}
+
 // Popup menu
 export interface MenuItem {
   name: string;
@@ -111,4 +121,5 @@ export interface MenuItem {
   subMenu?: MenuItem;
   content: JSX.Element | string;
   icon?: JSX.Element;
+  confirm?: ConfirmProps;
 }

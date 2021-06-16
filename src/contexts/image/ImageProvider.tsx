@@ -38,25 +38,27 @@ export default function ImageProvider({ children }: ProviderProps) {
     setSelection((prev) => ({ ...prev, [image.id]: !prev[image.id] ? image : undefined }));
   }, []);
 
-  const deleteSelection = () => {
+  const deleteSelection = useCallback(() => {
+    let deleteCount = 0;
+
     const images = Object.values(selection).filter((image) => !!image) as Image[];
+
+    const onNext = () => {
+      deleteCount += 1;
+      setProgress(Math.floor((deleteCount / images.length) * 100));
+      if (deleteCount < images.length) {
+        setProgressMessage(`Deleting (${deleteCount + 1}/${images.length})`);
+      }
+    };
+
     if (images.length) {
       setProgressing(true);
-      let deleteCount = 0;
       setProgressMessage(`Deleting (${deleteCount + 1}/${images.length})`);
-
-      const onNext = () => {
-        deleteCount += 1;
-        setProgress(Math.floor((deleteCount / images.length) * 100));
-        if (deleteCount < images.length) {
-          setProgressMessage(`Deleting (${deleteCount + 1}/${images.length})`);
-        }
-      };
 
       deleteImages(images, onNext, onProgressComplete);
       cancelSelecting();
     }
-  };
+  }, [cancelSelecting, onProgressComplete, selection]);
 
   return (
     <ImageContext.Provider

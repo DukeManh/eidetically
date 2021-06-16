@@ -1,16 +1,15 @@
-import { useState, useRef, FormEvent } from 'react';
-import { useKey } from 'react-use';
+import React, { useState, useRef, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { HiExternalLink } from 'react-icons/hi';
 import { BiRename } from 'react-icons/bi';
 import { AiOutlineDelete, AiOutlineShareAlt } from 'react-icons/ai';
-import Trigger from 'rc-trigger';
 
 import { Library, MenuItem } from '../../interfaces';
 import { useLibrary } from '../../contexts';
 import { renameLibrary, deleteLibrary } from '../../server/service';
 
+import Trigger from '../Trigger';
 import Menu from '../Menu';
 
 export interface TabProps {
@@ -27,7 +26,6 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
   const form = useRef<HTMLInputElement | null>(null);
   const [menuVisible, setMenuVisible] = useState(false);
 
-  useKey('Escape', () => setMenuVisible(false));
   const rename = () => {
     setRenaming(lib.id);
     if (form?.current) {
@@ -80,9 +78,13 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
     },
     {
       name: 'Delete',
-      handler: deleteLib,
+      handler: () => {},
       content: <span>Delete</span>,
       icon: <AiOutlineDelete />,
+      confirm: {
+        content: `Are you sure to delete library '${lib.name}' and its content`,
+        onConfirm: deleteLib,
+      },
     },
     {
       name: 'Share',
@@ -121,19 +123,8 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
           <span className="image-count">{lib.image_count}</span>
           <Trigger
             popupPlacement="bottomLeft"
-            action={['click']}
-            autoDestroy
-            hideAction={['contextMenu', 'click']}
-            destroyPopupOnHide
-            onPopupVisibleChange={(i) => setMenuVisible(i)}
-            builtinPlacements={{
-              bottomLeft: {
-                points: ['tl', 'bl'],
-              },
-            }}
-            getPopupContainer={() => document.querySelector('main') || document.body}
-            popupClassName="absolute z-50"
             popupVisible={menuVisible}
+            onPopupVisibleChange={(i) => setMenuVisible(i)}
             popup={<Menu items={MenuItems} />}
           >
             <button className="edit-library">

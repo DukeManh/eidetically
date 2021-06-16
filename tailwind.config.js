@@ -28,6 +28,7 @@ module.exports = {
       tabFocus: '#535353',
       mask: 'rgba(0,0,0,.45)',
       textArea: '#2D2D2D',
+      alert: '#1F1F1F',
 
       black: colors.black,
       white: colors.white,

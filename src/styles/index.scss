@@ -92,7 +92,7 @@ $menubar_height: 2.25rem;
   }
 
   .tab {
-      @apply w-full focus:bg-tabFocus hover:bg-tabFocus rounded-lg flex flex-row items-center;
+      @apply w-full focus:bg-tabFocus hover:bg-tabFocus cursor-pointer rounded-lg flex flex-row items-center;
 
       .image-count{
         @apply  text-gray-400 pr-2;
@@ -195,6 +195,17 @@ $menubar_height: 2.25rem;
 
   .loginButton {
     @apply px-4 py-1 bg-primary opacity-70 hover:opacity-100 active:bg-black;
+  }
+
+  .pop-confirm {
+    position: relative;
+
+    &::after {
+      @apply absolute top-full left-1/2 block border-l-8 border-r-8 border-alert border-t-8;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      content: "";
+    }
   }
 };
 
