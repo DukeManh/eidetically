@@ -4,6 +4,7 @@ import { MdCreateNewFolder } from 'react-icons/md';
 import { BiCut } from 'react-icons/bi';
 import { GoCloudUpload, GoCloudDownload } from 'react-icons/go';
 import { BiEdit, BiSlideshow } from 'react-icons/bi';
+
 import { useImage, useAuth } from '../../contexts';
 
 export default function ToolBox() {

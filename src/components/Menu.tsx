@@ -1,8 +1,8 @@
 import { CSSProperties } from 'react';
 
-import { MenuItem } from '../../interfaces';
+import { MenuItem } from '../interfaces';
 
-import PopConfirm from '../PopConfirm';
+import PopConfirm from './PopConfirm';
 
 export interface ContextMenuProps {
   items: MenuItem[];

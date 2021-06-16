@@ -1,5 +1,6 @@
 import React, { useState, useRef, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { HiExternalLink } from 'react-icons/hi';
 import { BiRename } from 'react-icons/bi';
@@ -38,23 +39,38 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
     if (activeLibrary?.id === lib.id) {
       history.push('/');
     }
-    await deleteLibrary(lib.id);
+    toast.promise(
+      new Promise<void>((resolve, reject) => {
+        deleteLibrary(lib.id)
+          .then(() => resolve())
+          .catch((error) => reject(error));
+      }),
+      {
+        loading: `Deleting library ${lib.name}`,
+        success: 'Library deleted',
+        error: (error) => error.message,
+      }
+    );
   };
 
   const shareLib = () => {
     if (window) {
-      navigator.clipboard.writeText(window.location.href);
+      navigator.clipboard.writeText(`${window.location.origin}/${lib.id}`);
     }
+    toast.success('Link copied to clipboard');
+    setMenuVisible(false);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await renameLibrary(lib.id, newLibName);
+      toast.success('Library renamed');
       setRenaming('');
       setError('');
     } catch (error) {
       console.error(error);
+      toast.error(error.message);
       setError(error.message);
     }
   };

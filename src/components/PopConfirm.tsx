@@ -2,8 +2,8 @@ import { useState, ReactElement, ReactNode } from 'react';
 import { TriggerProps } from 'rc-trigger';
 import { HiInformationCircle } from 'react-icons/hi';
 
-import Trigger from '../Trigger';
-import { noop } from '../../utilities';
+import Trigger from './Trigger';
+import { noop } from '../utilities';
 
 export interface PopConfirmProps {
   children: ReactElement;

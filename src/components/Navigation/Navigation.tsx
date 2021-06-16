@@ -1,5 +1,6 @@
 import { useState, useRef, FormEvent } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
+import toast from 'react-hot-toast';
 
 import { useLayout, useLibrary } from '../../contexts';
 import { createLibrary } from '../../server/service';
@@ -33,13 +34,26 @@ export default function Navigation() {
   const newLibrary = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newLibName) {
-      try {
-        await createLibrary(newLibName);
-        setCreatingNewLib(false);
-        setNewLibName(DEFAULT_LIB_NAME);
-      } catch (error) {
-        setError(error);
-      }
+      toast.promise(
+        new Promise<void>((resolve, reject) => {
+          createLibrary(newLibName)
+            .then(() => {
+              setCreatingNewLib(false);
+              setNewLibName(DEFAULT_LIB_NAME);
+              setError('');
+              resolve();
+            })
+            .catch((error) => {
+              setError(error);
+              reject(error);
+            });
+        }),
+        {
+          loading: `Creating ${newLibName}`,
+          success: 'Library created',
+          error: (error) => error.message,
+        }
+      );
     }
   };
 

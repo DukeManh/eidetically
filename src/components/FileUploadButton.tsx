@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useRef, ReactNode } from 'react';
 
 export interface FileUploadProps {
   onChange: (files: File[]) => void;
+  children?: ReactNode;
 }
 
-export default function FileUploadButton({ onChange }: FileUploadProps) {
+export default function FileUploadButton({ onChange, children }: FileUploadProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   return (
@@ -23,7 +24,7 @@ export default function FileUploadButton({ onChange }: FileUploadProps) {
         }}
       />
       <label htmlFor="select-files" className="cursor-pointer inline-block w-full">
-        Upload...
+        {children}
       </label>
     </>
   );

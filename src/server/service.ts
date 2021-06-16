@@ -1,4 +1,4 @@
-import { Library, MetaData, Image } from '../interfaces';
+import { MetaData, Image } from '../interfaces';
 import { auth, db, storage, firebase } from './firebase';
 
 import { noop } from '../utilities';
@@ -60,9 +60,7 @@ export async function renameLibrary(libID: string, name: string) {
           name,
         });
       } else {
-        throw new Error(
-          'A library with the same name already exists, please choose a different name'
-        );
+        throw errors.libExists;
       }
     }
   }

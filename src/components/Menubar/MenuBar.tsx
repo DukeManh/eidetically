@@ -7,7 +7,7 @@ import { MenuItem } from '../../interfaces';
 import { useLibrary } from '../../contexts';
 
 import Menu from '../Menu';
-import FileUploadButton from './FileUploadButton';
+import FileUploadButton from '../FileUploadButton';
 
 export default function MenuBar() {
   const [activeItem, setActiveItem] = useState('');
@@ -25,7 +25,7 @@ export default function MenuBar() {
         {
           name: 'open',
           handler: () => {},
-          content: <FileUploadButton onChange={uploadImages} />,
+          content: <FileUploadButton onChange={uploadImages}>Upload...</FileUploadButton>,
         },
       ],
     },
