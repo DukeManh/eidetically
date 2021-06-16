@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Rnd } from 'react-rnd';
 import { useWindowSize } from 'react-use';
 import { ImZoomIn, ImZoomOut, ImExit } from 'react-icons/im';
 import { MdAspectRatio } from 'react-icons/md';
-import Mask from '../Mask';
+import { Rnd } from 'react-rnd';
+
 import { useImage } from '../../contexts';
 import { on, isBrowser } from '../../utilities';
+
+import Mask from '../Mask';
 
 export default function Slides() {
   const { focused, toggleSlide } = useImage();
@@ -16,11 +18,11 @@ export default function Slides() {
   const [position, setPosition] = useState({ x: 100, y: -100 });
 
   const zoomIn = useCallback(() => {
-    setZoom((prev) => Math.min(prev + 0.25, 5));
+    setZoom((prev) => Math.min(prev * 1.5, 5));
   }, []);
 
   const zoomOut = useCallback(() => {
-    setZoom((prev) => Math.max(prev - 0.25, 0.25));
+    setZoom((prev) => Math.max(prev / 1.5, 0.25));
   }, []);
 
   const rePosition = useCallback(() => {

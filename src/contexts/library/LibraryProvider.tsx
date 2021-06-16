@@ -1,15 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import { ProviderProps, Library } from '../../interfaces';
 import { LibraryContext } from './LibraryContext';
 import { useAuth } from '../auth';
 import { db } from '../../server/firebase';
-import ProgressBar from '../../components/ProgressBar';
 import { uploadImages } from '../../server/service';
+
+import ProgressBar from '../../components/ProgressBar';
 
 export default function LibraryProvider({ children }: ProviderProps) {
   const { user } = useAuth();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
   const [libraries, setLibraries] = useState<Library[]>([]);
   const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
   const [progressing, setProgressing] = useState(false);
@@ -67,12 +70,14 @@ export default function LibraryProvider({ children }: ProviderProps) {
   useEffect(() => {
     let unsubscribe;
     if (user) {
+      setLoading(true);
       const librariesRef = db.libraries.where('owner', '==', user.uid).orderBy('name');
       unsubscribe = librariesRef.onSnapshot((snapshot) => {
         const nextLibraries = snapshot.docs.map(
           (lib) => ({ ...lib.data(), id: lib.id } as Library)
         );
         setLibraries(nextLibraries);
+        setLoading(false);
       });
     } else {
       setLibraries([]);
@@ -86,6 +91,7 @@ export default function LibraryProvider({ children }: ProviderProps) {
   return (
     <LibraryContext.Provider
       value={{
+        loading,
         libraries,
         activeLibrary,
         setActiveLibrary,

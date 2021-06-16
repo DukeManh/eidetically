@@ -1,28 +1,20 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { useLayout, useImage, useLibrary } from '../../contexts';
 import { RouterParams, Image } from '../../interfaces';
-import Figure from './Figure';
 import { db } from '../../server/firebase';
 
-const LIMIT = 15;
+import Figure from './Figure';
+
+const QUERY_LIMIT = 15;
 
 export default function Images() {
-  const { setActiveLibrary } = useLibrary();
+  const { setActiveLibrary, loading: loadingLib } = useLibrary();
   const { images, setImages } = useImage();
   const { zoom } = useLayout();
   const { libParam } = useParams<RouterParams>();
-  const unsubscribes = useRef<Array<() => void>>([]);
-
-  useEffect(() => {
-    setActiveLibrary(libParam);
-    setImages(undefined);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [libParam]);
-
-  useEffect(() => {
-    return unsubscribes.current.forEach((unsubscribe) => unsubscribe());
-  }, []);
+  const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot listener cancellation function
 
   const loadMore = useCallback(
     (libID) => {
@@ -34,10 +26,11 @@ export default function Images() {
           .collection('images')
           .orderBy('upload_date')
           .startAfter(images.cursor)
-          .limit(LIMIT);
+          .limit(QUERY_LIMIT);
       } else {
         imagesRef = db.libraries.doc(libID).collection('images').orderBy('upload_date').limit(15);
       }
+
       const unsubscribe = imagesRef.onSnapshot((snapshot) => {
         const libImages: { [imageID: string]: Image | undefined } = {};
         snapshot.docChanges().forEach((change) => {
@@ -47,9 +40,12 @@ export default function Images() {
             libImages[change.doc.id] = undefined;
           }
         });
+
         setImages((prevImages) => ({
           cursor:
-            snapshot.docs.length === LIMIT ? snapshot.docs[snapshot.docs.length - 1] : undefined,
+            snapshot.docs.length === QUERY_LIMIT
+              ? snapshot.docs[snapshot.docs.length - 1]
+              : undefined,
           images: { ...prevImages?.images, ...libImages },
         }));
       });
@@ -60,27 +56,33 @@ export default function Images() {
   );
 
   useEffect(() => {
-    if (!images) {
+    setActiveLibrary(libParam);
+    setImages(undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [libParam, loadingLib]);
+
+  useEffect(() => {
+    return unsubscribes.current.forEach((unsubscribe) => unsubscribe());
+  }, []);
+
+  useEffect(() => {
+    if (!images && !loadingLib && libParam) {
       unsubscribes.current.forEach((unsubscribe) => unsubscribe());
       unsubscribes.current = [];
       loadMore(libParam);
     }
-  }, [libParam, images, loadMore]);
+  }, [libParam, images, loadMore, loadingLib]);
 
   return (
     <>
-      <div
-        id="figure-container"
-        style={{
-          columnWidth: zoom,
-        }}
-      >
+      <div className="waterfall-layout" style={{ columnWidth: zoom }}>
         {Object.values(images?.images || {})
           .filter((image) => !!image)
           .map((image) => (
             <>{image && <Figure key={image.id} image={image} />}</>
           ))}
       </div>
+
       <div className="py-4 mx-auto flex flex-row justify-center">
         {images?.cursor && (
           <button

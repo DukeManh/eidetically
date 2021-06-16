@@ -1,11 +1,13 @@
 import { useState, useRef, FormEvent } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
+
 import { useLayout, useLibrary } from '../../contexts';
+import { createLibrary } from '../../server/service';
+
 import Mask from '../Mask';
 import Sidebar from '../Sidebar';
 import Tab from './Tab';
 import Profile from './Profile';
-import { createLibrary } from '../../server/service';
 
 const DEFAULT_LIB_NAME = 'Untitled library';
 

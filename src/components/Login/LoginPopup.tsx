@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
-import { GrClose } from 'react-icons/gr';
 import firebase from 'firebase/app';
+import { GrClose } from 'react-icons/gr';
+
 import { authUI } from '../../server/firebase';
 import { useAuth } from '../../contexts';
+
 import Mask from '../Mask';
 
 export default function LoginPopup() {

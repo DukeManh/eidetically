@@ -1,7 +1,9 @@
+import { VscLibrary, VscFileMedia, VscAccount } from 'react-icons/vsc';
+
+import { useAuth, useLibrary } from '../../contexts';
+
 import Avatar from './Avatar';
 import { LoginButton } from '../Login';
-import { useAuth, useLibrary } from '../../contexts';
-import { VscLibrary, VscFileMedia, VscAccount } from 'react-icons/vsc';
 
 export default function Profile() {
   const { user } = useAuth();

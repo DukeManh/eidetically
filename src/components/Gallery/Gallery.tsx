@@ -1,6 +1,8 @@
 import { useDrop } from 'react-use';
-import { useLayout, useLibrary } from '../../contexts';
 import { Switch, Route } from 'react-router-dom';
+
+import { useLayout, useLibrary } from '../../contexts';
+
 import Images from './Images';
 import TopBar from './TopBar';
 import Welcome from './Welcome';
@@ -15,8 +17,7 @@ export default function Gallery() {
 
   return (
     <div
-      className="h-screen relative flex flex-col justify-start pb-8"
-      id="gallery"
+      className="className h-screen relative flex flex-col justify-start pb-8"
       style={{
         marginLeft: navigation.visible && !isMobile ? navigation.width : '0',
         marginRight: properties.visible && !isMobile ? properties.width : '0',
@@ -29,6 +30,7 @@ export default function Gallery() {
           <Route path="/" exact>
             <Welcome />
           </Route>
+
           <Route path="/:libParam">
             <Images />
           </Route>

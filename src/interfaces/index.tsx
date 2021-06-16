@@ -1,31 +1,31 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { ReactNode, Dispatch, SetStateAction } from 'react';
 
 // Common props of Context Providers
-export type ProviderProps = {
+export interface ProviderProps {
   children: ReactNode;
-};
+}
 
 // Navigation and Properties sidebar
-export type SidebarLayout = {
+export interface SidebarLayout {
   visible: boolean;
   width: number;
-};
+}
 
 // Each library consists of many individual images
-export type Library = {
+export interface Library {
   id: string;
   name: string;
   image_count: number;
   owner: string;
-};
+}
 
 // Metadata of uploaded Image
-export type MetaData = {
+export interface MetaData {
   contentType: string;
   size: number;
   fullPath: string;
-};
+}
 
 // Uploaded image
 export interface Image extends MetaData {
@@ -37,14 +37,15 @@ export interface Image extends MetaData {
   upload_date: firebase.firestore.FieldValue;
 }
 
-export type Images = {
+// imageID-Image object, cursor points to the last document
+export interface Images {
   images: {
     [imageID: string]: Image | undefined;
   };
   cursor?: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>;
-};
+}
 
-export type LayoutContextType = {
+export interface LayoutContextType {
   navigation: SidebarLayout;
   updateNavigation: (props: Partial<SidebarLayout>) => void;
 
@@ -58,18 +59,19 @@ export type LayoutContextType = {
 
   zoom: number;
   setZoom: Dispatch<SetStateAction<number | undefined>>;
-};
+}
 
-export type LibraryContextType = {
+export interface LibraryContextType {
   libraries: Library[];
+  loading: boolean;
 
   activeLibrary: Library | undefined;
   setActiveLibrary: (id: string | undefined) => void;
 
   uploadImages: (acceptedFiles: File[]) => void;
-};
+}
 
-export type ImageContextType = {
+export interface ImageContextType {
   images?: Images;
   setImages: Dispatch<SetStateAction<Images | undefined>>;
 
@@ -77,7 +79,7 @@ export type ImageContextType = {
   startSelecting: () => void;
   cancelSelecting: () => void;
 
-  selected: { [imageID: string]: Image | undefined };
+  selection: { [imageID: string]: Image | undefined };
   select: (image: Image) => void;
 
   focused: Image | undefined;
@@ -87,25 +89,26 @@ export type ImageContextType = {
 
   slideVisible: boolean;
   toggleSlide: () => void;
-};
+}
 
-export type AuthContextType = {
+export interface AuthContextType {
   user: firebase.User | null;
 
   loginVisible: boolean;
   setLoginVisible: Dispatch<SetStateAction<boolean>>;
 
   logout: () => void;
-};
+}
 
-export type RouterParams = {
+export interface RouterParams {
   libParam: string;
-};
+}
 
-export type MenuItem = {
+// Popup menu
+export interface MenuItem {
   name: string;
   handler: () => void;
   subMenu?: MenuItem;
   content: JSX.Element | string;
   icon?: JSX.Element;
-};
+}

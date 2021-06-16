@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import LayoutContext from './LayoutContext';
 import { useLocalStorage, useMedia } from 'react-use';
+
 import { SidebarLayout, ProviderProps } from '../../interfaces';
 
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };

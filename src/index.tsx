@@ -4,10 +4,6 @@ import 'firebaseui/dist/firebaseui.css';
 import './styles/index.scss';
 import App from './App';
 
-import 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -7,16 +7,17 @@ import { BiRename } from 'react-icons/bi';
 import { AiOutlineDelete, AiOutlineShareAlt } from 'react-icons/ai';
 import Trigger from 'rc-trigger';
 
-import Menu from '../Menu';
 import { Library, MenuItem } from '../../interfaces';
 import { useLibrary } from '../../contexts';
 import { renameLibrary, deleteLibrary } from '../../server/service';
 
-type TabProps = {
+import Menu from '../Menu';
+
+export interface TabProps {
   lib: Library;
   renaming: string;
   setRenaming: (lidID: string) => void;
-};
+}
 
 export default function Tab({ lib, renaming, setRenaming }: TabProps) {
   const history = useHistory();
@@ -24,9 +25,9 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
   const [newLibName, setNewLibName] = useState(lib.name);
   const [error, setError] = useState('');
   const form = useRef<HTMLInputElement | null>(null);
-  const [vi, setVi] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
 
-  useKey('Escape', () => setVi(false));
+  useKey('Escape', () => setMenuVisible(false));
   const rename = () => {
     setRenaming(lib.id);
     if (form?.current) {
@@ -63,7 +64,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
   const MenuItems: MenuItem[] = [
     {
       name: 'Open',
-      handler: () => setVi(false),
+      handler: () => setMenuVisible(false),
       content: (
         <a href={`/${lib.id}`} target="_blank" rel="noreferrer">
           Open in new tab
@@ -124,7 +125,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
             autoDestroy
             hideAction={['contextMenu', 'click']}
             destroyPopupOnHide
-            onPopupVisibleChange={(i) => setVi(i)}
+            onPopupVisibleChange={(i) => setMenuVisible(i)}
             builtinPlacements={{
               bottomLeft: {
                 points: ['tl', 'bl'],
@@ -132,7 +133,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
             }}
             getPopupContainer={() => document.querySelector('main') || document.body}
             popupClassName="absolute z-50"
-            popupVisible={vi}
+            popupVisible={menuVisible}
             popup={<Menu items={MenuItems} />}
           >
             <button className="edit-library">

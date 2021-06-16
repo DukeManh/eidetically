@@ -3,6 +3,7 @@
 @tailwind components;
 @use "sass:math";
 
+// Base style
 @layer base {
   html,
   body, 
@@ -30,15 +31,15 @@ $mask: rgba(0,0,0,.45);
 $transition_duration: 300ms;
 $menubar_height: 2.25rem;
 
-
-
 @layer components {
+  // Mobile breakpoint mixin
   @mixin breakpoint {
     @media (max-width: $lg){
       @content
     }
-  }
+  };
 
+  // Non-clickable button
   @mixin buttonDisabled {
     &:disabled {
       @apply text-gray-400 bg-tabFocus;
@@ -47,16 +48,18 @@ $menubar_height: 2.25rem;
         fill: #9CA3AF;
       }
     }
-  }
+  };
 
+  // Image zoom slider thumb
   @mixin sliderThumb {
     @apply appearance-none w-4 h-5 rounded-sm border-none transform;
     background: linear-gradient(to right, #5E5E5E, #5E5E5E 15%, #151515 15%, #606060 85%, #151515 85%);
     -webkit-appearance: none;
     -moz-appearance: none;
-  }
+  };
 
-  #figure-container {
+  //  Default images layout
+  .waterfall-layout {
     column-width: 15rem;
     column-gap: 1.2rem;
     
@@ -65,19 +68,6 @@ $menubar_height: 2.25rem;
       -webkit-column-break-inside: avoid; 
       page-break-inside: avoid;
       break-inside: avoid;
-    }
-
-    figure img {
-      @apply w-full h-auto cursor-pointer; 
-    }
-
-    figure figcaption {
-      @apply px-4 overflow-hidden text-sm whitespace-nowrap overflow-ellipsis text-center max-h-12 leading-6;
-    }
-
-    figure.image-selected .image-container{
-      @apply border-2 border-blue-500;
-      padding: 2px;
     }
   }
 
@@ -202,12 +192,18 @@ $menubar_height: 2.25rem;
   .image-properties-input { 
     @apply w-full bg-textArea rounded-md border border-mask p-2 max-w-sm
   }
-}
 
+  .loginButton {
+    @apply px-4 py-1 bg-primary opacity-70 hover:opacity-100 active:bg-black;
+  }
+};
+
+// Navigation sidebar
 .navigation-wrap {
 max-height: calc(100vh -  #{$menubar_height});
 }
 
-#gallery {
+// Gallery container
+.gallery {
 max-height: calc(100vh -  #{$menubar_height});
 }

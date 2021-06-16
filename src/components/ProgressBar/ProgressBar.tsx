@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
-type ProgressBarProps = {
+export interface ProgressBarProps {
   children?: ReactNode;
   progress: number;
-};
+}
 
 export default function ProgressBar({ children, progress }: ProgressBarProps) {
   return (

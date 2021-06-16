@@ -1,13 +1,15 @@
 import { useState, useCallback } from 'react';
+
 import { ProviderProps, Image, Images } from '../../interfaces';
 import { ImageContext } from './ImageContext';
 import { deleteImages } from '../../server/service';
+
 import ProgressBar from '../../components/ProgressBar';
 import Slide from '../../components/Slide';
 
 export default function ImageProvider({ children }: ProviderProps) {
   const [selecting, setSelecting] = useState(false);
-  const [selected, setSelected] = useState<{ [imageID: string]: Image | undefined }>({});
+  const [selection, setSelection] = useState<{ [imageID: string]: Image | undefined }>({});
   const [images, setImages] = useState<Images>();
   const [focused, setFocused] = useState<Image | undefined>(undefined);
   const [progressing, setProgressing] = useState(false);
@@ -28,16 +30,16 @@ export default function ImageProvider({ children }: ProviderProps) {
   }, []);
 
   const cancelSelecting = useCallback(() => {
-    setSelected({});
+    setSelection({});
     setSelecting(false);
   }, []);
 
   const select = useCallback((image: Image) => {
-    setSelected((prev) => ({ ...prev, [image.id]: !prev[image.id] ? image : undefined }));
+    setSelection((prev) => ({ ...prev, [image.id]: !prev[image.id] ? image : undefined }));
   }, []);
 
   const deleteSelection = () => {
-    const images = Object.values(selected).filter((image) => !!image) as Image[];
+    const images = Object.values(selection).filter((image) => !!image) as Image[];
     if (images.length) {
       setProgressing(true);
       let deleteCount = 0;
@@ -62,7 +64,7 @@ export default function ImageProvider({ children }: ProviderProps) {
         selecting,
         startSelecting,
         cancelSelecting,
-        selected,
+        selection,
         select,
         images,
         setImages,

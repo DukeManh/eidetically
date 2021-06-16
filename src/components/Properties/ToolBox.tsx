@@ -14,11 +14,11 @@ export default function ToolBox() {
     focused,
     deleteSelection,
     toggleSlide,
-    selected,
+    selection,
   } = useImage();
   const { user } = useAuth();
 
-  const atLeastOneSelected = !!Object.values(selected).filter((image) => !!image).length;
+  const atLeastOneSelected = !!Object.values(selection).filter((image) => !!image).length;
   const oneFocused = !selecting && !!focused;
   const Tools = [
     {

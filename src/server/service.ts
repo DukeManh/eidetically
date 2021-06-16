@@ -85,37 +85,38 @@ export async function uploadImages(
 
       promises.push(
         new Promise((resolve, reject) => {
-          const upload = storage.ref(filePath).put(file);
-          upload.on(
-            firebase.storage.TaskEvent.STATE_CHANGED,
-            () => {},
-            (error) => reject(error),
-            async () => {
-              const downloadURL = await upload.snapshot.ref.getDownloadURL();
-              const { contentType, size, fullPath } =
-                (await upload.snapshot.ref.getMetadata()) as MetaData;
-              successfulUploads += 1;
+          storage
+            .ref(filePath)
+            .put(file)
+            .then(
+              async (snap) => {
+                const { contentType, size, fullPath } = snap.metadata as MetaData;
+                const downloadURL = await snap.ref.getDownloadURL();
+                successfulUploads += 1;
 
-              // create a new image document for each uploaded file
-              const imageRef = libRef.collection('images').doc();
-              imageRef.set({
-                note: '',
-                library: libRef,
-                upload_date: firebase.firestore.FieldValue.serverTimestamp(),
-                name: file.name,
-                downloadURL,
-                contentType,
-                size,
-                fullPath,
-              });
+                // create a new image document for each uploaded file
+                const imageRef = libRef.collection('images').doc();
+                imageRef.set({
+                  note: '',
+                  library: libRef,
+                  upload_date: firebase.firestore.FieldValue.serverTimestamp(),
+                  name: file.name,
+                  downloadURL,
+                  contentType,
+                  size,
+                  fullPath,
+                });
 
-              if (onNext) {
-                onNext(file.name);
+                if (onNext) {
+                  onNext(file.name);
+                }
+
+                resolve(downloadURL);
+              },
+              (error) => {
+                reject(error.message);
               }
-
-              resolve(downloadURL);
-            }
-          );
+            );
         })
       );
     });

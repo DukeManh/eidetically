@@ -1,11 +1,11 @@
 import { CSSProperties } from 'react';
 
-import { MenuItem } from '../interfaces';
+import { MenuItem } from '../../interfaces';
 
-export type ContextMenuProps = {
+export interface ContextMenuProps {
   items: MenuItem[];
   style?: CSSProperties;
-};
+}
 
 export default function Menu({ items, style }: ContextMenuProps) {
   return (

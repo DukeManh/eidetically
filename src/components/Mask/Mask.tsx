@@ -1,11 +1,11 @@
 import { CSSProperties, SyntheticEvent } from 'react';
 
-type MaskProps = {
+export interface MaskProps {
   onClick?: (e?: SyntheticEvent) => void;
   visible: boolean;
   zIndex?: number;
   style?: CSSProperties;
-};
+}
 
 export default function Mask({ onClick, visible, zIndex }: MaskProps) {
   if (onClick) {
