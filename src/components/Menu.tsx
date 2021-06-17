@@ -32,7 +32,10 @@ export function Item({ item }: ItemProps) {
 
 export default function Menu({ items, style }: ContextMenuProps) {
   return (
-    <div style={{ ...style }} className="z-50 w-min bg-dropdown rounded-lg pointer-events-auto">
+    <div
+      style={{ ...style }}
+      className="z-50 w-min bg-dropdown shadow-sm rounded-lg pointer-events-auto"
+    >
       <div className="py-2 flex flex-col space-y-1 min-w-[14rem]">
         {items.map(({ handler, name, content, icon, confirm }) =>
           confirm ? (

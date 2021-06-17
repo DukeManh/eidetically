@@ -5,6 +5,8 @@ import { useLocalStorage, useMedia } from 'react-use';
 import { SidebarLayout, ProviderProps } from '../../interfaces';
 
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };
+const MIN = 100;
+const MAX = 900;
 
 export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);
@@ -99,7 +101,7 @@ export default function LayoutProvider({ children }: ProviderProps) {
         maxNavigationWidth,
         maxPropertiesWidth,
         zoom: zoom || defaultZoom,
-        setZoom,
+        setZoom: (val) => setZoom(Math.min(Math.max(MIN, val), MAX)),
       }}
     >
       {children}

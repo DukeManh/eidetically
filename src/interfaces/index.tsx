@@ -59,7 +59,7 @@ export interface LayoutContextType {
   maxPropertiesWidth: () => number;
 
   zoom: number;
-  setZoom: Dispatch<SetStateAction<number | undefined>>;
+  setZoom: (val: number) => void;
 }
 
 export interface LibraryContextType {

@@ -1,4 +1,5 @@
 import { HiMenuAlt2, HiMenuAlt3 } from 'react-icons/hi';
+// import { HiOutlinePlusCircle, HiOutlineMinusCircle } from 'react-icons/hi';
 
 import { useLayout, useLibrary } from '../../contexts';
 
@@ -19,7 +20,11 @@ export default function TopBar() {
 
         <div className="text-md">{activeLibrary?.name || 'Drop it'}</div>
 
-        <div className="max-w-xs">
+        <div className="flex flex-row items-center justify-evenly space-x-2">
+          {/* <HiOutlineMinusCircle
+            className="flex-shrink-0 cursor-pointer transform transition-transform duration-75 active:scale-125"
+            onClick={() => setZoom(zoom - 100)}
+          /> */}
           <input
             className="zoom-slider"
             type="range"
@@ -29,6 +34,10 @@ export default function TopBar() {
             max={900}
             step={50}
           ></input>
+          {/* <HiOutlinePlusCircle
+            className="flex-shrink-0 cursor-pointer transform transition-transform duration-75 active:scale-125"
+            onClick={() => setZoom(zoom + 100)}
+          /> */}
         </div>
 
         <div>Search</div>

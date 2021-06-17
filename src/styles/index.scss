@@ -52,10 +52,17 @@ $menubar_height: 2.25rem;
 
   // Image zoom slider thumb
   @mixin sliderThumb {
-    @apply appearance-none w-4 h-5 rounded-sm border-none transform;
-    background: linear-gradient(to right, #5E5E5E, #5E5E5E 15%, #151515 15%, #606060 85%, #151515 85%);
     -webkit-appearance: none;
     -moz-appearance: none;
+    @apply appearance-none  rounded-full transform bg-primary;
+    border: 2px solid white;
+    width: 11px;
+    height: 11px;
+
+    &:active {
+      @apply bg-white w-5 h-5;
+      border: 1px solid white;
+    }
   };
 
   //  Default images layout
@@ -155,8 +162,7 @@ $menubar_height: 2.25rem;
   }
 
   .zoom-slider {
-    @apply bg-black w-full border-2 appearance-none border-gray-300 rounded-lg;
-    height: 6px; 
+    @apply bg-gray-500 h-1 w-3/4 appearance-none rounded-lg;
     cursor: grab;
     &:active {
       cursor: grabbing;
@@ -172,6 +178,13 @@ $menubar_height: 2.25rem;
 
     &::-moz-range-thumb {
       @include sliderThumb;
+    }
+
+    &::-moz-range-progress {
+      background-color: white; 
+    }
+    &::-ms-fill-lower {
+      background-color: white; 
     }
   }
 
