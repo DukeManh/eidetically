@@ -36,7 +36,7 @@ export default function PopConfirm({
       </div>
       <div className="text-right">
         <button
-          className="px-2 py-1 mr-1 hover:bg-gray-800 rounded-sm"
+          className="px-2 py-1 mr-1 hover:bg-gray-800 hover:shadow-md rounded-sm"
           onClick={() => {
             setVisible(false);
             (onCancel || noop)();
@@ -45,7 +45,7 @@ export default function PopConfirm({
           {cancelText || 'No'}
         </button>
         <button
-          className="px-2 py-1 bg-purple-600 hover:bg-purple-500 rounded-sm"
+          className="px-2 py-1 bg-purple-600 hover:bg-purple-500 hover:shadow-md rounded-sm"
           onClick={() => {
             setVisible(false);
             (onConfirm || noop)();

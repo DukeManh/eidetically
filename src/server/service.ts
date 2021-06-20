@@ -1,12 +1,10 @@
 import { MetaData, Image } from '../interfaces';
 import { auth, db, storage, firebase } from './firebase';
 
-import { noop } from '../utilities';
+import task from '../components/UploadProgress/task';
 
 const errors = {
-  libExists: new Error(
-    'A library with the same name already exists, please choose a different name'
-  ),
+  libExists: new Error('Library exists, choose a different name'),
 };
 
 export async function createLibrary(name: string) {
@@ -66,53 +64,50 @@ export async function renameLibrary(libID: string, name: string) {
   }
 }
 
-export async function uploadImages(
-  acceptedFiles: File[],
-  libraryID: string,
-  onNext?: (fileName: string) => void,
-  onComplete?: (success: number) => void
-): Promise<void> {
+export async function uploadImages(acceptedFiles: File[], libraryID: string) {
   if (auth.currentUser) {
     const libRef = db.libraries.doc(libraryID);
-    let successfulUploads = 0;
     const promises: Promise<string>[] = [];
 
+    task.start(acceptedFiles.length);
     // upload files first
     acceptedFiles.forEach((file) => {
       const filePath = `${auth.currentUser?.uid}/${libraryID}/${file.name}`;
-
       promises.push(
-        new Promise((resolve, reject) => {
-          storage
-            .ref(filePath)
-            .put(file)
-            .then(
-              async (snap) => {
-                const { contentType, size, fullPath } = snap.metadata as MetaData;
-                const downloadURL = await snap.ref.getDownloadURL();
-                successfulUploads += 1;
+        new Promise((resolve) => {
+          const upload = storage.ref(filePath).put(file);
+          const t = task.new(file, upload.cancel);
+          upload.then(
+            async (snap) => {
+              const { contentType, size, fullPath } = snap.metadata as MetaData;
+              const downloadURL = await snap.ref.getDownloadURL();
 
-                // create a new image document for each uploaded file
-                const imageRef = libRef.collection('images').doc();
-                imageRef.set({
-                  note: '',
-                  library: libRef,
-                  upload_date: firebase.firestore.FieldValue.serverTimestamp(),
-                  name: file.name,
-                  downloadURL,
-                  contentType,
-                  size,
-                  fullPath,
-                });
+              // create a new image document for each uploaded file
+              const imageRef = libRef.collection('images').doc();
+              await imageRef.set({
+                note: '',
+                library: libRef,
+                upload_date: firebase.firestore.FieldValue.serverTimestamp(),
+                name: file.name,
+                downloadURL,
+                contentType,
+                size,
+                fullPath,
+              });
 
-                (onNext || noop)(file.name);
+              task.complete(t.id);
+              await libRef.update({
+                image_count: firebase.firestore.FieldValue.increment(1),
+              });
 
-                resolve(downloadURL);
-              },
-              (error) => {
-                reject(error.message);
-              }
-            );
+              resolve(downloadURL);
+            },
+            (error) => {
+              task.fail(t.id);
+              console.error(error.message);
+              resolve('');
+            }
+          );
         })
       );
     });
@@ -121,20 +116,11 @@ export async function uploadImages(
       console.error(error);
     });
 
-    (onComplete || noop)(successfulUploads);
-
-    // update the library's image_count
-    await libRef.update({
-      image_count: firebase.firestore.FieldValue.increment(successfulUploads),
-    });
+    task.done();
   }
 }
 
-export async function deleteImages(
-  images: Image[],
-  onNext?: (fileName: string) => void,
-  onComplete?: (success: number) => void
-): Promise<void> {
+export async function deleteImages(images: Image[]): Promise<void> {
   if (auth.currentUser && images.length) {
     let successfulDeletes = 0;
     const promises: Promise<Image>[] = [];
@@ -147,7 +133,7 @@ export async function deleteImages(
             .ref(image.fullPath)
             .delete()
             .catch((error) => {
-              console.error();
+              error();
               reject(error);
             })
             .finally(() => {
@@ -156,9 +142,6 @@ export async function deleteImages(
                 .delete()
                 .then(() => {
                   successfulDeletes += 1;
-                  if (onNext) {
-                    onNext(image.name);
-                  }
                   resolve(image);
                 })
                 .catch((error) => {
@@ -173,8 +156,6 @@ export async function deleteImages(
     await Promise.all(promises).catch((error) => {
       console.error(error);
     });
-
-    (onComplete || noop)(successfulDeletes);
 
     // update the library's image_count
     await libRef.update({

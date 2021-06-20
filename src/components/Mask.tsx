@@ -7,13 +7,13 @@ export interface MaskProps {
   style?: CSSProperties;
 }
 
-export default function Mask({ onClick, visible, zIndex }: MaskProps) {
+export default function Mask({ onClick, visible, zIndex, style }: MaskProps) {
   if (onClick) {
     return (
       <button
         onClick={onClick}
         className={visible ? 'mask mask-active' : 'mask'}
-        style={{ zIndex: zIndex ? zIndex : 10 }}
+        style={{ ...style, zIndex: zIndex ? zIndex : 10 }}
       ></button>
     );
   }
@@ -21,7 +21,7 @@ export default function Mask({ onClick, visible, zIndex }: MaskProps) {
   return (
     <div
       className={visible ? 'mask mask-active' : 'mask'}
-      style={{ zIndex: zIndex ? zIndex : 10 }}
+      style={{ ...style, zIndex: zIndex ? zIndex : 10 }}
     ></div>
   );
 }

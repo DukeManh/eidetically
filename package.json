@@ -4,15 +4,17 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.2",
+    "css-unit-converter": "^1.1.2",
     "firebase": "^8.6.2",
     "firebaseui": "^4.8.0",
     "node-sass": "^6.0.0",
-    "postcss-import": "^14.0.2",
+    "postcss-import": "^12.0.1",
     "postcss-nested": "^4.2.3",
     "rc-dropdown": "^3.2.0",
     "rc-trigger": "^5.2.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-dropzone": "^11.3.2",
     "react-hot-toast": "^2.0.0",
     "react-icons": "^4.2.0",
     "react-rnd": "^10.2.4",
@@ -24,7 +26,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "PORT=8000 craco start",
+    "start": "PORT=8000 TAILWIND_MODE=watch craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
@@ -62,6 +64,7 @@
     "@types/react-dom": "^17.0.5",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-window": "^1.8.3",
+    "@types/tailwindcss": "^2.0.5",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
     "autoprefixer": "^9.8.6",
@@ -73,8 +76,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
-    "postcss": "^8.2.15",
+    "postcss": "^7.0.36",
     "prettier": "^2.3.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.2"
   }
 }

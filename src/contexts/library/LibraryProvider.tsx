@@ -7,25 +7,12 @@ import { useAuth } from '../auth';
 import { db } from '../../server/firebase';
 import { uploadImages } from '../../server/service';
 
-import ProgressBar from '../../components/ProgressBar';
-
 export default function LibraryProvider({ children }: ProviderProps) {
   const { user } = useAuth();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [libraries, setLibraries] = useState<Library[]>([]);
   const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
-  const [progressing, setProgressing] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [progressMessage, setProgressMessage] = useState('');
-
-  const onProgressComplete = useCallback(() => {
-    setTimeout(() => {
-      setProgressing(false);
-      setProgressMessage('');
-      setProgress(0);
-    }, 2000);
-  }, []);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -36,26 +23,14 @@ export default function LibraryProvider({ children }: ProviderProps) {
   const upload = useCallback(
     (acceptedFiles: File[], libraryID?: string) => {
       if (activeLibrary?.id || libraryID) {
-        setProgressing(true);
-        let uploadedCount = 0;
-        setProgressMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
-
-        const onNext = () => {
-          uploadedCount += 1;
-          setProgress(Math.floor((uploadedCount / acceptedFiles.length) * 100));
-          if (uploadedCount < acceptedFiles.length) {
-            setProgressMessage(`Uploading (${uploadedCount + 1}/${acceptedFiles.length})`);
-          }
-        };
-
         if (libraryID) {
-          uploadImages(acceptedFiles, libraryID, onNext, onProgressComplete);
+          uploadImages(acceptedFiles, libraryID);
         } else if (activeLibrary?.id) {
-          uploadImages(acceptedFiles, activeLibrary.id, onNext, onProgressComplete);
+          uploadImages(acceptedFiles, activeLibrary.id);
         }
       }
     },
-    [activeLibrary, onProgressComplete]
+    [activeLibrary]
   );
 
   const setActiveLibrary = (id: string | undefined) => {
@@ -98,11 +73,6 @@ export default function LibraryProvider({ children }: ProviderProps) {
         uploadImages: upload,
       }}
     >
-      {progressing && (
-        <ProgressBar progress={progress}>
-          <div className="text-center my-auto">{progressMessage}</div>
-        </ProgressBar>
-      )}
       {children}
     </LibraryContext.Provider>
   );

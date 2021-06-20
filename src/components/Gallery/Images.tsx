@@ -1,20 +1,28 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDropzone } from 'react-dropzone';
+import colors from 'tailwindcss/colors';
 
 import { useLayout, useImage, useLibrary } from '../../contexts';
 import { RouterParams, Image } from '../../interfaces';
 import { db } from '../../server/firebase';
 
 import Figure from './Figure';
+import Mask from '../Mask';
 
 const QUERY_LIMIT = 15;
 
 export default function Images() {
-  const { setActiveLibrary, loading: loadingLib } = useLibrary();
+  const { setActiveLibrary, loading: loadingLib, uploadImages } = useLibrary();
   const { images, setImages } = useImage();
   const { zoom } = useLayout();
   const { libParam } = useParams<RouterParams>();
-  const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot listener cancellation function
+  const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot un-listener
+
+  const { getRootProps, isDragActive } = useDropzone({
+    onDrop: (files) => uploadImages(files),
+    accept: 'image/*',
+  });
 
   const loadMore = useCallback(
     (libID) => {
@@ -74,25 +82,36 @@ export default function Images() {
   }, [libParam, images, loadMore, loadingLib]);
 
   return (
-    <>
+    <div className="p-2 relative min-h-full" {...getRootProps()}>
+      {isDragActive && (
+        <Mask
+          visible
+          style={{
+            position: 'absolute',
+            height: '100%',
+            border: `2px solid ${colors.blue[600]}`,
+            animation: 'dropzoneBackground 800ms ease-in-out infinite alternate',
+          }}
+        />
+      )}
       <div className="waterfall-layout" style={{ columnWidth: zoom }}>
-        {Object.values(images?.images || {})
-          .filter((image) => !!image)
-          .map((image) => (
-            <>{image && <Figure key={image.id} image={image} />}</>
-          ))}
+        {(Object.values(images?.images || {}).filter((image) => !!image) as Image[]).map(
+          (image) => (
+            <Figure key={image.id} image={image} />
+          )
+        )}
       </div>
 
       <div className="py-4 mx-auto flex flex-row justify-center">
         {images?.cursor && (
           <button
-            className="bg-tabActive hover:bg-tabFocus py-1 px-2 rounded-sm"
+            className="py-1 px-2 rounded-sm border border-white transition-colors hover:bg-tabFocus shadow-md"
             onClick={() => loadMore(libParam)}
           >
             Load more
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 }

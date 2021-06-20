@@ -71,7 +71,7 @@ $menubar_height: 2.25rem;
     column-gap: 1.2rem;
     
     figure {
-      @apply mb-6 overflow-hidden flex flex-col space-y-3;
+      @apply mb-6 flex flex-col space-y-3;
       -webkit-column-break-inside: avoid; 
       page-break-inside: avoid;
       break-inside: avoid;
@@ -121,10 +121,36 @@ $menubar_height: 2.25rem;
           display: none;
         }
       }
+
+      @keyframes dropzoneBackground {
+        from {
+          @apply bg-blue-300 bg-opacity-5;
+        }
+        to {
+          @apply bg-blue-300 bg-opacity-30;
+        }
+      };
+
+      @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      };
+      @keyframes progress-animation {
+        from {
+          background-position: 100%;
+        }
+        to {
+          background-position: 0;
+        }
+      };
   }
 
   .tab-active {
-      @apply bg-tabActive;
+      @apply bg-tabActive font-medium;
   }
 
   .tab-hidden {
@@ -144,8 +170,14 @@ $menubar_height: 2.25rem;
   }
 
   .progress {
-    @apply absolute w-full h-full top-[90%] bg-gradient-to-r from-blue-300 to-blue-700;
     transition: right 0.5s cubic-bezier(0, 0.55, 0.45, 1);
+    background: linear-gradient(90deg,#8AB6D6,#2978B5 17%,#0061A8 34%,#0039a6 51%,#8AB6D6 68%,#2978B5 85%,#0061A8);
+    background-size: 300% 100%;
+    animation: progress-animation 2s linear infinite;
+  }
+
+  .progressBar-icon {
+    @apply text-2xl font-bold hover:bg-tabFocus cursor-pointer rounded-md transform transition-transform duration-500;
   }
 
   .toolbox-button {

@@ -4,6 +4,7 @@ import MenuBar from '../components/Menubar';
 import Navigation from '../components/Navigation';
 import Properties from '../components/Properties';
 import Gallery from '../components/Gallery';
+import UploadProgress from '../components/UploadProgress';
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
           duration: 3000,
         }}
       />
+      <UploadProgress />
       <MenuBar />
       <div className="max-h-screen overflow-hidden relative">
         <Navigation />

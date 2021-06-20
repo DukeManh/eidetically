@@ -25,7 +25,11 @@ export default function Figure({ image }: FigureProps) {
         onClick={handleClick}
         onDoubleClick={toggleSlide}
       >
-        <img className="w-full h-auto cursor-pointer" alt={image.name} src={image.downloadURL} />
+        <img
+          className="w-full h-auto cursor-pointer shadow-sm hover:shadow-md"
+          alt={image.name}
+          src={image.downloadURL}
+        />
       </button>
       <figcaption className="px-4 overflow-hidden text-sm whitespace-nowrap overflow-ellipsis text-center max-h-12 leading-6">
         {image.name}
