@@ -18,7 +18,7 @@ export default function Properties() {
         onClick={() => updateProperties({ visible: false })}
       />
       <SideBar
-        className="sidebar border-l-2 pl-1"
+        className="sidebar shadow-sm"
         width={properties.width}
         maxWidth={maxPropertiesWidth()}
         position={{ x: properties.visible ? windowWidth - properties.width : windowWidth, y: 0 }}

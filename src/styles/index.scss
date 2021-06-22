@@ -181,12 +181,12 @@ $menubar_height: 2.25rem;
   }
 
   .toolbox-button {
-    min-height: 3.5rem;
-    min-width: 3.5rem;
-    @apply m-1;
+    min-height: 3rem;
+    min-width: 3rem;
     padding: 1px;
+    margin: 2px;
     button {
-      @apply bg-tabActive transition-all transform hover:scale-95 hover:shadow-none w-full h-full flex flex-col
+      @apply bg-tabActive transition-all transform hover:scale-95 w-full h-full flex flex-col
       justify-center items-center duration-75 rounded-lg rounded-bl-md rounded-tr-md active:delay-700;   
 
       @include buttonDisabled;

@@ -65,7 +65,7 @@ export default function Navigation() {
       />
 
       <Sidebar
-        className="sidebar border-r-2 pr-1"
+        className="sidebar shadow-sm"
         width={navigation.width}
         maxWidth={maxNavigationWidth()}
         position={{ x: navigation.visible ? 0 : -navigation.width, y: 0 }}

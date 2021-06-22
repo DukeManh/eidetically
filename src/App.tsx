@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import { LayoutProvider, LibraryProvider, AuthProvider, ImageProvider } from './contexts/';
+import { LayoutProvider, LibraryProvider, AuthProvider, ImageProvider } from './contexts';
 import Home from './pages/Home';
 
 function App() {

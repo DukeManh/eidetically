@@ -1,11 +1,13 @@
-import { AiOutlineSelect, AiOutlineDelete, AiOutlineLink } from 'react-icons/ai';
-import { CgCloseO } from 'react-icons/cg';
+import { IconContext } from 'react-icons';
+
 import { MdCreateNewFolder } from 'react-icons/md';
-import { BiCut } from 'react-icons/bi';
-import { GoCloudUpload, GoCloudDownload } from 'react-icons/go';
-import { BiEdit, BiSlideshow } from 'react-icons/bi';
+import { BiCut, BiSelectMultiple } from 'react-icons/bi';
+import { IoIosCloseCircle, IoIosCopy } from 'react-icons/io';
+import { RiDeleteBin7Fill, RiSlideshow2Fill, RiEditBoxFill } from 'react-icons/ri';
+import { ImCloudUpload, ImCloudDownload } from 'react-icons/im';
 
 import { useImage, useAuth } from '../../contexts';
+import Tooltip from '../Tooltip';
 
 export default function ToolBox() {
   const {
@@ -17,6 +19,7 @@ export default function ToolBox() {
     toggleSlide,
     selection,
   } = useImage();
+
   const { user } = useAuth();
 
   const atLeastOneSelected = !!Object.values(selection).filter((image) => !!image).length;
@@ -25,21 +28,21 @@ export default function ToolBox() {
     {
       name: 'Select',
       handleClick: startSelecting,
-      children: <AiOutlineSelect />,
+      children: <BiSelectMultiple />,
       disabled: false,
       hidden: selecting,
     },
     {
       name: 'Cancel',
       handleClick: cancelSelecting,
-      children: <CgCloseO />,
+      children: <IoIosCloseCircle />,
       disabled: false,
       hidden: !selecting,
     },
     {
       name: 'Delete',
       handleClick: deleteSelection,
-      children: <AiOutlineDelete />,
+      children: <RiDeleteBin7Fill />,
       disabled: !atLeastOneSelected,
     },
     {
@@ -57,51 +60,50 @@ export default function ToolBox() {
     {
       name: 'Save',
       handleClick: () => {},
-      children: <GoCloudDownload />,
+      children: <ImCloudDownload />,
       disabled: !atLeastOneSelected,
     },
     {
       name: 'Slide',
       handleClick: () => toggleSlide(),
-      children: <BiSlideshow />,
+      children: <RiSlideshow2Fill />,
       disabled: !atLeastOneSelected,
     },
     {
       name: 'Upload',
       handleClick: () => {},
-      children: <GoCloudUpload />,
+      children: <ImCloudUpload />,
       disabled: false,
     },
     {
       name: 'Edit',
       handleClick: () => {},
-      children: <BiEdit />,
+      children: <RiEditBoxFill />,
       disabled: !oneFocused,
     },
     {
       name: 'Copy',
       handleClick: () => {},
-      children: <AiOutlineLink />,
+      children: <IoIosCopy />,
       disabled: !oneFocused,
     },
   ];
 
   return (
-    <>
+    <IconContext.Provider value={{ size: '22' }}>
       <div className="flex flex-wrap justify-center">
         {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
-          <div key={name} className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}>
-            {!hidden ? (
-              <button disabled={!user || disabled} onClick={() => handleClick()}>
-                {children}
-                {name}
-              </button>
-            ) : (
-              <div className="hidden w-0 h-0"></div>
-            )}
-          </div>
+          <Tooltip key={name} text={name} hidden={hidden}>
+            <div className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}>
+              {!hidden && (
+                <button disabled={!user || disabled} onClick={() => handleClick()}>
+                  {children}
+                </button>
+              )}
+            </div>
+          </Tooltip>
         ))}
       </div>
-    </>
+    </IconContext.Provider>
   );
 }

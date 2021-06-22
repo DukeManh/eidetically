@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect } from 'react';
+import { CSSProperties } from 'react';
 
 import { MenuItem } from '../interfaces';
 
@@ -31,14 +31,6 @@ export function Item({ item }: ItemProps) {
 }
 
 export default function Menu({ items, style }: ContextMenuProps) {
-  useEffect(() => {
-    return () => {
-      setTimeout(() => {
-        console.log('Closed');
-      }, 7000);
-    };
-  }, []);
-
   return (
     <div
       style={{ ...style }}

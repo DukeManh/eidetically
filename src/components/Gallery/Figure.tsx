@@ -1,6 +1,6 @@
 import { Image } from '../../interfaces';
 import { useImage } from '../../contexts';
-import { classNames } from '../../utilities/';
+import { classNames } from '../../utilities';
 
 export interface FigureProps {
   image: Image;

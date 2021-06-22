@@ -5,6 +5,7 @@ import task from '../components/UploadProgress/task';
 
 const errors = {
   libExists: new Error('Library exists, choose a different name'),
+  unauthenticated: new Error('User not authenticated'),
 };
 
 export async function createLibrary(name: string) {
@@ -15,14 +16,18 @@ export async function createLibrary(name: string) {
       .get();
 
     if (existingLib.empty) {
-      await db.libraries.add({
+      const lib = await db.libraries.add({
         name,
         image_count: 0,
         owner: auth.currentUser.uid,
       });
+
+      return lib.id;
     } else {
       throw errors.libExists;
     }
+  } else {
+    throw errors.unauthenticated;
   }
 }
 
@@ -40,6 +45,8 @@ export async function deleteLibrary(libID: string) {
     } catch (error) {
       console.error(error);
     }
+  } else {
+    throw errors.unauthenticated;
   }
 }
 
@@ -61,6 +68,8 @@ export async function renameLibrary(libID: string, name: string) {
         throw errors.libExists;
       }
     }
+  } else {
+    throw errors.unauthenticated;
   }
 }
 
@@ -117,6 +126,8 @@ export async function uploadImages(acceptedFiles: File[], libraryID: string) {
     });
 
     task.done();
+  } else {
+    throw errors.unauthenticated;
   }
 }
 
@@ -161,5 +172,7 @@ export async function deleteImages(images: Image[]): Promise<void> {
     await libRef.update({
       image_count: firebase.firestore.FieldValue.increment(-successfulDeletes),
     });
+  } else {
+    throw errors.unauthenticated;
   }
 }

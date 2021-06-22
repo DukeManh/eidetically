@@ -30,14 +30,20 @@ const builtinPlacements = {
   },
 };
 
-export default function Trigger({ children, onPopupVisibleChange, ...props }: RCTriggerProps) {
+export default function Trigger({
+  children,
+  onPopupVisibleChange,
+  action,
+  hideAction,
+  ...props
+}: RCTriggerProps) {
   useKey('Escape', () => (onPopupVisibleChange || noop)(false));
 
   return (
     <RCTrigger
-      action={['click']}
       autoDestroy
-      hideAction={['contextMenu', 'click']}
+      action={action || ['click']}
+      hideAction={hideAction || ['contextMenu', 'click']}
       destroyPopupOnHide
       builtinPlacements={builtinPlacements}
       getPopupContainer={() => document.querySelector('main') || document.body}

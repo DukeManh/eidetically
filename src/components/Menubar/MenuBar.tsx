@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BsDropletHalf } from 'react-icons/bs';
 import Trigger from '../Trigger';
 
 import { MenuItem } from '../../interfaces';
@@ -42,11 +41,11 @@ export default function MenuBar() {
   ];
 
   return (
-    <nav className="h-9 bg-secondary relative text-gray-100 border-b border-gray-500 z-100">
+    <nav className="h-9 bg-secondary relative text-gray-100 border-b border-gray-600 z-100">
       <span className="align-text-top menubar pl-2 inline-flex flex-row justify-start items-center">
-        <div className="menu-item">
+        <div className="menu-item mr-2">
           <Link to="/">
-            <BsDropletHalf />
+            <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="logo" width={18}></img>
           </Link>
         </div>
         {MenuItems.map((item) => (
