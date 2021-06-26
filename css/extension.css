@@ -1,0 +1,43 @@
+:root {
+  --bg: #414141;
+  --text: #e5e7eb;
+  --container-height: 9rem;
+  --maxZIndex: 9999999999999999999999;
+  --easeInOutBack: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --coolGray: #9ca3af;
+  --blue: #60a5fa;
+}
+
+.ex-drop-area {
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  background-color: var(--bg);
+  opacity: var(--bgOpactiy);
+  color: var(--text);
+  z-index: var(--maxZIndex);
+  height: 0;
+  transition: height 400ms var(--easeInOutBack);
+}
+
+.ex-drop-area.show {
+  height: var(--container-height);
+  border-top: 1px var(--coolGray) solid;
+}
+
+.ex-drop-area.dragOver {
+  border: var(--blue) 2px solid;
+}
+
+.firebase-authUI-container {
+  position: fixed;
+  z-index: var(--maxZIndex);
+  width: 250px;
+  height: 300px;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+}

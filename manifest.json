@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "Drop It",
+  "version": "1.0",
+
+  "description": "Allows drag and drop media from websites to cloud storage",
+  "homepage_url": "https://dropit-app.netlify.app/",
+  "icons": {
+    "48": "icons/logo48.png",
+    "96": "icons/logo96.png"
+  },
+
+  "permissions": ["tabs", "https://reqres.in/*"],
+
+  "browser_action": {
+    "default_icon": "icons/logo48.png",
+    "default_title": "Drop It",
+    "default_popup": "popup/popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "scripts/utils/firebase-app.js",
+        "scripts/utils/firebase-auth.js",
+        "scripts/utils/firebase-ui-auth.js",
+        "scripts/utils/jquery.min.js",
+        "scripts/content.js"
+      ],
+      "css": ["css/extension.css"]
+    }
+  ],
+
+  "background": {
+    "page": "background.html" 
+  },
+
+  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://securetoken.googleapis.com https://apis.google.com https://www.gstatic.com; object-src 'self'"
+}

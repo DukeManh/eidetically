@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6"
+  },
+  "typeAcquisition": {
+    "include": ["jquery", "chrome", "firefox-webext-browser", "firebase-client"]
+  }
+}
