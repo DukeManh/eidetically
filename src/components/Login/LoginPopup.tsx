@@ -20,7 +20,9 @@ export default function LoginPopup() {
         ],
         popupMode: true,
         signInFlow: 'popup',
-        signInSuccessUrl: 'http://localhost:8000/',
+        callbacks: {
+          signInSuccessWithAuthResult: () => false,
+        },
       });
     }
   }, [loginVisible, user]);

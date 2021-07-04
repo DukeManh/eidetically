@@ -39,11 +39,13 @@ export default function Menu({ items, style }: ContextMenuProps) {
       <div className="py-2 flex flex-col space-y-1 min-w-[14rem]">
         {items.map(({ handler, name, content, icon, confirm }) =>
           confirm ? (
-            <PopConfirm content={confirm.content} placement="top" onConfirm={confirm.onConfirm}>
-              <div
-                className="text-left px-4 hover:bg-blue-500 items-center cursor-pointer"
-                key={name}
-              >
+            <PopConfirm
+              content={confirm.content}
+              placement="top"
+              onConfirm={confirm.onConfirm}
+              key={name}
+            >
+              <div className="text-left px-4 hover:bg-blue-500 items-center cursor-pointer">
                 <div className="flex flex-row space-x-2">
                   <div className="flex-grow">{content}</div>
                   <div>{icon}</div>

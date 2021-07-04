@@ -17,10 +17,13 @@ export default function Images() {
   const { images, setImages } = useImage();
   const { zoom } = useLayout();
   const { libParam } = useParams<RouterParams>();
-  const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot un-listener
+  const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot unsubscribers
 
   const { getRootProps, isDragActive } = useDropzone({
-    onDrop: (files) => uploadImages(files),
+    onDrop: (files, rejected) => {
+      console.log(files);
+      console.log(rejected);
+    },
     accept: 'image/*',
   });
 
@@ -94,7 +97,15 @@ export default function Images() {
           }}
         />
       )}
-      <div className="waterfall-layout" style={{ columnWidth: zoom }}>
+      <div
+        className="waterfall-layout"
+        style={{ columnWidth: zoom }}
+        onDrop={(ev) => {
+          ev.preventDefault();
+          const src = ev.dataTransfer.getData('src');
+          console.log(src);
+        }}
+      >
         {(Object.values(images?.images || {}).filter((image) => !!image) as Image[]).map(
           (image) => (
             <Figure key={image.id} image={image} />

@@ -37,6 +37,16 @@ export default function SideBar({
 
   return (
     <Rnd
+      resizeHandleClasses={{
+        topRight: 'resizeHandler',
+        topLeft: 'resizeHandler',
+        top: 'resizeHandler',
+        right: 'resizeHandler',
+        left: 'resizeHandler',
+        bottomRight: 'resizeHandler',
+        bottomLeft: 'resizeHandler',
+        bottom: 'resizeHandler',
+      }}
       className={className}
       size={{ width, height: '100%' }}
       minWidth={250}

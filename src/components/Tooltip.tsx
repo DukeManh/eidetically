@@ -20,8 +20,8 @@ export default function Tooltip({ children, placement, text, hidden }: TooltipPr
       onPopupVisibleChange={(i) => {
         setVisible(i);
       }}
-      mouseEnterDelay={2}
-      popup={<div className="bg-alert text-center px-2 rounded-md m-1">{text}</div>}
+      mouseEnterDelay={1.5}
+      popup={<div className="bg-alert text-sm text-center px-2 rounded-md">{text}</div>}
       action={['hover']}
     >
       {children}

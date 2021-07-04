@@ -102,10 +102,10 @@ $menubar_height: 2.25rem;
       @apply w-full focus:bg-tabFocus hover:bg-tabFocus cursor-pointer rounded-lg flex flex-row items-center;
 
       .image-count{
-        @apply  text-gray-400 pr-2;
+        @apply  text-gray-400 pr-1;
       }
       .edit-library {
-        @apply text-gray-400 hover:bg-tabActive rounded-lg h-full w-6 block;
+        @apply text-gray-400 hover:bg-tabActive rounded-lg h-full p-1 ;
         display: none;
         
         .react-icons {
@@ -115,7 +115,7 @@ $menubar_height: 2.25rem;
 
       &:hover {
         .edit-library {
-          @apply py-1 block;
+          @apply block;
         }
         .image-count {
           display: none;
@@ -251,6 +251,10 @@ $menubar_height: 2.25rem;
       border-right-color: transparent;
       content: "";
     }
+  }
+
+  .resizeHandler {
+    @apply hover:bg-gray-400 active:bg-blue-500;
   }
 };
 

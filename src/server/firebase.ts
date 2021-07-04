@@ -27,7 +27,7 @@ const firebaseConfig = {
   measurementId: REACT_APP_MEASUREMENT_ID,
 };
 
-export const firebaseApp = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 const typeConverter = <T>() => ({
   toFirestore: (data: T) => data,

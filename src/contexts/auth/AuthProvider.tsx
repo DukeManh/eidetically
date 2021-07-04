@@ -18,6 +18,9 @@ export default function StorageProvider({ children }: ProviderProps) {
   useEffect(() => {
     auth.onAuthStateChanged((firebaseUser) => {
       setUser(firebaseUser);
+      if (firebaseUser) {
+        setLoginVisible(false);
+      }
     });
   }, []);
 

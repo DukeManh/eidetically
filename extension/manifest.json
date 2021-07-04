@@ -1,7 +1,0 @@
-{
-  "manifest_version": 2,
-  "name": "dropit",
-  "version": "1.0",
-
-  "description": "Allow dragging online image to Drop It app"
-}
