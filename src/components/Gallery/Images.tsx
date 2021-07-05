@@ -20,10 +20,7 @@ export default function Images() {
   const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot unsubscribers
 
   const { getRootProps, isDragActive } = useDropzone({
-    onDrop: (files, rejected) => {
-      console.log(files);
-      console.log(rejected);
-    },
+    onDrop: (files) => uploadImages(files),
     accept: 'image/*',
   });
 

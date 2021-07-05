@@ -121,33 +121,33 @@ $menubar_height: 2.25rem;
           display: none;
         }
       }
-
-      @keyframes dropzoneBackground {
-        from {
-          @apply bg-blue-300 bg-opacity-5;
-        }
-        to {
-          @apply bg-blue-300 bg-opacity-30;
-        }
-      };
-
-      @keyframes rotation {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      };
-      @keyframes progress-animation {
-        from {
-          background-position: 100%;
-        }
-        to {
-          background-position: 0;
-        }
-      };
   }
+
+  @keyframes dropzoneBackground {
+    from {
+      @apply bg-blue-300 bg-opacity-5;
+    }
+    to {
+      @apply bg-blue-300 bg-opacity-30;
+    }
+  };
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  };
+  @keyframes progress-animation {
+    from {
+      background-position: 100%;
+    }
+    to {
+      background-position: 0;
+    }
+  };
 
   .tab-active {
       @apply bg-tabActive font-medium;
@@ -221,7 +221,8 @@ $menubar_height: 2.25rem;
   }
 
   .slides {
-    @apply fixed top-0 left-0 w-full h-full z-[1000];
+    @apply fixed top-0 left-0 w-full h-full;
+    z-index: 1000;
   }
 
   .slides-hidden {
@@ -258,12 +259,10 @@ $menubar_height: 2.25rem;
   }
 };
 
-// Navigation sidebar
 .navigation-wrap {
-max-height: calc(100vh -  #{$menubar_height});
+  max-height: calc(100vh -  #{$menubar_height});
 }
 
-// Gallery container
 .gallery {
-max-height: calc(100vh -  #{$menubar_height});
+  max-height: calc(100vh -  #{$menubar_height});
 }
