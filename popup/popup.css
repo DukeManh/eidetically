@@ -37,8 +37,12 @@ code {
 }
 
 .loginButton {
-  padding: 0.1rem 0.2px;
+  padding: 0.1rem 0.2rem;
   background-color: teal;
   display: block;
   margin: 0 auto;
+}
+
+.hidden {
+  display: none;
 }

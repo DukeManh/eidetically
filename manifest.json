@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Drop It",
+  "name": "Eidetically",
   "version": "1.0",
 
   "description": "Allows drag and drop media from websites to cloud storage",
@@ -10,11 +10,11 @@
     "96": "icons/logo96.png"
   },
 
-  "permissions": ["tabs", "https://reqres.in/*"],
+  "permissions": ["tabs"],
 
   "browser_action": {
     "default_icon": "icons/logo48.png",
-    "default_title": "Drop It",
+    "default_title": "Eidetically",
     "default_popup": "popup/popup.html"
   },
 
@@ -33,7 +33,7 @@
   ],
 
   "background": {
-    "page": "background.html" 
+    "scripts": ["scripts/utils/jwt-decode.js", "background.js"]
   },
 
   "content_security_policy": "script-src 'self' https://cdn.firebase.com https://securetoken.googleapis.com https://apis.google.com https://www.gstatic.com; object-src 'self'"

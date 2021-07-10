@@ -36,6 +36,11 @@ $(function () {
   document.body.appendChild(dropArea);
 
   $(document).on('dragstart', 'img', (ev) => {
+    chrome.runtime.sendMessage(
+      {
+        command: 'getLibs',
+    }, );
+
     dropArea.classList.add('show');
     const img = ev.target;
     const canvas = createCanvas(img);
