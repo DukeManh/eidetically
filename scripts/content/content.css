@@ -43,10 +43,6 @@
     border-top: 1px var(--ei-coolGray) solid;
 }
 
-.ei-drop-area.dragOver {
-    border: var(--ei-blue) 2px solid;
-}
-
 .ei-drop-container {
     box-sizing: border-box;
     height: var(--ei-container-height);
