@@ -8,7 +8,9 @@
     "build": "cd web && craco build",
     "type-check": "cd web && tsc --project tsconfig.json --pretty --noEmit",
     "lint": "cd web && eslint --ext js,jsx,ts,tsx --fix",
-    "install": "npm install && cd web && npm install"
+    "install:web": "cd web && npm install",
+    "eslint": "eslint --config .eslintrc.js",
+    "prettier": "prettier --write \"./**/*.{md,jsx,json,html,css,js,yml}\""
   },
   "husky": {
     "hooks": {
@@ -16,7 +18,7 @@
     }
   },
   "lint-staged": {
-    "*": "npm run type-check && npm run lint"
+    "*": "npm run prettier && npm run type-check && npm run lint"
   },
   "repository": {
     "type": "git",

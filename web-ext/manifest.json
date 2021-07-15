@@ -30,9 +30,7 @@
         "scripts/utils/jquery.min.js",
         "scripts/content/content.js"
       ],
-      "css": [
-        "scripts/content/content.css"
-      ],
+      "css": ["scripts/content/content.css"],
       "all_frames": true
     }
   ],
