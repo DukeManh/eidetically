@@ -1,0 +1,81 @@
+{
+  "name": "drop-it",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.1.2",
+    "css-unit-converter": "^1.1.2",
+    "firebase": "^8.6.2",
+    "firebaseui": "^4.8.0",
+    "node-sass": "^6.0.0",
+    "postcss-import": "^14.0.2",
+    "postcss-nested": "^4.2.3",
+    "rc-dropdown": "^3.2.0",
+    "rc-trigger": "^5.2.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^11.3.2",
+    "react-hot-toast": "^2.0.0",
+    "react-icons": "^4.2.0",
+    "react-rnd": "^10.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-use": "^17.2.4",
+    "sweetalert2": "^11.0.17",
+    "typescript": "^4.2.4",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start": "PORT=8000 TAILWIND_MODE=watch craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "lint": "eslint --ext js,jsx,ts,tsx --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^26.0.23",
+    "@types/lodash": "^4.14.169",
+    "@types/node": "^12.20.13",
+    "@types/node-sass": "^4.11.1",
+    "@types/react": "^17.0.5",
+    "@types/react-dom": "^17.0.5",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-window": "^1.8.3",
+    "@types/tailwindcss": "^2.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "autoprefixer": "^9.8.6",
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "lint-staged": "^11.0.0",
+    "npm": "file:tailwindcss/postcss7-compat@^2.1.2",
+    "postcss": "^8.2.15",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.2"
+  }
+}

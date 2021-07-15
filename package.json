@@ -4,7 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cd web && PORT=8000 TAILWIND_MODE=watch craco start",
+    "build": "cd web && craco build",
+    "type-check": "cd web && tsc --project tsconfig.json --pretty --noEmit",
+    "lint": "cd web && eslint --ext js,jsx,ts,tsx --fix",
+    "install": "npm install && cd web && npm install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": "npm run type-check && npm run lint"
   },
   "repository": {
     "type": "git",
@@ -16,5 +28,10 @@
   "bugs": {
     "url": "https://github.com/DukeManh/eidetically/issues"
   },
-  "homepage": "https://github.com/DukeManh/eidetically#readme"
+  "homepage": "https://github.com/DukeManh/eidetically#readme",
+  "devDependencies": {
+    "husky": "^7.0.1",
+    "prettier": "^2.3.2",
+    "lint-staged": "^11.0.0"
+  }
 }
