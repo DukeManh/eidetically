@@ -1,0 +1,48 @@
+html,
+body {
+  font-size: 15px;
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+body {
+  width: 230px;
+  min-height: 300px;
+  margin: 0;
+  padding: 5px;
+}
+a {
+  text-decoration: none;
+}
+li a {
+  text-decoration: underline;
+  color: #0288d1;
+}
+.container {
+  margin-top: 20px;
+  line-height: 25px;
+}
+#sign-in-status {
+  font-weight: bold;
+}
+pre {
+  overflow-x: scroll;
+  line-height: 18px;
+}
+code {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.loginButton {
+  padding: 0.1rem 0.2rem;
+  background-color: teal;
+  display: block;
+  margin: 0 auto;
+}
+
+.hidden {
+  display: none;
+}
