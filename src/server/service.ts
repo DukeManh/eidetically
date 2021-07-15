@@ -79,7 +79,7 @@ export async function uploadImages(acceptedFiles: File[], libraryID: string) {
     const promises: Promise<string>[] = [];
 
     task.start(acceptedFiles.length);
-    // upload files first
+
     acceptedFiles.forEach((file) => {
       const filePath = `${auth.currentUser?.uid}/${libraryID}/${file.name}`;
       promises.push(
@@ -168,7 +168,6 @@ export async function deleteImages(images: Image[]): Promise<void> {
       console.error(error);
     });
 
-    // update the library's image_count
     await libRef.update({
       image_count: firebase.firestore.FieldValue.increment(-successfulDeletes),
     });

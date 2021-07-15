@@ -7,23 +7,25 @@ import { useAuth } from '../../contexts';
 
 import Mask from '../Mask';
 
+const authUIConfig = {
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.GithubAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+  ],
+  signInFlow: 'popup',
+  callbacks: {
+    signInSuccessWithAuthResult: () => true,
+  },
+};
+
 export default function LoginPopup() {
   const { loginVisible, setLoginVisible } = useAuth();
   const { user } = useAuth();
 
   useEffect(() => {
     if (!user && loginVisible) {
-      authUI.start('.google-login', {
-        signInOptions: [
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        ],
-        popupMode: true,
-        signInFlow: 'popup',
-        callbacks: {
-          signInSuccessWithAuthResult: () => false,
-        },
-      });
+      authUI.start('.google-login', authUIConfig);
     }
   }, [loginVisible, user]);
 
