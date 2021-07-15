@@ -23,9 +23,9 @@ $(() => {
     {
       command: 'getUser',
     },
-    (auth) => {
-      if (auth) {
-        updateUser(auth.user);
+    (res) => {
+      if (res.status === 'success') {
+        updateUser(res.payload.user);
       }
 
       $('.signIn').on(`click`, () => {
@@ -34,10 +34,10 @@ $(() => {
           payload: {
             token: token.val(),
           },
-        }, (auth) => {
-          if (auth){
+        }, ({status, payload}) => {
+          if (status === 'success'){
             token.val('');
-            updateUser(auth.user);
+            updateUser(payload.user);
           }
         });
       });

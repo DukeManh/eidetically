@@ -1,0 +1,115 @@
+:root {
+    --ei-bg: #414141;
+    --ei-lib: #3A3A3A;
+    --ei-text: #e5e7eb;
+    --ei-container-height: 150px;
+    --ei-maxZIndex: 9999999999999999999999;
+    --ei-easeInOutBack: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --ei-coolGray: #9ca3af;
+    --ei-blue: #60a5fa;
+    --font: 16px;
+}
+
+.ei-drop-area *{
+    all: unset;
+    box-sizing: border-box;
+}
+
+.ei-drop-area img{
+    position: unset;
+    text-align: unset;
+    margin: unset;
+    width: 2em;
+    height: 2em;
+}
+
+.ei-drop-area {
+    font-size: var(--font);
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    background-color: var(--ei-bg);
+    color: var(--ei-text);
+    z-index: var(--ei-maxZIndex);
+    height: 0;
+    transition: height 400ms var(--ei-easeInOutBack);
+}
+
+.ei-drop-area.show {
+    height: var(--ei-container-height);
+    border-top: 1px var(--ei-coolGray) solid;
+}
+
+.ei-drop-area.dragOver {
+    border: var(--ei-blue) 2px solid;
+}
+
+.ei-drop-container {
+    box-sizing: border-box;
+    height: var(--ei-container-height);
+    padding: .5em .5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    justify-items: center;
+    gap: 0.5em;
+}
+
+.ei-arrow {
+    width: 9em;
+    margin: 2em 0;
+}
+
+.ei-arrow img {
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+}
+
+#ei-arrow-right{
+    border-left: 1px solid #e5e7eb;
+}
+
+#ei-arrow-left{
+    border-right: 1px solid #e5e7eb;
+}
+
+.ei-lib-box {
+    box-sizing: border-box;
+    background: var(--ei-lib);
+    box-shadow: 0 3px 4px black;
+    min-width: 10em;
+    width: 10em;
+    border-radius: 8px;
+    transition: box-shadow 200ms ease;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.ei-lib-box * {
+    pointer-events: none;
+}
+
+.ei-lib-box.dragover {
+    box-shadow: 0 2px 8px var(--ei-blue);
+}
+
+.ei-libs-container {
+    flex-shrink: unset;
+    padding: .5em .5em 1em;
+    flex-grow: 1;
+    box-sizing: border-box;
+    justify-content: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    gap: 1em;
+    overflow-x: scroll;
+}

@@ -12,6 +12,8 @@
 
   "permissions": ["tabs"],
 
+  "web_accessible_resources": ["icons/*"],
+
   "browser_action": {
     "default_icon": "icons/logo48.png",
     "default_title": "Eidetically",
@@ -26,9 +28,12 @@
         "scripts/utils/firebase-auth.js",
         "scripts/utils/firebase-ui-auth.js",
         "scripts/utils/jquery.min.js",
-        "scripts/content.js"
+        "scripts/content/content.js"
       ],
-      "css": ["css/extension.css"]
+      "css": [
+        "scripts/content/content.css"
+      ],
+      "all_frames": true
     }
   ],
 
