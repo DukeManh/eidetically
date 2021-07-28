@@ -15,7 +15,7 @@
   "web_accessible_resources": ["icons/*"],
 
   "browser_action": {
-    "default_icon": "icons/logo48.png",
+    "default_icon": "icons/logo32.png",
     "default_title": "Eidetically",
     "default_popup": "popup/popup.html"
   },
@@ -23,20 +23,20 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": [
-        "scripts/utils/firebase-app.js",
-        "scripts/utils/firebase-auth.js",
-        "scripts/utils/firebase-ui-auth.js",
-        "scripts/utils/jquery.min.js",
-        "scripts/content/content.js"
-      ],
+      "js": ["scripts/utils/jquery.min.js", "scripts/content/content.js"],
       "css": ["scripts/content/content.css"],
       "all_frames": true
     }
   ],
 
   "background": {
-    "scripts": ["scripts/utils/jwt-decode.js", "background.js"]
+    "scripts": [
+      "scripts/utils/jwt-decode.js",
+      "scripts/utils/firebase-app.js",
+      "scripts/utils/firebase-auth.js",
+      "scripts/utils/firebase-firestore.js",
+      "background.js"
+    ]
   },
 
   "content_security_policy": "script-src 'self' https://cdn.firebase.com https://securetoken.googleapis.com https://apis.google.com https://www.gstatic.com; object-src 'self'"

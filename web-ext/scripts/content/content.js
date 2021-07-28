@@ -1,122 +1,8 @@
 $(function () {
   let dragged;
   let libraries = null;
-  const libsData = [
-    {
-      document: {
-        name: 'projects/dropit-7ae30/databases/(default)/documents/libraries/354wH5SCAObbOLhJhC2E',
-        fields: {
-          name: {
-            stringValue: 'wow',
-          },
-          image_count: {
-            integerValue: '30',
-          },
-          owner: {
-            stringValue: 'laLvpMgONMPO5nMyqXuot38U8jp2',
-          },
-        },
-        createTime: '2021-06-20T05:52:36.944227Z',
-        updateTime: '2021-07-05T00:24:17.527836Z',
-      },
-      readTime: '2021-07-12T09:22:36.219778Z',
-    },
-    {
-      document: {
-        name: 'projects/dropit-7ae30/databases/(default)/documents/libraries/AtU5dXEyhTUPlZpW76a9',
-        fields: {
-          owner: {
-            stringValue: 'laLvpMgONMPO5nMyqXuot38U8jp2',
-          },
-          image_count: {
-            integerValue: '37',
-          },
-          name: {
-            stringValue: 'hi there',
-          },
-        },
-        createTime: '2021-06-20T06:08:12.685925Z',
-        updateTime: '2021-06-20T06:09:01.049338Z',
-      },
-      readTime: '2021-07-12T09:22:36.219778Z',
-    },
-    {
-      document: {
-        name: 'projects/dropit-7ae30/databases/(default)/documents/libraries/354wH5SCAObbOLhJhC2E',
-        fields: {
-          name: {
-            stringValue: 'wow',
-          },
-          image_count: {
-            integerValue: '30',
-          },
-          owner: {
-            stringValue: 'laLvpMgONMPO5nMyqXuot38U8jp2',
-          },
-        },
-        createTime: '2021-06-20T05:52:36.944227Z',
-        updateTime: '2021-07-05T00:24:17.527836Z',
-      },
-      readTime: '2021-07-12T09:22:36.219778Z',
-    },
-    {
-      document: {
-        name: 'projects/dropit-7ae30/databases/(default)/documents/libraries/Dry7dFNAoLgoLWoq9KKM',
-        fields: {
-          name: {
-            stringValue: 'hello there gamer',
-          },
-          owner: {
-            stringValue: 'laLvpMgONMPO5nMyqXuot38U8jp2',
-          },
-          image_count: {
-            integerValue: '30',
-          },
-        },
-        createTime: '2021-06-20T05:51:32.653079Z',
-        updateTime: '2021-07-05T00:37:27.845063Z',
-      },
-      readTime: '2021-07-12T09:22:36.219778Z',
-    },
-    {
-      document: {
-        name: 'projects/dropit-7ae30/databases/(default)/documents/libraries/v6BnsgJ294H09X7oCeDm',
-        fields: {
-          owner: {
-            stringValue: 'laLvpMgONMPO5nMyqXuot38U8jp2',
-          },
-          image_count: {
-            integerValue: '30',
-          },
-          name: {
-            stringValue: 'hello',
-          },
-        },
-        createTime: '2021-06-22T21:41:14.541619Z',
-        updateTime: '2021-06-22T21:43:03.922872Z',
-      },
-      readTime: '2021-07-12T09:22:36.219778Z',
-    },
-    {
-      document: {
-        name: 'projects/dropit-7ae30/databases/(default)/documents/libraries/Dry7dFNAoLgoLWoq9KKM',
-        fields: {
-          name: {
-            stringValue: 'hello there gamer',
-          },
-          owner: {
-            stringValue: 'laLvpMgONMPO5nMyqXuot38U8jp2',
-          },
-          image_count: {
-            integerValue: '30',
-          },
-        },
-        createTime: '2021-06-20T05:51:32.653079Z',
-        updateTime: '2021-07-05T00:37:27.845063Z',
-      },
-      readTime: '2021-07-12T09:22:36.219778Z',
-    },
-  ];
+  const bg = chrome.extension.getBackgroundPage();
+  const libsData = [];
 
   const dropArea = document.createElement('div');
   dropArea.classList.add('ei-drop-area');
@@ -301,6 +187,7 @@ $(function () {
     setTimeout(function () {
       document.body.removeChild(canvas);
     }, 100);
+
     ev.originalEvent.dataTransfer.setDragImage(canvas, 0, 0);
     dragged = img;
   });
@@ -316,7 +203,7 @@ $(function () {
   dropArea.ondrop = function (ev) {
     ev.preventDefault();
     if (dragged) {
-      // const file = fileFromImage(dragged);
+      const file = fileFromImage(dragged);
     }
   };
 });

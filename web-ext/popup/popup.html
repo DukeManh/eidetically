@@ -6,19 +6,23 @@
     <title>Eidetically Popup</title>
 
     <link rel="stylesheet" href="popup.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
-    <h4 class="text-center">Eidetically Version 1.0.0</h4>
-    <div id="user_container">
-      <div id="signedIn">
-        <p id="username" class="text-center"></p>
-        <button class="signOut loginButton">Sign out</button>
+    <header>
+      <h4 id='Logo'>Eidetically 1.0.0</h4>
+    </header>
+    <div class="wrapper">
+      <div id="signInProvider">
+        <h5 style='margin: 15px 0 0 0' class='text-center'>Start 'Dragging 'n Dropping' now!</h5>
+        <div class="providers">
+          <button class="loginProvider gpLogin" data-provider-id="google.com"><i class="fa fa-google-plus fa-lg"></i><span>Sign in with Google</span></button>
+          <button class="loginProvider fbLogin" data-provider-id="facebook.com"><i class="fa fa-facebook fa-lg"></i><span>Sign in with Facebook</span></button>
+          <button class="loginProvider ghLogin" data-provider-id="github.com"><i class="fa fa-github fa-lg"></i><span>Sign in with Github</span></button>
+          <p class='agreements'>By continuing, you are indicating that you accept Google's <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> and <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a>.</p>
+        </div>
       </div>
-
-      <div id="signedOut">
-        <label for="token_id">Token</label
-        ><input id="token_id" type="text" placeholder="eyJhbGciO..." />
-        <button class="signIn loginButton">Sign in</button>
+      <div id="userInfo">
       </div>
     </div>
 

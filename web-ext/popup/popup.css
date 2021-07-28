@@ -4,11 +4,16 @@ body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 body {
-  width: 230px;
-  min-height: 300px;
+  width: 270px;
   margin: 0;
-  padding: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
+
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
 a {
   text-decoration: none;
 }
@@ -16,13 +21,7 @@ li a {
   text-decoration: underline;
   color: #0288d1;
 }
-.container {
-  margin-top: 20px;
-  line-height: 25px;
-}
-#sign-in-status {
-  font-weight: bold;
-}
+
 pre {
   overflow-x: scroll;
   line-height: 18px;
@@ -36,13 +35,166 @@ code {
   text-align: center;
 }
 
-.loginButton {
-  padding: 0.1rem 0.2rem;
-  background-color: teal;
-  display: block;
-  margin: 0 auto;
-}
-
 .hidden {
   display: none;
+}
+
+#signInProvider {
+  margin: 10px 0;
+}
+
+.providers {
+    padding-top: 5px;
+}
+
+.providers span {
+  display: block;
+  font-size: 0.9em;
+  font-family: 'Arimo', sans-serif;
+  font-weight: 700;
+  width: 130px;
+  text-align: left;
+}
+.providers i {
+  display: block;
+}
+
+.loginProvider {
+  transition: background 200ms ease-in-out 0s;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+  height: 45px;
+  line-height: 50px;
+  width: 85%;
+  text-decoration: none;
+  text-align: center;
+  color: #ffffff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  border: none;
+  outline: none;
+  margin: 12px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+.loginProvider:active {
+  outline: none;
+  position: relative;
+  top: 1px;
+}
+
+.fbLogin {
+  background-color: #3b5898;
+}
+
+.fbLogin:hover {
+  background-color: #5177c2;
+}
+
+.gpLogin {
+  background-color: #dd4c39;
+}
+
+.gpLogin:hover {
+  background-color: #f06e60;
+}
+
+.ghLogin {
+  background-color: #222222;
+}
+
+.ghLogin:hover {
+  background-color: #444444;
+}
+
+.agreements {
+  font: 16px Roboto,arial,sans-serif;
+  box-sizing: border-box;
+  color: #757575;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  margin-top: 10px;
+}
+.agreements a {
+  color: #0288d1;
+  font-size: 11px;
+}
+
+header {
+  background: linear-gradient(to right, rgb(0, 255, 143) 0%, rgb(0, 161, 255) 100%);
+  padding: 10px;
+  color: #2b2e4a;
+  border-bottom: 1px solid #e5e5ec;
+  user-select: none;
+}
+
+#logo {
+  vertical-align: center;
+}
+
+.userCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 5px;
+}
+
+.avatar {
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  border-radius: 50%;
+  position: relative;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+}
+
+.avatar .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.email {
+  color: #5f6368;
+  font: 400 14px/19px Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+  letter-spacing: normal;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.signOutButton {
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid #5f6368;
+  outline: none;
+  cursor: pointer;
+  width: 50%;
+  background: inherit;
+}
+
+.signOutButton:active {
+  position: relative;
+  top: 1px;
+  background: #e5e7eb;
+}
+
+.wrapper {
+  user-select: none;
+  max-height: 0;
+  transition: max-height 650ms 150ms ease;
+  overflow: hidden;
 }
