@@ -35,6 +35,7 @@
       "scripts/utils/firebase-app.js",
       "scripts/utils/firebase-auth.js",
       "scripts/utils/firebase-firestore.js",
+      "scripts/utils/firebase-storage.js",
       "background.js"
     ]
   },

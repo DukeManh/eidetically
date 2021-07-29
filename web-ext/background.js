@@ -11,11 +11,11 @@ var firebaseConfig = {
 var fire = firebase;
 var app = firebase.initializeApp(firebaseConfig);
 var auth = app.auth();
+var storage = app.storage();
+var db = app.firestore();
 
 function signInWithPopup(providerId) {
-  console.log(auth.currentUser);
   let provider;
-  console.log(providerId);
   switch (providerId) {
     case 'google.com':
       provider = new firebase.auth.GoogleAuthProvider();
@@ -35,13 +35,48 @@ function signInWithPopup(providerId) {
   }
 
   return auth.signInWithPopup(provider).catch((error) => {
-    console.log(error);
+    console.error(error);
   });
+}
+
+async function uploadImage(file, libraryId) {
+  if (!auth.currentUser) {
+    throw new Error('Please login to upload images');
+  }
+  const filePath = `${auth.currentUser.uid}/${libraryId}/${file.name}`;
+  storage.ref(filePath).put(file).then(() => {
+  }).catch((error) => {
+    console.error(error);
+  });
+}
+
+async function getLibraries(){
+  if (!auth.currentUser) {
+    throw new Error('Please login');
+  }
+
+  const librariesRef = db.collection('libraries').where('owner', '==', auth.currentUser.uid).orderBy('name');
+  const response = await librariesRef.get();
+  const snapshots = response.docs;
+  const libs = snapshots.map(function(doc) {
+    return { id: doc.id, ...doc.data()}
+  });
+  return libs;
 }
 
 function logOut(){
   return auth.signOut();
 }
+
+async function fileFromUrl(url, name) {
+  const image = await fetch(url);
+  const blob = await image.blob();
+  return new File([blob], name, {
+    lastModified: Date.now(),
+    type: blob.type
+  });
+}
+
 
 chrome.runtime.onMessage.addListener((message, sender, sendMessage) => {
   switch (message.command) {
@@ -49,7 +84,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendMessage) => {
       if (!auth.currentUser) {
         sendMessage({
           status: 'failed',
-          message: 'User not logged in',
+          message: "Please sign in to start 'Dragging 'n Dropping'",
           payload: {
             user: null,
           },
@@ -71,20 +106,44 @@ chrome.runtime.onMessage.addListener((message, sender, sendMessage) => {
       sendMessage({ status: 'success' });
       break;
     case 'getLibs':
-      getLibs().then((libs) => {
-        if (!libs) {
-          sendMessage({
-            status: 'failed',
-          });
-        } else {
+      getLibraries()
+       .then((libs) => {
           sendMessage({
             status: 'success',
             payload: {
               libs,
             },
           });
-        }
+      }).catch((error) => {
+        sendMessage({
+          status: 'failure',
+          message: error.message,
+          payload: {
+            libs: null,
+          }
+        });
       });
+      break;
+    case 'uploadImage':
+      const { url, name, libraryId } = message.payload;
+      fileFromUrl(url, name).then((file) => {
+        uploadImage(file, libraryId)
+          .then((libs) => {
+            sendMessage({
+              status: 'success',
+            });
+          }).catch((error) => {
+          sendMessage({
+            status: 'failure',
+            message: error.message,
+          });
+        });
+      }).catch((error) => {
+        sendMessage({
+          status: 'failure',
+          message: error.message,
+        });
+      })
       break;
     default:
       break;

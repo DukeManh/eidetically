@@ -1,22 +1,21 @@
 $(function () {
   let dragged;
   let libraries = null;
-  const bg = chrome.extension.getBackgroundPage();
   const libsData = [];
 
   const dropArea = document.createElement('div');
   dropArea.classList.add('ei-drop-area');
   $(dropArea).appendTo(document.body);
 
-  function fillDropArea(authenticated, libs) {
+  function fillDropArea(error, libs) {
     const container = document.createElement('div');
     container.classList.add('ei-drop-container');
 
-    if (!authenticated) {
+    if (error) {
       const html = `
             <div class='ei-libs-container'>
                 <p>
-                    Please Login To Start Drag 'n Dropping !
+                    ${error}
                 </p>
             </div>
           `;
@@ -55,12 +54,14 @@ $(function () {
 
       libs.forEach(function (lib) {
         const library = document.createElement('div');
+        $(library).attr('data-libraryId', lib.id);
         library.classList.add('ei-lib-box');
+
         $(library).html(`
                 <img src='${chrome.extension.getURL(
                   '../../icons/folder.png'
                 )}' alt='folder icon' width='30' height='30' />
-                <div>${lib.document.fields.name.stringValue}</div>
+                <div>${lib.name}</div>
             `);
         $(library).appendTo(libsContainer);
       });
@@ -72,7 +73,17 @@ $(function () {
       });
 
       libBoxes.on('drop', function (ev) {
+        const libraryId = $(ev.target).attr('data-libraryId');
         ev.target.classList.remove('dragover');
+        const url = new URL(dragged.src);
+        chrome.runtime.sendMessage({
+          command: 'uploadImage',
+          payload: {
+            url: dragged.src,
+            name: dragged.alt || `${url.host}-${(Date.now() / 1000).toFixed()}`,
+            libraryId,
+          }
+        });
       });
 
       libBoxes.on('dragover', function (ev) {
@@ -147,16 +158,6 @@ $(function () {
     return canvas;
   }
 
-  function fileFromImage(img) {
-    const canvas = createCanvas(img);
-    const { width, height } = canvas;
-
-    img.crossOrigin = 'Anonymous';
-    const ctx = canvas.getContext('2d');
-    const imageData = ctx.getImageData(0, 0, width, height).data.buffer;
-    return new File([imageData], img.alt, { lastModified: Date.now() });
-  }
-
   $(document).on('dragstart', 'img', function (ev) {
     if (!libraries) {
       chrome.runtime.sendMessage(
@@ -164,19 +165,16 @@ $(function () {
           command: 'getLibs',
         },
         function (res) {
-          console.log(res);
-          if (res.status === 'failed') {
-            fillDropArea(false);
+          if (res.status === 'failure') {
+            console.error(res.message);
+            fillDropArea(res.message);
           } else {
-            fillDropArea(true, res.payload.libs || []);
+            fillDropArea('', res.payload.libs);
             libraries = res.payload.libs;
           }
         }
       );
-      fillDropArea(true, libsData);
     }
-    libraries = libsData;
-
     dropArea.classList.add('show');
 
     const img = ev.target;
@@ -202,8 +200,5 @@ $(function () {
 
   dropArea.ondrop = function (ev) {
     ev.preventDefault();
-    if (dragged) {
-      const file = fileFromImage(dragged);
-    }
   };
 });
