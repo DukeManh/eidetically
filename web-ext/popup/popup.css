@@ -10,7 +10,13 @@ body {
   box-sizing: border-box;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
@@ -44,7 +50,7 @@ code {
 }
 
 .providers {
-    padding-top: 5px;
+  padding-top: 5px;
 }
 
 .providers span {
@@ -70,7 +76,8 @@ code {
   text-decoration: none;
   text-align: center;
   color: #ffffff;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
   border: none;
   outline: none;
   margin: 12px auto;
@@ -112,7 +119,7 @@ code {
 }
 
 .agreements {
-  font: 16px Roboto,arial,sans-serif;
+  font: 16px Roboto, arial, sans-serif;
   box-sizing: border-box;
   color: #757575;
   font-size: 12px;
@@ -155,8 +162,8 @@ header {
 }
 
 .avatar img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .avatar .overlay {
@@ -169,7 +176,7 @@ header {
 
 .email {
   color: #5f6368;
-  font: 400 14px/19px Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+  font: 400 14px/19px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
   letter-spacing: normal;
   text-align: center;
   text-overflow: ellipsis;

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-var */
 var firebaseConfig = {
   apiKey: 'AIzaSyCUgKWDq2dxiXW3SYBFknfXka7DpYMGacw',
   authDomain: 'dropit-7ae30.firebaseapp.com',
@@ -8,7 +10,6 @@ var firebaseConfig = {
   measurementId: 'G-WG0RKKDP9F',
 };
 
-var fire = firebase;
 var app = firebase.initializeApp(firebaseConfig);
 var auth = app.auth();
 var storage = app.storage();
@@ -34,6 +35,7 @@ function signInWithPopup(providerId) {
     return;
   }
 
+  // eslint-disable-next-line consistent-return
   return auth.signInWithPopup(provider).catch((error) => {
     console.error(error);
   });
@@ -44,28 +46,30 @@ async function uploadImage(file, libraryId) {
     throw new Error('Please login to upload images');
   }
   const filePath = `${auth.currentUser.uid}/${libraryId}/${file.name}`;
-  storage.ref(filePath).put(file).then(() => {
-  }).catch((error) => {
-    console.error(error);
-  });
+  storage
+    .ref(filePath)
+    .put(file)
+    .then(() => {})
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
-async function getLibraries(){
+async function getLibraries() {
   if (!auth.currentUser) {
     throw new Error('Please login');
   }
 
-  const librariesRef = db.collection('libraries').where('owner', '==', auth.currentUser.uid).orderBy('name');
+  const librariesRef = db
+    .collection('libraries')
+    .where('owner', '==', auth.currentUser.uid)
+    .orderBy('name');
   const response = await librariesRef.get();
   const snapshots = response.docs;
-  const libs = snapshots.map(function(doc) {
-    return { id: doc.id, ...doc.data()}
+  const libs = snapshots.map((doc) => {
+    return { id: doc.id, ...doc.data() };
   });
   return libs;
-}
-
-function logOut(){
-  return auth.signOut();
 }
 
 async function fileFromUrl(url, name) {
@@ -73,12 +77,11 @@ async function fileFromUrl(url, name) {
   const blob = await image.blob();
   return new File([blob], name, {
     lastModified: Date.now(),
-    type: blob.type
+    type: blob.type,
   });
 }
 
-
-chrome.runtime.onMessage.addListener((message, sender, sendMessage) => {
+chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
   switch (message.command) {
     case 'getUser':
       if (!auth.currentUser) {
@@ -107,43 +110,46 @@ chrome.runtime.onMessage.addListener((message, sender, sendMessage) => {
       break;
     case 'getLibs':
       getLibraries()
-       .then((libs) => {
+        .then((libs) => {
           sendMessage({
             status: 'success',
             payload: {
               libs,
             },
           });
-      }).catch((error) => {
-        sendMessage({
-          status: 'failure',
-          message: error.message,
-          payload: {
-            libs: null,
-          }
+        })
+        .catch((error) => {
+          sendMessage({
+            status: 'failure',
+            message: error.message,
+            payload: {
+              libs: null,
+            },
+          });
         });
-      });
       break;
     case 'uploadImage':
-      const { url, name, libraryId } = message.payload;
-      fileFromUrl(url, name).then((file) => {
-        uploadImage(file, libraryId)
-          .then((libs) => {
-            sendMessage({
-              status: 'success',
+      fileFromUrl(message.payload.url, message.payload.name)
+        .then((file) => {
+          uploadImage(file, message.payload.libraryId)
+            .then(() => {
+              sendMessage({
+                status: 'success',
+              });
+            })
+            .catch((error) => {
+              sendMessage({
+                status: 'failure',
+                message: error.message,
+              });
             });
-          }).catch((error) => {
+        })
+        .catch((error) => {
           sendMessage({
             status: 'failure',
             message: error.message,
           });
         });
-      }).catch((error) => {
-        sendMessage({
-          status: 'failure',
-          message: error.message,
-        });
-      })
       break;
     default:
       break;

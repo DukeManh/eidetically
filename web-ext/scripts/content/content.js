@@ -1,7 +1,7 @@
-$(function () {
+/* eslint-disable no-undef */
+$(() => {
   let dragged;
   let libraries = null;
-  const libsData = [];
 
   const dropArea = document.createElement('div');
   dropArea.classList.add('ei-drop-area');
@@ -52,7 +52,7 @@ $(function () {
             `);
       $(newLib).appendTo(libsContainer);
 
-      libs.forEach(function (lib) {
+      libs.forEach((lib) => {
         const library = document.createElement('div');
         $(library).attr('data-libraryId', lib.id);
         library.classList.add('ei-lib-box');
@@ -68,11 +68,11 @@ $(function () {
 
       const libBoxes = $('.ei-lib-box');
 
-      libBoxes.on('dragenter', function (ev) {
+      libBoxes.on('dragenter', (ev) => {
         ev.target.classList.add('dragover');
       });
 
-      libBoxes.on('drop', function (ev) {
+      libBoxes.on('drop', (ev) => {
         const libraryId = $(ev.target).attr('data-libraryId');
         ev.target.classList.remove('dragover');
         const url = new URL(dragged.src);
@@ -82,15 +82,15 @@ $(function () {
             url: dragged.src,
             name: dragged.alt || `${url.host}-${(Date.now() / 1000).toFixed()}`,
             libraryId,
-          }
+          },
         });
       });
 
-      libBoxes.on('dragover', function (ev) {
+      libBoxes.on('dragover', (ev) => {
         ev.preventDefault();
       });
 
-      libBoxes.on('dragleave', function (ev) {
+      libBoxes.on('dragleave', (ev) => {
         ev.target.classList.remove('dragover');
       });
 
@@ -105,13 +105,13 @@ $(function () {
           icon.attr({ src: arrowIcon });
         }
 
-        $(this).on('dragenter', function () {
+        $(this).on('dragenter', () => {
           const scrollable = isLeftArrow
             ? libsContainer.scrollLeft() > 0
             : libsContainer.scrollLeft() <
               libsContainer[0].scrollWidth - libsContainer[0].clientWidth;
 
-          interval = setInterval(function () {
+          interval = setInterval(() => {
             if (scrollable) {
               icon.attr({ src: blueArrowIcon });
               libsContainer.animate(
@@ -126,11 +126,11 @@ $(function () {
           }, animationDuration);
         });
 
-        $(this).on('dragleave', function () {
+        $(this).on('dragleave', () => {
           reset();
         });
 
-        $(this).on('drop', function (ev) {
+        $(this).on('drop', (ev) => {
           ev.preventDefault();
           reset();
         });
@@ -158,13 +158,13 @@ $(function () {
     return canvas;
   }
 
-  $(document).on('dragstart', 'img', function (ev) {
+  $(document).on('dragstart', 'img', (ev) => {
     if (!libraries) {
       chrome.runtime.sendMessage(
         {
           command: 'getLibs',
         },
-        function (res) {
+        (res) => {
           if (res.status === 'failure') {
             console.error(res.message);
             fillDropArea(res.message);
@@ -182,7 +182,7 @@ $(function () {
     canvas.style.position = 'fixed';
     canvas.style.top = '200%';
     document.body.appendChild(canvas);
-    setTimeout(function () {
+    setTimeout(() => {
       document.body.removeChild(canvas);
     }, 100);
 
@@ -190,15 +190,15 @@ $(function () {
     dragged = img;
   });
 
-  $(document).on('dragend', 'img', function () {
+  $(document).on('dragend', 'img', () => {
     dropArea.classList.remove('show');
   });
 
-  dropArea.ondragover = function (ev) {
+  dropArea.ondragover = (ev) => {
     ev.preventDefault();
   };
 
-  dropArea.ondrop = function (ev) {
+  dropArea.ondrop = (ev) => {
     ev.preventDefault();
   };
 });

@@ -1,0 +1,4 @@
+node_modules/
+web-ext/scripts/utils/
+web/*.config.js
+web/build

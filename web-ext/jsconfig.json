@@ -4,7 +4,7 @@
     "target": "es6"
   },
   "typeAcquisition": {
-    "include": ["jquery", "chrome", "firefox-webext-browser", "firebase"]
+    "include": ["jquery", "chrome", "firebase"]
   },
   "include": ["*.js"]
 }

@@ -30,14 +30,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "lint": "eslint --ext js,jsx,ts,tsx --fix"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "browserslist": {
     "production": [
@@ -64,16 +57,6 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/react-window": "^1.8.3",
     "@types/tailwindcss": "^2.0.5",
-    "@typescript-eslint/eslint-plugin": "^4.23.0",
-    "@typescript-eslint/parser": "^4.23.0",
-    "autoprefixer": "^9.8.6",
-    "eslint": "^7.26.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.23.2",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "lint-staged": "^11.0.0",
     "npm": "file:tailwindcss/postcss7-compat@^2.1.2",
     "postcss": "^8.2.15",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.2"
