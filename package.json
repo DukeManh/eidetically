@@ -7,14 +7,14 @@
     "start": "cd web && PORT=8000 TAILWIND_MODE=watch craco start",
     "build": "cd web && craco build",
     "type-check": "cd web && tsc --project tsconfig.json --pretty --noEmit",
-    "lint": "eslint \"**/*.js\" \"**/*.tsx\" \"**/*.ts\"",
+    "lint": "npm run eslint \"**/*.js\" \"**/*.tsx\" \"**/*.ts\"",
     "install:web": "cd web && npm install",
-    "eslint": "eslint --config .eslintrc.js",
+    "eslint": "eslint --max-warnings 0",
     "prettier": "prettier --write \"./**/*.{md,jsx,tsx,ts,json,html,css,js,yml}\""
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm run lint"
     }
   },
   "lint-staged": {

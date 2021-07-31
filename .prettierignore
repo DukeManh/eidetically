@@ -7,5 +7,7 @@ certs
 web/buid
 web/build/
 web-ext/scripts/utils/
-.eslintignore
-.prettierignore
+**/.eslintignore
+**/.prettierignore
+**/.firebaserc
+**/.gitignore
