@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+/* Using var to make background variables available to the popup script */
 /* eslint-disable no-var */
 var firebaseConfig = {
   apiKey: 'AIzaSyCUgKWDq2dxiXW3SYBFknfXka7DpYMGacw',

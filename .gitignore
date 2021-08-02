@@ -2,3 +2,8 @@
 
 # dependencies
 /node_modules
+
+# Ignore firebase cloud functions debug logs files
+**/*-debug.log
+
+storage.rules
