@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd web && PORT=8000 TAILWIND_MODE=watch craco start",
-    "build": "cd web && craco build",
-    "type-check": "cd web && tsc --project tsconfig.json --pretty --noEmit",
+    "start": "cd web && npm run start",
+    "build": "cd web && npm run build",
+    "type-check": "cd web && npm run type-check",
     "lint": "npm run eslint \"**/*.js\" \"**/*.tsx\" \"**/*.ts\"",
     "install:web": "cd web && npm install",
+    "install:functions": "cd functions && npm install",
     "eslint": "eslint --max-warnings 0",
     "prettier": "prettier --write \"./**/*.{md,jsx,tsx,ts,json,html,css,js,yml}\""
   },
