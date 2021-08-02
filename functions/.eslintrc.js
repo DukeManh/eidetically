@@ -11,6 +11,7 @@ module.exports = {
     'plugin:import/typescript',
     'google',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,5 +23,11 @@ module.exports = {
     '/lib/**/*', // Ignore built files.
   ],
   plugins: ['@typescript-eslint', 'import'],
-  rules: {},
+  rules: {
+    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+
+    'require-jsdoc': 'off',
+
+    'max-len': 'off',
+  },
 };
