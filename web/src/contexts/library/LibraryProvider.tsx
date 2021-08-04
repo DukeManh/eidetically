@@ -10,7 +10,7 @@ import { uploadImages } from '../../server/service';
 export default function LibraryProvider({ children }: ProviderProps) {
   const { user } = useAuth();
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [libraries, setLibraries] = useState<Library[]>([]);
   const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
 

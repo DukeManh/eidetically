@@ -18,7 +18,7 @@ export default function TopBar() {
           }}
         />
 
-        <div className="text-md">{activeLibrary?.name || 'Drop it'}</div>
+        <div className="text-md text-truncate max-w-[40%]">{activeLibrary?.name || 'Drop it'}</div>
 
         <div className="flex flex-row items-center justify-evenly space-x-2">
           {/* <HiOutlineMinusCircle

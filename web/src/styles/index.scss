@@ -130,15 +130,6 @@ $menubar_height: 2.25rem;
     }
   }
 
-  @keyframes dropzoneBackground {
-    from {
-      @apply bg-blue-300 bg-opacity-5;
-    }
-    to {
-      @apply bg-blue-300 bg-opacity-30;
-    }
-  }
-
   @keyframes rotation {
     from {
       transform: rotate(0deg);

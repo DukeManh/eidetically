@@ -41,13 +41,15 @@ export default function TaskProgress({ task }: TaskProgressProps) {
       onMouseLeave={() => setHovering(false)}
     >
       <div className="h-8 flex flex-row space-x-4 items-center cursor-pointer">
-        {task.file.type.startsWith('image') ? (
-          <BsFillImageFill className="h-full" />
-        ) : (
-          <BsFillCameraVideoFill className="h-full" />
-        )}
+        <div>
+          {task.file.type.startsWith('image') ? (
+            <BsFillImageFill className="h-full" />
+          ) : (
+            <BsFillCameraVideoFill className="h-full" />
+          )}
+        </div>
 
-        <div>{task.file.name}</div>
+        <div className="text-truncate">{task.file.name}</div>
 
         <div className="flex-grow"></div>
 

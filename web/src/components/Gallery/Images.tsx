@@ -1,7 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
-import colors from 'tailwindcss/colors';
 import firebase from 'firebase';
 
 import { useLayout, useImage, useLibrary } from '../../contexts';
@@ -9,7 +8,6 @@ import { RouterParams, Image } from '../../interfaces';
 import { db } from '../../server/firebase';
 
 import Figure from './Figure';
-import Mask from '../Mask';
 
 const QUERY_LIMIT = 15;
 
@@ -36,7 +34,7 @@ export default function Images() {
           .startAfter(images.cursor)
           .limit(QUERY_LIMIT);
       } else {
-        imagesRef = db.images(libID).orderBy('upload_date').limit(15);
+        imagesRef = db.libraries().doc(libID).collection('images').orderBy('upload_date').limit(15);
       }
 
       const unsubscribe = imagesRef.onSnapshot((snapshot) => {
@@ -84,15 +82,7 @@ export default function Images() {
   return (
     <div className="p-2 relative min-h-full" {...getRootProps()}>
       {isDragActive && (
-        <Mask
-          visible
-          style={{
-            position: 'absolute',
-            height: '100%',
-            border: `2px solid ${colors.blue[600]}`,
-            animation: 'dropzoneBackground 800ms ease-in-out infinite alternate',
-          }}
-        />
+        <div className="w-full h-full border-2 border-dotted bg-blue-500 bg-opacity-20 border-blue-600 absolute top-0 left-0 dropZone" />
       )}
       <div
         className="waterfall-layout"
