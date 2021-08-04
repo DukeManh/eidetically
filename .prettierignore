@@ -11,3 +11,8 @@ web-ext/scripts/utils/
 **/.prettierignore
 **/.firebaserc
 **/.gitignore
+**/*.eot
+**/*.svg
+**/*.ttf
+**/*.woff
+**/*.woff2

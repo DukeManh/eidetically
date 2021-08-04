@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+
 /* Using var to make background variables available to the popup script */
 /* eslint-disable no-var */
 var firebaseConfig = {
@@ -50,7 +51,6 @@ async function uploadImage(file, libraryId) {
   storage
     .ref(filePath)
     .put(file)
-    .then(() => {})
     .catch((error) => {
       console.error(error);
     });

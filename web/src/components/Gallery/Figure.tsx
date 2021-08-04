@@ -31,7 +31,7 @@ export default function Figure({ image }: FigureProps) {
           src={image.downloadURL}
         />
       </button>
-      <figcaption className="px-4 overflow-hidden text-sm whitespace-nowrap overflow-ellipsis text-center max-h-12 leading-6">
+      <figcaption className="px-4 text-truncate text-sm text-center max-h-12 leading-6">
         {image.name}
       </figcaption>
     </figure>

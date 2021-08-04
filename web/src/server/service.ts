@@ -69,7 +69,7 @@ export async function renameLibrary(libID: string, name: string) {
 
 export async function uploadImages(acceptedFiles: File[], libraryID: string) {
   if (auth.currentUser) {
-    const promises: Promise<string>[] = [];
+    const promises: Promise<void>[] = [];
 
     task.start(acceptedFiles.length);
 
@@ -82,11 +82,12 @@ export async function uploadImages(acceptedFiles: File[], libraryID: string) {
           upload.then(
             async () => {
               task.complete(t.id);
+              resolve();
             },
             (error) => {
               task.fail(t.id);
               console.error(error.message);
-              resolve('');
+              resolve();
             }
           );
         })

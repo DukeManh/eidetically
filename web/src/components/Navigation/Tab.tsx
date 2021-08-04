@@ -1,4 +1,4 @@
-import React, { useState, useRef, FormEvent } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AiOutlineEdit } from 'react-icons/ai';
@@ -133,7 +133,10 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
       </form>
       {!(renaming === lib.id) && (
         <div className={activeLibrary?.id === lib.id ? 'tab tab-active' : 'tab'}>
-          <Link to={`/${lib.id}`} className="w-3/4 h-full inline-block py-1 px-3 flex-grow">
+          <Link
+            to={`/${lib.id}`}
+            className="w-3/4 h-full inline-block py-1 px-3 flex-grow text-truncate"
+          >
             {lib.name}
           </Link>
           <span className="image-count">{lib.image_count}</span>

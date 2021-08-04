@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const colors = require('tailwindcss/colors');
 
 module.exports = {
@@ -6,9 +7,6 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   important: true,
   theme: {
-    fontFamily: {
-      serif: ['Didot', 'serif'],
-    },
     screens: {
       sm: '640px',
       md: '768px',
@@ -251,6 +249,7 @@ module.exports = {
     },
     fontFamily: {
       sans: [
+        '"Hind"',
         'ui-sans-serif',
         'system-ui',
         '-apple-system',

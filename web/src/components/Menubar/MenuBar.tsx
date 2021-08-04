@@ -53,15 +53,7 @@ export default function MenuBar() {
             popupPlacement="bottomLeft"
             onPopupVisibleChange={(i) => setActiveItem(i ? item.name : '')}
             popupVisible={activeItem === item.name}
-            popup={
-              <Menu
-                style={{
-                  borderTopLeftRadius: 0,
-                  borderTopRightRadius: 0,
-                }}
-                items={item.items}
-              />
-            }
+            popup={<Menu items={item.items} className="rounded-t-none" />}
             key={item.name}
           >
             <div className="menu-item">

@@ -8,19 +8,26 @@
   html,
   body,
   #root {
-    @apply p-0 m-0 min-h-full h-auto overflow-hidden max-h-screen;
+    @apply p-0 m-0 min-h-full h-auto overflow-hidden max-h-screen font-sans;
     font-size: 14px;
     * {
       @apply box-border focus:outline-none;
     }
   }
+  /* inter-regular - latin */
+  /* quicksand-regular - latin */
+  /* cabin-regular - latin */
+  /* hind-regular - latin */
   @font-face {
-    font-family: 'Didot';
+    font-family: 'Hind';
     font-style: normal;
     font-weight: 400;
-    src: local('Didot'), url('./fonts/gfs-didot-v10-greek-regular.woff2') format('woff2'),
-      /* Chrome 26+, Opera 23+, Firefox 39+ */ url('./fonts/gfs-didot-v10-greek-regular.woff')
-        format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    src: url('./fonts/hind-v11-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local(''), url('./fonts/hind-v11-latin-regular.eot?#iefix') format('embedded-opentype'),
+      /* IE6-IE8 */ url('./fonts/hind-v11-latin-regular.woff2') format('woff2'),
+      /* Super Modern Browsers */ url('./fonts/hind-v11-latin-regular.woff') format('woff'),
+      /* Modern Browsers */ url('./fonts/hind-v11-latin-regular.ttf') format('truetype'),
+      /* Safari, Android, iOS */ url('./fonts/hind-v11-latin-regular.svg#Hind') format('svg'); /* Legacy iOS */
   }
 }
 
@@ -265,6 +272,10 @@ $menubar_height: 2.25rem;
 
   .resizeHandler {
     @apply hover:bg-gray-400 active:bg-blue-500;
+  }
+
+  .text-truncate {
+    @apply overflow-hidden overflow-ellipsis whitespace-nowrap;
   }
 }
 

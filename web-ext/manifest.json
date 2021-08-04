@@ -3,14 +3,12 @@
   "name": "Eidetically",
   "version": "1.0",
 
-  "description": "Allows drag and drop media from websites to cloud storage",
+  "description": "Allows dragging and dropping medias from any websites to your cloud storage",
   "homepage_url": "https://dropit-app.netlify.app/",
   "icons": {
     "48": "icons/logo48.png",
     "96": "icons/logo96.png"
   },
-
-  "permissions": ["tabs"],
 
   "web_accessible_resources": ["icons/*"],
 
@@ -25,7 +23,8 @@
       "matches": ["<all_urls>"],
       "js": ["scripts/utils/jquery.min.js", "scripts/content/content.js"],
       "css": ["scripts/content/content.css"],
-      "all_frames": true
+      "all_frames": true,
+      "exclude_matches": ["https://dropit-app.netlify.app/*"]
     }
   ],
 
