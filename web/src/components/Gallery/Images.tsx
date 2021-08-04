@@ -2,6 +2,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import colors from 'tailwindcss/colors';
+import firebase from 'firebase';
 
 import { useLayout, useImage, useLibrary } from '../../contexts';
 import { RouterParams, Image } from '../../interfaces';
@@ -26,17 +27,16 @@ export default function Images() {
 
   const loadMore = useCallback(
     (libID) => {
-      let imagesRef;
+      let imagesRef: firebase.firestore.Query<Image | Partial<Image>>;
 
       if (images?.cursor) {
-        imagesRef = db.libraries
-          .doc(libID)
-          .collection('images')
+        imagesRef = db
+          .images(libID)
           .orderBy('upload_date')
           .startAfter(images.cursor)
           .limit(QUERY_LIMIT);
       } else {
-        imagesRef = db.libraries.doc(libID).collection('images').orderBy('upload_date').limit(15);
+        imagesRef = db.images(libID).orderBy('upload_date').limit(15);
       }
 
       const unsubscribe = imagesRef.onSnapshot((snapshot) => {

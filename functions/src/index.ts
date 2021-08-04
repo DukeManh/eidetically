@@ -12,7 +12,7 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
 
   if (name && metadata) {
     // Image name has the form `uid/libraryID/imageName`, ex: laLvpMgONMPO5nMyqXuot38U8jp2/rPwfu42CHzverW4mGGWp/CoolImage
-    const [, libraryID, imageName] = name.split('/');
+    const [uid, libraryID, imageName] = name.split('/');
 
     const firebaseStorageBaseUrl = `https://firebasestorage.googleapis.com/v0/b/${
       storage.bucket().name
@@ -24,7 +24,7 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
     functions.logger.log('Download Url: ', downloadURL);
 
     // create a image document the uploaded file
-    const libRef = db.collection('libraries').doc(libraryID);
+    const libRef = db.collection(`firebase_users/${uid}/libraries`).doc(libraryID);
     const imageRef = libRef.collection('images').doc();
     await imageRef.set({
       note: '',
@@ -43,7 +43,7 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
 });
 
 exports.deleteImageStorage = functions.firestore
-  .document('libraries/{libraryID}/images/{imageID}')
+  .document('firebase_users/{uid}/libraries/{libraryID}/images/{imageID}')
   .onDelete(async (snap) => {
     const { fullPath, library: libRef } = snap.data();
 
@@ -63,14 +63,16 @@ exports.deleteImageStorage = functions.firestore
   });
 
 exports.deleteLibrary = functions.firestore
-  .document('libraries/{libraryID}')
-  .onDelete(async (snap) => {
+  .document('firebase_users/{uid}/libraries/{libraryID}')
+  .onDelete(async (snap, context) => {
     const batchSize = 50;
     const { id: libraryID } = snap;
 
     functions.logger.log(`Library ${libraryID} deleted`);
 
-    const collectionRef = db.collection(`libraries/${libraryID}/images`);
+    const collectionRef = db.collection(
+      `firebase_users/${context.auth?.uid}/libraries/${libraryID}/images`
+    );
     const query = collectionRef.orderBy('upload_date').limit(batchSize);
 
     return new Promise((resolve, reject) => {

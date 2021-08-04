@@ -46,7 +46,7 @@ export default function LibraryProvider({ children }: ProviderProps) {
     let unsubscribe;
     if (user) {
       setLoading(true);
-      const librariesRef = db.libraries.where('owner', '==', user.uid).orderBy('name');
+      const librariesRef = db.libraries().orderBy('name');
       unsubscribe = librariesRef.onSnapshot((snapshot) => {
         const nextLibraries = snapshot.docs.map(
           (lib) => ({ ...lib.data(), id: lib.id } as Library)

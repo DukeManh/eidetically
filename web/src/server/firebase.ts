@@ -34,17 +34,31 @@ const typeConverter = <T>() => ({
   fromFirestore: (snapshot: firebase.firestore.QueryDocumentSnapshot) => snapshot.data() as T,
 });
 
-const collection = <T>(collectionPath: string) =>
+export const collection = <T>(collectionPath: string) =>
   firebase.firestore().collection(collectionPath).withConverter(typeConverter<T>());
-
-export const db = {
-  libraries: collection<Library | Partial<Library>>('libraries'),
-  images: collection<Image | Partial<Image>>('images'),
-};
 
 export { firebase };
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
+
+export const db = {
+  libraries: () => {
+    if (!auth?.currentUser?.uid) {
+      throw new Error('User not logged in');
+    }
+    return collection<Library | Partial<Library>>(
+      `firebase_users/${auth.currentUser.uid}/libraries`
+    );
+  },
+  images: (libID: string) => {
+    if (!auth?.currentUser?.uid) {
+      throw new Error('User not logged in');
+    }
+    return collection<Image | Partial<Image>>(
+      `firebase_users/${auth.currentUser.uid}/libraries/${libID}/images`
+    );
+  },
+};
 
 export const authUI = new firebaseui.auth.AuthUI(auth);

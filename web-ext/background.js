@@ -62,8 +62,7 @@ async function getLibraries() {
   }
 
   const librariesRef = db
-    .collection('libraries')
-    .where('owner', '==', auth.currentUser.uid)
+    .collection(`firebase_users/${auth.currentUser.uid}/libraries`)
     .orderBy('name');
   const response = await librariesRef.get();
   const snapshots = response.docs;

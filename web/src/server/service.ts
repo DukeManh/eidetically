@@ -10,13 +10,10 @@ const errors = {
 
 export async function createLibrary(name: string) {
   if (auth.currentUser) {
-    const existingLib = await db.libraries
-      .where('owner', '==', auth.currentUser.uid)
-      .where('name', '==', name)
-      .get();
+    const existingLib = await db.libraries().where('name', '==', name).get();
 
     if (existingLib.empty) {
-      const lib = await db.libraries.add({
+      const lib = await db.libraries().add({
         name,
         image_count: 0,
         owner: auth.currentUser.uid,
@@ -34,7 +31,7 @@ export async function createLibrary(name: string) {
 export async function deleteLibrary(libID: string) {
   if (auth.currentUser) {
     try {
-      const libRef = db.libraries.doc(libID);
+      const libRef = db.libraries().doc(libID);
       await libRef.delete();
     } catch (error) {
       console.error(error);
@@ -46,13 +43,10 @@ export async function deleteLibrary(libID: string) {
 
 export async function renameLibrary(libID: string, name: string) {
   if (auth.currentUser) {
-    const libRef = db.libraries.doc(libID);
+    const libRef = db.libraries().doc(libID);
     const lib = await libRef.get();
     if (lib.exists && lib.data()?.name !== name) {
-      const sameNameLib = await db.libraries
-        .where('owner', '==', auth.currentUser.uid)
-        .where('name', '==', name)
-        .get();
+      const sameNameLib = await db.libraries().where('name', '==', name).get();
 
       if (sameNameLib.empty) {
         libRef.update({
