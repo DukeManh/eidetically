@@ -67,7 +67,7 @@ export interface LibraryContextType {
   loading: boolean;
 
   activeLibrary: Library | undefined;
-  setActiveLibrary: (id: string | undefined) => void;
+  setActiveLibrary: (id: string) => void;
 
   uploadImages: (acceptedFiles: File[]) => void;
 }

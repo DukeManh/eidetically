@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { ProviderProps, Library } from '../../interfaces';
@@ -12,34 +12,37 @@ export default function LibraryProvider({ children }: ProviderProps) {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [libraries, setLibraries] = useState<Library[]>([]);
-  const [activeLibrary, setActive] = useState<Library | undefined>(undefined);
+  const [active, setActive] = useState<string>('');
+
+  const activeLibrary = useMemo(() => {
+    const library = libraries.find((lib) => lib.id === active);
+    return library ? library : undefined;
+  }, [active, libraries]);
 
   useEffect(() => {
     if (location.pathname === '/') {
-      setActive(undefined);
+      setActive('');
     }
   }, [location]);
 
   const upload = useCallback(
     (acceptedFiles: File[], libraryID?: string) => {
-      if (activeLibrary?.id || libraryID) {
-        if (libraryID) {
-          uploadImages(acceptedFiles, libraryID);
-        } else if (activeLibrary?.id) {
-          uploadImages(acceptedFiles, activeLibrary.id);
-        }
+      if (libraryID) {
+        uploadImages(acceptedFiles, libraryID);
+      } else if (activeLibrary?.id) {
+        uploadImages(acceptedFiles, activeLibrary.id);
       }
     },
     [activeLibrary]
   );
 
-  const setActiveLibrary = (id: string | undefined) => {
+  const setActiveLibrary = (id: string) => {
     const active = libraries.find((lib) => lib.id === id);
     if (active) {
-      setActive(active);
+      setActive(id);
       return;
     }
-    setActive(undefined);
+    setActive('');
   };
 
   useEffect(() => {
@@ -56,7 +59,7 @@ export default function LibraryProvider({ children }: ProviderProps) {
       });
     } else {
       setLibraries([]);
-      setActiveLibrary(undefined);
+      setActiveLibrary('');
     }
 
     return unsubscribe;
