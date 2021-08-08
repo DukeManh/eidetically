@@ -202,6 +202,7 @@ $menubar_height: 2.25rem;
 
   .zoom-slider {
     @apply bg-gray-500 h-1 w-3/4 appearance-none rounded-lg;
+    max-width: 8rem;
     cursor: grab;
     &:active {
       cursor: grabbing;
@@ -267,6 +268,11 @@ $menubar_height: 2.25rem;
 
   .text-truncate {
     @apply overflow-hidden overflow-ellipsis whitespace-nowrap;
+  }
+
+  .topbarColumn {
+    @apply flex flex-row items-center;
+    flex-basis: 100%;
   }
 }
 
