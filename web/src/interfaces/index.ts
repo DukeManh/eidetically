@@ -40,10 +40,7 @@ export interface Image extends MetaData {
 
 // imageID-Image object, cursor points to the last document
 export interface Images {
-  images: {
-    [imageID: string]: Image | undefined;
-  };
-  cursor?: firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>;
+  [imageID: string]: Image | undefined;
 }
 
 export interface LayoutContextType {

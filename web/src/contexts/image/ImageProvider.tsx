@@ -44,7 +44,7 @@ export default function ImageProvider({ children }: ProviderProps) {
         select,
         images,
         setImages,
-        focused: focused ? images?.images?.[focused.id] : undefined,
+        focused: focused ? images?.[focused.id] : undefined,
         focus: setFocused,
         deleteSelection,
         slideVisible,

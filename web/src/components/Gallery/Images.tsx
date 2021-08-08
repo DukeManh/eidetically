@@ -1,7 +1,7 @@
-import { useEffect, useRef, useCallback } from 'react';
+import firebase from 'firebase';
+import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
-import firebase from 'firebase';
 
 import { useLayout, useImage, useLibrary } from '../../contexts';
 import { RouterParams, Image } from '../../interfaces';
@@ -12,11 +12,13 @@ import Figure from './Figure';
 const QUERY_LIMIT = 15;
 
 export default function Images() {
-  const { setActiveLibrary, loading: loadingLib, uploadImages } = useLibrary();
+  const { setActiveLibrary, loading: loadingLib, uploadImages, activeLibrary } = useLibrary();
   const { images, setImages } = useImage();
   const { zoom } = useLayout();
   const { libParam } = useParams<RouterParams>();
   const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot unsubscribers
+  const [cursor, setCursor] =
+    useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>>();
 
   const { getRootProps, isDragActive } = useDropzone({
     onDrop: (files) => uploadImages(files),
@@ -25,14 +27,12 @@ export default function Images() {
 
   const loadMore = useCallback(
     (libID) => {
+      console.log('called');
       let imagesRef: firebase.firestore.Query<Image | Partial<Image>>;
 
-      if (images?.cursor) {
-        imagesRef = db
-          .images(libID)
-          .orderBy('upload_date')
-          .startAfter(images.cursor)
-          .limit(QUERY_LIMIT);
+      // start querying from the last cursor
+      if (cursor) {
+        imagesRef = db.images(libID).orderBy('upload_date').startAfter(cursor).limit(QUERY_LIMIT);
       } else {
         imagesRef = db.libraries().doc(libID).collection('images').orderBy('upload_date').limit(15);
       }
@@ -48,22 +48,24 @@ export default function Images() {
         });
 
         setImages((prevImages) => ({
-          cursor:
-            snapshot.docs.length === QUERY_LIMIT
-              ? snapshot.docs[snapshot.docs.length - 1]
-              : undefined,
-          images: { ...prevImages?.images, ...libImages },
+          ...prevImages,
+          ...libImages,
         }));
+
+        setCursor(
+          snapshot.docs.length === QUERY_LIMIT ? snapshot.docs[snapshot.docs.length - 1] : undefined
+        );
       });
 
       unsubscribes.current.push(unsubscribe);
     },
-    [images, setImages]
+    [cursor, setImages]
   );
 
   useEffect(() => {
     setActiveLibrary(libParam);
     setImages(undefined);
+    setCursor(undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [libParam, loadingLib]);
 
@@ -72,6 +74,7 @@ export default function Images() {
   }, []);
 
   useEffect(() => {
+    console.log(images, loadingLib, libParam);
     if (!images && !loadingLib && libParam) {
       unsubscribes.current.forEach((unsubscribe) => unsubscribe());
       unsubscribes.current = [];
@@ -79,29 +82,24 @@ export default function Images() {
     }
   }, [libParam, images, loadMore, loadingLib]);
 
+  const imageArray = useMemo(
+    () => Object.values(images || {}).filter((image) => !!image) as Image[],
+    [images]
+  );
+
   return (
     <div className="p-2 relative min-h-full" {...getRootProps()}>
       {isDragActive && (
         <div className="w-full h-full border-2 border-dotted bg-blue-500 bg-opacity-20 border-blue-600 absolute top-0 left-0 dropZone" />
       )}
-      <div
-        className="waterfall-layout"
-        style={{ columnWidth: zoom }}
-        onDrop={(ev) => {
-          ev.preventDefault();
-          const src = ev.dataTransfer.getData('src');
-          console.log(src);
-        }}
-      >
-        {(Object.values(images?.images || {}).filter((image) => !!image) as Image[]).map(
-          (image) => (
-            <Figure key={image.id} image={image} />
-          )
-        )}
+      <div className="waterfall-layout" style={{ columnWidth: zoom }}>
+        {imageArray.map((image) => (
+          <Figure key={image.id} image={image} />
+        ))}
       </div>
 
       <div className="py-4 mx-auto flex flex-row justify-center">
-        {images?.cursor && (
+        {!!cursor && activeLibrary && imageArray.length < activeLibrary?.image_count && (
           <button
             className="py-1 px-2 rounded-sm border border-white transition-colors hover:bg-tabFocus shadow-md"
             onClick={() => loadMore(libParam)}
