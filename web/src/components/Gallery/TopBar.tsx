@@ -1,4 +1,5 @@
 import { HiMenuAlt2, HiMenuAlt3, HiPlusSm, HiMinusSm, HiOutlineSearch } from 'react-icons/hi';
+import { ImCancelCircle } from 'react-icons/im';
 
 import { useLayout, useLibrary } from '../../contexts';
 import useQuery from '../../hooks/useQuery';
@@ -43,16 +44,27 @@ export default function TopBar() {
         <div className="topbarColumn justify-end space-x-4">
           <div>
             <form className="relative">
-              <div className="absolute h-full bg-tabFocus transform rounded-l-md w-8 flex flex-row justify-center items-center cursor-pointer active:bg-tabActive">
+              <div className="absolute h-full bg-tabFocus rounded-l-md w-8 flex flex-row justify-center items-center cursor-pointer active:bg-tabActive">
                 <HiOutlineSearch />
               </div>
               <input
-                className="bg-textArea box-border border border-textArea focus:border-alert py-1 pr-3 pl-11 rounded-md caret-gray-400"
+                className="bg-textArea box-border border border-textArea focus:border-alert py-1 pr-8 pl-11 rounded-md caret-gray-400"
                 type="text"
                 placeholder="Search"
                 onChange={(e) => setQuery('s', e.target.value)}
                 value={query.get('s') || ''}
               ></input>
+              {!!query.get('s') && (
+                <div className="absolute right-2 top-0 h-full flex flex-row justify-center items-center cursor-pointer">
+                  <ImCancelCircle
+                    size={'1rem'}
+                    className="hover:text-gray-300 active:text-tabActive transition-colors"
+                    onClick={() => {
+                      setQuery('s', '');
+                    }}
+                  />
+                </div>
+              )}
             </form>
           </div>
 
