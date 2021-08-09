@@ -18,7 +18,7 @@ export default function Images() {
   const { setActiveLibrary, loading: loadingLib, uploadImages, activeLibrary } = useLibrary();
   const { images, setImages } = useImage();
   const { zoom } = useLayout();
-  const [loadingImages, setLoadingImages] = useState(false);
+  const [loadingImages, setLoadingImages] = useState(true);
 
   const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot unsubscribers
   const [cursor, setCursor] =
@@ -109,6 +109,7 @@ export default function Images() {
     () => {
       const param = query.get('s');
       if (param && !loadingImages) {
+        console.log(param);
         const results = fuse.current?.search(param).flatMap((image) => ({
           ...image.item,
         }));
@@ -128,9 +129,15 @@ export default function Images() {
         <div className="w-full h-full border-2 border-dotted bg-blue-500 bg-opacity-20 border-blue-600 absolute top-0 left-0 dropZone" />
       )}
       <div className="waterfall-layout" style={{ columnWidth: zoom }}>
-        {(searchResults || imageArray).map((image) => (
-          <Figure key={image.id} image={image} />
-        ))}
+        {searchResults ? (
+          !searchResults.length ? (
+            <div>not found</div>
+          ) : (
+            searchResults.map((image) => <Figure key={image.id} image={image} />)
+          )
+        ) : (
+          imageArray.map((image) => <Figure key={image.id} image={image} />)
+        )}
       </div>
 
       <div className="py-4 mx-auto flex flex-row justify-center">

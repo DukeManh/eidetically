@@ -1,5 +1,6 @@
-import { HiMenuAlt2, HiMenuAlt3, HiPlusSm, HiMinusSm, HiOutlineSearch } from 'react-icons/hi';
+import { HiPlusSm, HiMinusSm, HiOutlineSearch } from 'react-icons/hi';
 import { ImCancelCircle } from 'react-icons/im';
+import { BiMenuAltLeft, BiMenuAltRight } from 'react-icons/bi';
 
 import { useLayout, useLibrary } from '../../contexts';
 import useQuery from '../../hooks/useQuery';
@@ -13,7 +14,7 @@ export default function TopBar() {
     <div className="md:px-4 min-h-[6rem] max-h-24 h-10 top-0 space-y-2">
       <div className="h-3/4 flex flex-row justify-between">
         <div className="topbarColumn justify-start space-x-4">
-          <HiMenuAlt2
+          <BiMenuAltLeft
             size={28}
             className="cursor-pointer"
             onClick={() => {
@@ -68,7 +69,7 @@ export default function TopBar() {
             </form>
           </div>
 
-          <HiMenuAlt3
+          <BiMenuAltRight
             size={28}
             className="cursor-pointer"
             onClick={() => {
