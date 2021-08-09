@@ -25,7 +25,7 @@ export default function Gallery() {
             <Welcome />
           </Route>
 
-          <Route path="/:libParam">
+          <Route path="/libraries/:libParam">
             <Images />
           </Route>
         </Switch>

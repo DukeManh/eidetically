@@ -80,7 +80,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
       name: 'Open',
       handler: () => setMenuVisible(false),
       content: (
-        <a href={`/${lib.id}`} target="_blank" rel="noreferrer">
+        <a href={`/libraries/${lib.id}`} target="_blank" rel="noreferrer">
           Open in new tab
         </a>
       ),
@@ -134,7 +134,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
       {!(renaming === lib.id) && (
         <div className={activeLibrary?.id === lib.id ? 'tab tab-active' : 'tab'}>
           <Link
-            to={`/${lib.id}`}
+            to={`/libraries/${lib.id}`}
             className="w-3/4 h-full inline-block py-1 px-3 flex-grow text-truncate"
           >
             {lib.name}
