@@ -2,10 +2,13 @@ import firebase from 'firebase';
 import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
+import Fuse from 'fuse.js';
+import { useDebounce } from 'react-use';
 
 import { useLayout, useImage, useLibrary } from '../../contexts';
 import { RouterParams, Image } from '../../interfaces';
 import { db } from '../../server/firebase';
+import useQuery from '../../hooks/useQuery';
 
 import Figure from './Figure';
 
@@ -15,10 +18,17 @@ export default function Images() {
   const { setActiveLibrary, loading: loadingLib, uploadImages, activeLibrary } = useLibrary();
   const { images, setImages } = useImage();
   const { zoom } = useLayout();
-  const { libParam } = useParams<RouterParams>();
+  const [loadingImages, setLoadingImages] = useState(false);
+
   const unsubscribes = useRef<Array<() => void>>([]); // Array of snapshot unsubscribers
   const [cursor, setCursor] =
     useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>>();
+
+  const fuse = useRef<Fuse<Image>>();
+
+  const { libParam } = useParams<RouterParams>();
+  const { query } = useQuery();
+  const [searchResults, setSearchResults] = useState<Image[]>();
 
   const { getRootProps, isDragActive } = useDropzone({
     onDrop: (files) => uploadImages(files),
@@ -27,7 +37,7 @@ export default function Images() {
 
   const loadMore = useCallback(
     (libID) => {
-      console.log('called');
+      setLoadingImages(true);
       let imagesRef: firebase.firestore.Query<Image | Partial<Image>>;
 
       // start querying from the last cursor
@@ -38,6 +48,7 @@ export default function Images() {
       }
 
       const unsubscribe = imagesRef.onSnapshot((snapshot) => {
+        setLoadingImages(false);
         const libImages: { [imageID: string]: Image | undefined } = {};
         snapshot.docChanges().forEach((change) => {
           if (change.type !== 'removed') {
@@ -66,6 +77,7 @@ export default function Images() {
     setActiveLibrary(libParam);
     setImages(undefined);
     setCursor(undefined);
+    fuse.current = undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [libParam, loadingLib]);
 
@@ -74,7 +86,6 @@ export default function Images() {
   }, []);
 
   useEffect(() => {
-    console.log(images, loadingLib, libParam);
     if (!images && !loadingLib && libParam) {
       unsubscribes.current.forEach((unsubscribe) => unsubscribe());
       unsubscribes.current = [];
@@ -87,13 +98,37 @@ export default function Images() {
     [images]
   );
 
+  useEffect(() => {
+    fuse.current = new Fuse(imageArray, {
+      keys: ['name', 'note', 'id'],
+      threshold: 0.3,
+    });
+  }, [imageArray]);
+
+  useDebounce(
+    () => {
+      const param = query.get('s');
+      if (param && !loadingImages) {
+        const results = fuse.current?.search(param).flatMap((image) => ({
+          ...image.item,
+        }));
+
+        setSearchResults(results);
+      } else {
+        setSearchResults(undefined);
+      }
+    },
+    400,
+    [query.get('s'), loadingImages]
+  );
+
   return (
     <div className="p-2 relative min-h-full" {...getRootProps()}>
       {isDragActive && (
         <div className="w-full h-full border-2 border-dotted bg-blue-500 bg-opacity-20 border-blue-600 absolute top-0 left-0 dropZone" />
       )}
       <div className="waterfall-layout" style={{ columnWidth: zoom }}>
-        {imageArray.map((image) => (
+        {(searchResults || imageArray).map((image) => (
           <Figure key={image.id} image={image} />
         ))}
       </div>

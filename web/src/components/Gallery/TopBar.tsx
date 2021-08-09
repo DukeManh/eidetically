@@ -1,10 +1,12 @@
 import { HiMenuAlt2, HiMenuAlt3, HiPlusSm, HiMinusSm, HiOutlineSearch } from 'react-icons/hi';
 
 import { useLayout, useLibrary } from '../../contexts';
+import useQuery from '../../hooks/useQuery';
 
 export default function TopBar() {
   const { navigation, updateNavigation, properties, updateProperties, zoom, setZoom } = useLayout();
   const { activeLibrary } = useLibrary();
+  const { query, setQuery } = useQuery();
 
   return (
     <div className="md:px-4 min-h-[6rem] max-h-24 h-10 top-0 space-y-2">
@@ -45,9 +47,11 @@ export default function TopBar() {
                 <HiOutlineSearch />
               </div>
               <input
-                className="bg-textArea box-border focus:border border-alert py-2 pr-3 pl-11 rounded-md caret-gray-400"
+                className="bg-textArea box-border border border-textArea focus:border-alert py-1 pr-3 pl-11 rounded-md caret-gray-400"
                 type="text"
                 placeholder="Search"
+                onChange={(e) => setQuery('s', e.target.value)}
+                value={query.get('s') || ''}
               ></input>
             </form>
           </div>
