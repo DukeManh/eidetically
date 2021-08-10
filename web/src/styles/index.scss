@@ -37,6 +37,8 @@ $secondary: #414141;
 $mask: rgba(0, 0, 0, 0.45);
 $transition_duration: 300ms;
 $menubar_height: 2.25rem;
+$column_gap: 1.25rem;
+$mobile_column_gap: 0.5rem;
 
 @layer components {
   // Mobile breakpoint mixin
@@ -75,12 +77,21 @@ $menubar_height: 2.25rem;
   .waterfall {
     display: grid;
     justify-content: center;
-    gap: 10px;
-    place .imageColumn {
+    gap: $column_gap;
+
+    @include breakpoint {
+      gap: $mobile_column_gap;
+    }
+
+    .imageColumn {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
-      grid-auto-rows: auto;
-      gap: 10px;
+      grid-auto-rows: min-content;
+      gap: $column_gap;
+
+      @include breakpoint {
+        gap: $mobile_column_gap;
+      }
     }
   }
 

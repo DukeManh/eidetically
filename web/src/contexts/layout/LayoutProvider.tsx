@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LayoutContext from './LayoutContext';
 import { useLocalStorage, useMedia } from 'react-use';
 
 import { SidebarLayout, ProviderProps } from '../../interfaces';
 
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };
-const MIN = 1;
-const MAX = 10;
+const maxZoom = 10;
 
 export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);
   const defaultZoom = isMobile ? 1 : 3;
   const [zoom, setZoom] = useLocalStorage('zoom', defaultZoom);
+  const [minZoom, setMinZoom] = useState(1);
 
   const DefaultSidebarLayout: SidebarLayout = {
     visible: !isMobile,
@@ -90,6 +90,15 @@ export default function LayoutProvider({ children }: ProviderProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, navigation.width, properties.width]);
 
+  useEffect(() => {
+    if (isMobile) {
+      setMinZoom(5);
+      setZoom((zoom) => Math.max(5, zoom || 0));
+    } else {
+      setMinZoom(1);
+    }
+  }, [isMobile, setZoom]);
+
   return (
     <LayoutContext.Provider
       value={{
@@ -101,9 +110,9 @@ export default function LayoutProvider({ children }: ProviderProps) {
         maxNavigationWidth,
         maxPropertiesWidth,
         zoom: zoom || defaultZoom,
-        maxZoom: MAX,
-        minZoom: MIN,
-        setZoom: (val) => setZoom(Math.min(Math.max(MIN, val), MAX)),
+        maxZoom,
+        minZoom,
+        setZoom: (val) => setZoom(Math.min(Math.max(minZoom, val), maxZoom)),
       }}
     >
       {children}

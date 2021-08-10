@@ -114,7 +114,6 @@ export default function ImageContainer() {
     () => {
       const param = query.get('s');
       if (param && !loadingImages) {
-        console.log(param);
         const results = fuse.current?.search(param).flatMap((image) => ({
           ...image.item,
         }));

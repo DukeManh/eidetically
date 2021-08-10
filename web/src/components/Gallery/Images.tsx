@@ -27,11 +27,6 @@ export default function Images({ images }: ImagesProps) {
             ))}
         </div>
       ))}
-      {/* {images
-        .filter((_, i) => i % 3 == 0)
-        .map((image) => (
-          <Figure key={image.id} image={image} />
-        ))} */}
     </div>
   );
 }
