@@ -6,7 +6,16 @@ import { useLayout, useLibrary } from '../../contexts';
 import useQuery from '../../hooks/useQuery';
 
 export default function TopBar() {
-  const { navigation, updateNavigation, properties, updateProperties, zoom, setZoom } = useLayout();
+  const {
+    navigation,
+    updateNavigation,
+    properties,
+    updateProperties,
+    zoom,
+    setZoom,
+    minZoom,
+    maxZoom,
+  } = useLayout();
   const { activeLibrary } = useLibrary();
   const { query, setQuery } = useQuery();
 
@@ -26,19 +35,19 @@ export default function TopBar() {
 
         <div className="topbarColumn justify-center space-x-2">
           <div className="cursor-pointer p-1 rounded-full active:bg-tabActive">
-            <HiMinusSm onClick={() => setZoom(zoom - 100)} />
+            <HiMinusSm onClick={() => setZoom(zoom - 1)} />
           </div>
           <input
             className="zoom-slider"
             type="range"
             value={zoom}
             onChange={(e) => setZoom(parseInt(e.target.value))}
-            min={100}
-            max={900}
-            step={50}
+            min={minZoom}
+            max={maxZoom}
+            step={1}
           ></input>
           <div className="cursor-pointer p-1 rounded-full active:bg-tabActive">
-            <HiPlusSm onClick={() => setZoom(zoom + 100)} />
+            <HiPlusSm onClick={() => setZoom(zoom + 1)} />
           </div>
         </div>
 

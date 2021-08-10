@@ -24,6 +24,7 @@ export default function Figure({ image }: FigureProps) {
         className={classNames(selected && 'border-2 border-blue-500 p-[2px]')}
         onClick={handleClick}
         onDoubleClick={toggleSlide}
+        style={{ width: '100%' }}
       >
         <img
           className="w-full h-auto cursor-pointer shadow-sm hover:shadow-md"

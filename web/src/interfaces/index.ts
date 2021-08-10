@@ -56,6 +56,8 @@ export interface LayoutContextType {
   maxPropertiesWidth: () => number;
 
   zoom: number;
+  maxZoom: number;
+  minZoom: number;
   setZoom: (val: number) => void;
 }
 

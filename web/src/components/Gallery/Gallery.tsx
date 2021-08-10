@@ -2,7 +2,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { useLayout } from '../../contexts';
 
-import Images from './Images';
+import ImageContainer from './ImageContainer';
 import TopBar from './TopBar';
 import Welcome from './Welcome';
 
@@ -26,7 +26,7 @@ export default function Gallery() {
           </Route>
 
           <Route path="/libraries/:libParam">
-            <Images />
+            <ImageContainer />
           </Route>
         </Switch>
       </div>
