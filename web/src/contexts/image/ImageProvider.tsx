@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import { ProviderProps, Image, Images } from '../../interfaces';
+import { ProviderProps, Image, ImageMap } from '../../interfaces';
 import { ImageContext } from './ImageContext';
 import { deleteImages } from '../../server/service';
 
@@ -9,7 +9,8 @@ import Slide from '../../components/Slide';
 export default function ImageProvider({ children }: ProviderProps) {
   const [selecting, setSelecting] = useState(false);
   const [selection, setSelection] = useState<{ [imageID: string]: Image | undefined }>({});
-  const [images, setImages] = useState<Images>();
+  const [imageArray, setImageArray] = useState<Image[][]>([]);
+  const [imageMap, setImageMap] = useState<ImageMap>({});
   const [focused, setFocused] = useState<Image | undefined>(undefined);
   const [slideVisible, toggleSlide] = useState(false);
 
@@ -42,9 +43,11 @@ export default function ImageProvider({ children }: ProviderProps) {
         cancelSelecting,
         selection,
         select,
-        images,
-        setImages,
-        focused: focused ? images?.[focused.id] : undefined,
+        imageArray,
+        setImageArray,
+        imageMap,
+        setImageMap,
+        focused: focused ? imageMap?.[focused.id] : undefined,
         focus: setFocused,
         deleteSelection,
         slideVisible,
