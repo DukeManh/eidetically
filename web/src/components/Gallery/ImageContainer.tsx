@@ -16,7 +16,7 @@ const QUERY_LIMIT = 15;
 
 export default function ImageContainer() {
   const { setActiveLibrary, loading: loadingLib, uploadImages, activeLibrary } = useLibrary();
-  const { images, setImages } = useImage();
+  const { imageArray, setImageArray, setImageMap } = useImage();
   const [loadingImages, setLoadingImages] = useState(true);
 
   const unsubscribes = useRef<Array<() => void>>([]);
@@ -37,6 +37,8 @@ export default function ImageContainer() {
   // Query new images starting from the last cursor
   const loadMore = useCallback(
     (libID) => {
+      const listenerIndex = imageArray.length;
+
       setLoadingImages(true);
       let imagesRef: firebase.firestore.Query<Image | Partial<Image>>;
 
@@ -48,6 +50,15 @@ export default function ImageContainer() {
 
       const unsubscribe = imagesRef.onSnapshot((snapshot) => {
         setLoadingImages(false);
+
+        setImageArray((arr) => {
+          arr[listenerIndex] = snapshot.docs.map((img) => ({
+            id: img.id,
+            ...img.data(),
+          })) as Image[];
+          return [...arr];
+        });
+
         const libImages: { [imageID: string]: Image | undefined } = {};
         snapshot.docChanges().forEach((change) => {
           if (change.type !== 'removed') {
@@ -57,8 +68,8 @@ export default function ImageContainer() {
           }
         });
 
-        setImages((prevImages) => ({
-          ...prevImages,
+        setImageMap((map) => ({
+          ...map,
           ...libImages,
         }));
 
@@ -69,13 +80,15 @@ export default function ImageContainer() {
 
       unsubscribes.current.push(unsubscribe);
     },
-    [cursor, setImages]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [cursor, setImageArray, setImageMap, imageArray.length]
   );
 
-  // Clean up on changing library
+  // Clean up states on changing library
   useEffect(() => {
     setActiveLibrary(libParam);
-    setImages(undefined);
+    setImageArray([]);
+    setImageMap({});
     setCursor(undefined);
     fuse.current = undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,28 +101,28 @@ export default function ImageContainer() {
 
   // First images load
   useEffect(() => {
-    if (!images && !loadingLib && libParam) {
+    if (!imageArray.length && !loadingLib && libParam) {
       unsubscribes.current.forEach((unsubscribe) => unsubscribe());
       unsubscribes.current = [];
       loadMore(libParam);
     }
-  }, [libParam, images, loadMore, loadingLib]);
+  }, [libParam, imageArray.length, loadMore, loadingLib]);
 
-  // Filter deleted images
-  const imageArray = useMemo(
-    () => Object.values(images || {}).filter((image) => !!image) as Image[],
-    [images]
+  const flattenArray = useMemo(
+    () => imageArray.reduce((acc, curr) => acc.concat(curr), []),
+    [imageArray]
   );
 
-  // Index image array again on change
+  // Index image arrayVu on change
   useEffect(() => {
-    fuse.current = new Fuse(imageArray, {
+    fuse.current = new Fuse(flattenArray, {
       keys: ['name', 'note', 'id'],
       threshold: 0.3,
     });
-  }, [imageArray]);
+  }, [flattenArray]);
 
   // Debounce search 400ms
+  console.log('cookies');
   useDebounce(
     () => {
       const param = query.get('s');
@@ -133,10 +146,10 @@ export default function ImageContainer() {
         <div className="w-full h-full border-2 border-dotted bg-blue-500 bg-opacity-20 border-blue-600 absolute top-0 left-0 dropZone" />
       )}
 
-      <Images images={(searchResults && searchResults) || imageArray} />
+      <Images images={searchResults || flattenArray} />
 
       <div className="py-4 mx-auto flex flex-row justify-center">
-        {!!cursor && activeLibrary && imageArray.length < activeLibrary?.image_count && (
+        {!!cursor && activeLibrary && flattenArray.length < activeLibrary?.image_count && (
           <button
             className="py-1 px-2 rounded-sm border border-white transition-colors hover:bg-tabFocus shadow-md"
             onClick={() => loadMore(libParam)}

@@ -39,7 +39,7 @@ export interface Image extends MetaData {
 }
 
 // imageID-Image object, cursor points to the last document
-export interface Images {
+export interface ImageMap {
   [imageID: string]: Image | undefined;
 }
 
@@ -72,8 +72,10 @@ export interface LibraryContextType {
 }
 
 export interface ImageContextType {
-  images?: Images;
-  setImages: Dispatch<SetStateAction<Images | undefined>>;
+  imageArray: Image[][];
+  imageMap: ImageMap;
+  setImageArray: Dispatch<SetStateAction<Image[][]>>;
+  setImageMap: Dispatch<SetStateAction<ImageMap>>;
 
   selecting: boolean;
   startSelecting: () => void;
