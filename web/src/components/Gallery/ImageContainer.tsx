@@ -12,7 +12,7 @@ import useQuery from '../../hooks/useQuery';
 
 import Images from './Images';
 
-const QUERY_LIMIT = 15;
+const QUERY_LIMIT = 50;
 
 export default function ImageContainer() {
   const { setActiveLibrary, loading: loadingLib, uploadImages, activeLibrary } = useLibrary();
@@ -45,7 +45,12 @@ export default function ImageContainer() {
       if (cursor) {
         imagesRef = db.images(libID).orderBy('upload_date').startAfter(cursor).limit(QUERY_LIMIT);
       } else {
-        imagesRef = db.libraries().doc(libID).collection('images').orderBy('upload_date').limit(15);
+        imagesRef = db
+          .libraries()
+          .doc(libID)
+          .collection('images')
+          .orderBy('upload_date')
+          .limit(QUERY_LIMIT);
       }
 
       const unsubscribe = imagesRef.onSnapshot((snapshot) => {

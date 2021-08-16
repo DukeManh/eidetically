@@ -30,6 +30,7 @@ export default function Figure({ image }: FigureProps) {
           className="w-full h-auto cursor-pointer shadow-sm hover:shadow-md"
           alt={image.name}
           src={image.downloadURL}
+          loading="lazy"
         />
       </button>
       <figcaption className="px-4 text-truncate text-sm text-center max-h-12 leading-6">
