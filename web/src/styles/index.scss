@@ -282,7 +282,19 @@ $mobile_column_gap: 0.5rem;
 
   .topbarColumn {
     @apply flex flex-row items-center;
-    flex-basis: 100%;
+  }
+
+  .searchForm {
+    @apply relative flex-shrink-[2] overflow-hidden;
+    .searchIcon {
+      @apply absolute h-full bg-tabFocus rounded-l-md w-8 flex flex-row justify-center items-center cursor-pointer active:bg-tabActive;
+    }
+    .searchBox {
+      @apply max-w-full bg-textArea box-border border border-textArea focus:border-alert py-1 pr-8 pl-11 rounded-md caret-gray-400;
+    }
+    .cancelIcon {
+      @apply absolute right-2 top-0 h-full flex flex-row justify-center items-center cursor-pointer;
+    }
   }
 }
 

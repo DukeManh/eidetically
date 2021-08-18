@@ -1,14 +1,14 @@
 import firebase from 'firebase';
+import Fuse from 'fuse.js';
 import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
-import Fuse from 'fuse.js';
 import { useDebounce } from 'react-use';
 
+import useQuery from '../../hooks/useQuery';
 import { useImage, useLibrary } from '../../contexts';
 import { RouterParams, Image } from '../../interfaces';
 import { db } from '../../server/firebase';
-import useQuery from '../../hooks/useQuery';
 
 import Images from './Images';
 
@@ -118,7 +118,7 @@ export default function ImageContainer() {
     [imageArray]
   );
 
-  // Index image arrayVu on change
+  // Index image array on change
   useEffect(() => {
     fuse.current = new Fuse(flattenArray, {
       keys: ['name', 'note', 'id'],
@@ -127,7 +127,6 @@ export default function ImageContainer() {
   }, [flattenArray]);
 
   // Debounce search 400ms
-  console.log('cookies');
   useDebounce(
     () => {
       const param = query.get('s');
