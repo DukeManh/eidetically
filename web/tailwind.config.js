@@ -25,7 +25,7 @@ module.exports = {
       progressBar: '#2E2E30',
       tabActive: '#666666',
       tabFocus: '#535353',
-      mask: 'rgba(0,0,0,.45)',
+      mask: 'rgba(0,0,0,.65)',
       textArea: '#2D2D2D',
       alert: '#1F1F1F',
 

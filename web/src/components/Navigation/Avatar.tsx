@@ -1,5 +1,6 @@
-import { useAuth } from '../../contexts';
 import { MdEdit } from 'react-icons/md';
+
+import { useAuth } from '../../contexts';
 import defaultAvatar from '../../public/images/default-avatar.png';
 
 export default function Avatar() {
@@ -16,7 +17,7 @@ export default function Avatar() {
       ></img>
       {user && (
         <>
-          <div className="rounded-full bg-white border border-black w-6 h-6 p-[2px] absolute bottom-0 right-0 z-50">
+          <div className="rounded-full bg-white border border-black w-6 h-6 p-[2px] absolute bottom-0 right-0 z-[5]">
             <MdEdit style={{ fill: 'black', height: '100%', width: '100%' }} />
           </div>
           <div className="absolute opacity-0 hover:opacity-100 p-[1px] top-0 left-0 rounded-full w-full h-full bg-mask transition-all">

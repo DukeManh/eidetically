@@ -241,6 +241,31 @@ $mobile_column_gap: 0.5rem;
   .slides {
     @apply fixed top-0 left-0 w-full h-full;
     z-index: 1000;
+
+    .swiper-container {
+      @apply h-full z-50;
+    }
+
+    .swiper-pagination-bullet {
+      @apply bg-gray-400 opacity-60;
+    }
+
+    .swiper-pagination-bullet {
+      @apply w-3 h-3;
+    }
+
+    .swiper-button-disabled {
+      @apply text-gray-400;
+    }
+
+    .swiper-pagination-bullet-active {
+      @apply bg-white w-4 h-4 opacity-100;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      @apply text-white;
+    }
   }
 
   .slides-hidden {

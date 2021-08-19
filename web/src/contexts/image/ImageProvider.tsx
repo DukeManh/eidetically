@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 import { ProviderProps, Image, ImageMap } from '../../interfaces';
 import { ImageContext } from './ImageContext';
@@ -35,6 +35,11 @@ export default function ImageProvider({ children }: ProviderProps) {
     }
   }, [cancelSelecting, selection]);
 
+  const flattenArray = useMemo(
+    () => imageArray.reduce((acc, curr) => acc.concat(curr), []),
+    [imageArray]
+  );
+
   return (
     <ImageContext.Provider
       value={{
@@ -47,6 +52,7 @@ export default function ImageProvider({ children }: ProviderProps) {
         setImageArray,
         imageMap,
         setImageMap,
+        flattenArray,
         focused: focused ? imageMap?.[focused.id] : undefined,
         focus: setFocused,
         deleteSelection,

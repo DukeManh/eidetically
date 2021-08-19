@@ -76,6 +76,7 @@ export interface ImageContextType {
   imageMap: ImageMap;
   setImageArray: Dispatch<SetStateAction<Image[][]>>;
   setImageMap: Dispatch<SetStateAction<ImageMap>>;
+  flattenArray: Image[];
 
   selecting: boolean;
   startSelecting: () => void;

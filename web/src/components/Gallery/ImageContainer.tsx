@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import Fuse from 'fuse.js';
-import { useEffect, useRef, useCallback, useMemo, useState } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { useDebounce } from 'react-use';
@@ -16,7 +16,7 @@ const QUERY_LIMIT = 50;
 
 export default function ImageContainer() {
   const { setActiveLibrary, loading: loadingLib, uploadImages, activeLibrary } = useLibrary();
-  const { imageArray, setImageArray, setImageMap } = useImage();
+  const { imageArray, setImageArray, setImageMap, flattenArray } = useImage();
   const [loadingImages, setLoadingImages] = useState(true);
 
   const unsubscribes = useRef<Array<() => void>>([]);
@@ -112,11 +112,6 @@ export default function ImageContainer() {
       loadMore(libParam);
     }
   }, [libParam, imageArray.length, loadMore, loadingLib]);
-
-  const flattenArray = useMemo(
-    () => imageArray.reduce((acc, curr) => acc.concat(curr), []),
-    [imageArray]
-  );
 
   // Index image array on change
   useEffect(() => {
