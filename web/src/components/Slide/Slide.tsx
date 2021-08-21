@@ -67,7 +67,7 @@ export default function Slides() {
                   ref={imageRef}
                   src={image.downloadURL}
                   alt={image.name}
-                  className="h-full object-contain select-none pointer-events-none"
+                  className="max-w-[100vw] h-full object-contain select-none pointer-events-none"
                 ></img>
               </div>
             </div>
