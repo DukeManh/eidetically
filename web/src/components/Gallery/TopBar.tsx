@@ -7,10 +7,10 @@ import useQuery from '../../hooks/useQuery';
 
 export default function TopBar() {
   const {
-    navigation,
-    updateNavigation,
-    properties,
-    updateProperties,
+    navigationVisible,
+    setNavigationVisible,
+    propertiesVisible,
+    setPropertiesVisible,
     zoom,
     setZoom,
     minZoom,
@@ -27,7 +27,7 @@ export default function TopBar() {
             size={28}
             className="cursor-pointer"
             onClick={() => {
-              updateNavigation({ visible: !navigation.visible });
+              setNavigationVisible(!navigationVisible);
             }}
           />
           <div className="text-md text-truncate">{activeLibrary?.name || 'Drop it'}</div>
@@ -80,7 +80,7 @@ export default function TopBar() {
             size={28}
             className="cursor-pointer flex-shrink-0"
             onClick={() => {
-              updateProperties({ visible: !properties.visible });
+              setPropertiesVisible(!propertiesVisible);
             }}
           />
         </div>

@@ -1,94 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import LayoutContext from './LayoutContext';
+import { useEffect, useState } from 'react';
 import { useLocalStorage, useMedia } from 'react-use';
 
-import { SidebarLayout, ProviderProps } from '../../interfaces';
+import { ProviderProps } from '../../interfaces';
+import LayoutContext from './LayoutContext';
+import { on, off } from '../../utilities/';
 
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };
-const maxZoom = 10;
+const MaxZoom = 10;
+const DefaultSidebarWidth = 250;
 
 export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);
   const defaultZoom = isMobile ? 1 : 3;
+  const [propertiesVisible, setPropertiesVisible] = useLocalStorage('propertiesVisible', !isMobile);
+  const [navigationVisible, setNavigationVisible] = useLocalStorage('navigationVisible', !isMobile);
+  const [navigationWidth, setNavigationWidth] = useLocalStorage(
+    'navigationWidth',
+    DefaultSidebarWidth
+  );
   const [zoom, setZoom] = useLocalStorage('zoom', defaultZoom);
   const [minZoom, setMinZoom] = useState(1);
 
-  const DefaultSidebarLayout: SidebarLayout = {
-    visible: !isMobile,
-    width: 250,
-  };
-
-  const [navigationLayout, setNavigationLayout] = useLocalStorage(
-    'layout:navigation',
-    DefaultSidebarLayout
-  );
-
-  const navigation = navigationLayout || DefaultSidebarLayout;
-
-  // Make sure gallery has a min width of 768px when resizing
-  const maxNavigationWidth = (visible = properties.visible) => {
-    if (!window) {
-      return 0;
-    }
-    return window.innerWidth - (visible ? properties.width : 0) - BreakPoints.sm;
-  };
-
-  const [propertiesLayout, setPropertiesLayout] = useLocalStorage(
-    'layout:properties',
-    DefaultSidebarLayout
-  );
-
-  const properties = propertiesLayout || DefaultSidebarLayout;
-
-  // Make sure gallery has a min width of 768px when resizing
-  const maxPropertiesWidth = (visible = navigation.visible) => {
-    if (!window) {
-      return 0;
-    }
-    return window.innerWidth - (visible ? navigation.width : 0) - BreakPoints.sm;
-  };
-
-  const updateProperties = (props: Partial<SidebarLayout>) => {
-    setPropertiesLayout({
-      ...properties,
-      ...props,
-      width: props?.width ? (props.width >= 250 ? props.width : 250) : properties.width,
-    });
-  };
-
-  const updateNavigation = (props: Partial<SidebarLayout>) => {
-    setNavigationLayout({
-      ...navigation,
-      ...props,
-      width: props?.width ? (props.width >= 250 ? props.width : 250) : navigation.width,
-    });
-  };
+  useEffect(() => {
+    setPropertiesVisible(!isMobile);
+    setNavigationVisible(!isMobile);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
 
   useEffect(() => {
-    const adjustWidthOnWindowResize = () => {
-      if (!isMobile) {
-        updateNavigation({
-          width: Math.min(maxNavigationWidth(), navigation.width),
-          visible: true,
-        });
-        updateProperties({
-          width: Math.min(maxPropertiesWidth(), properties.width),
-          visible: true,
-        });
-      } else {
-        updateProperties({ visible: false });
-        updateNavigation({ visible: false });
+    const resize = () => {
+      if ((navigationWidth ?? DefaultSidebarWidth) + DefaultSidebarWidth * 3 > window.innerWidth) {
+        setNavigationWidth(
+          Math.max(DefaultSidebarWidth, window.innerWidth - DefaultSidebarWidth * 3)
+        );
       }
     };
-    if (window) {
-      window.addEventListener('resize', adjustWidthOnWindowResize);
-    }
-
+    on(window, 'resize', resize);
     return () => {
-      window.removeEventListener('resize', adjustWidthOnWindowResize);
+      off(window, 'resize', resize);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile, navigation.width, properties.width]);
+  }, [navigationWidth]);
 
   useEffect(() => {
     if (isMobile) {
@@ -102,17 +54,18 @@ export default function LayoutProvider({ children }: ProviderProps) {
   return (
     <LayoutContext.Provider
       value={{
-        navigation,
-        properties,
-        updateProperties,
-        updateNavigation,
+        navigationWidth: navigationWidth ?? DefaultSidebarWidth,
+        setNavigationWidth,
+        navigationVisible: navigationVisible ?? !isMobile,
+        setNavigationVisible,
         isMobile,
-        maxNavigationWidth,
-        maxPropertiesWidth,
+        DefaultSidebarWidth,
+        propertiesVisible: propertiesVisible ?? !isMobile,
+        setPropertiesVisible,
         zoom: zoom || defaultZoom,
-        maxZoom,
+        maxZoom: MaxZoom,
         minZoom,
-        setZoom: (val) => setZoom(Math.min(Math.max(minZoom, val), maxZoom)),
+        setZoom: (val) => setZoom(Math.min(Math.max(minZoom, val), MaxZoom)),
       }}
     >
       {children}

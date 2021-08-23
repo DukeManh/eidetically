@@ -7,12 +7,6 @@ export interface ProviderProps {
   children: ReactNode;
 }
 
-// Navigation and Properties sidebar
-export interface SidebarLayout {
-  visible: boolean;
-  width: number;
-}
-
 // Each library consists of many individual images
 export interface Library {
   id: string;
@@ -44,17 +38,15 @@ export interface ImageMap {
 }
 
 export interface LayoutContextType {
-  navigation: SidebarLayout;
-  updateNavigation: (props: Partial<SidebarLayout>) => void;
-
-  properties: SidebarLayout;
-  updateProperties: (props: Partial<SidebarLayout>) => void;
+  navigationWidth: number;
+  setNavigationWidth: (val: number) => void;
+  navigationVisible: boolean;
+  setNavigationVisible: (val: boolean) => void;
+  propertiesVisible: boolean;
+  setPropertiesVisible: (val: boolean) => void;
+  DefaultSidebarWidth: number;
 
   isMobile: boolean;
-
-  maxNavigationWidth: () => number;
-  maxPropertiesWidth: () => number;
-
   zoom: number;
   maxZoom: number;
   minZoom: number;

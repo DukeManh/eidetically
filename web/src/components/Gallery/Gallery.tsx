@@ -7,14 +7,15 @@ import TopBar from './TopBar';
 import Welcome from './Welcome';
 
 export default function Gallery() {
-  const { navigation, properties, isMobile } = useLayout();
+  const { navigationVisible, propertiesVisible, navigationWidth, DefaultSidebarWidth, isMobile } =
+    useLayout();
 
   return (
     <div
       className="className h-screen relative flex flex-col justify-start pb-12"
       style={{
-        marginLeft: navigation.visible && !isMobile ? navigation.width : '0',
-        marginRight: properties.visible && !isMobile ? properties.width : '0',
+        marginLeft: navigationVisible && !isMobile ? navigationWidth : '0',
+        marginRight: propertiesVisible && !isMobile ? DefaultSidebarWidth : '0',
       }}
     >
       <TopBar />
