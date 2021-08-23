@@ -93,7 +93,7 @@ export default function ToolBox() {
     <IconContext.Provider value={{ size: '22' }}>
       <div className="flex flex-wrap justify-center">
         {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
-          <Tooltip key={name} text={name} hidden={hidden}>
+          <Tooltip key={name} text={name}>
             <div className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}>
               {!hidden && (
                 <button disabled={!user || disabled} onClick={() => handleClick()}>
