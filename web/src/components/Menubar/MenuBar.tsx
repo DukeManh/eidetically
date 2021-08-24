@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Trigger from '../Trigger';
+import { BiCheck } from 'react-icons/bi';
 
+import Trigger from '../Trigger';
 import { MenuItem } from '../../interfaces';
-import { useLibrary } from '../../contexts';
+import { useLibrary, useLayout } from '../../contexts';
 
 import Menu from '../Menu';
 import FileUploadButton from '../FileUploadButton';
@@ -11,6 +12,7 @@ import FileUploadButton from '../FileUploadButton';
 export default function MenuBar() {
   const [activeItem, setActiveItem] = useState('');
   const { uploadImages } = useLibrary();
+  const { setLayout, layout } = useLayout();
   const MenuItems: Array<{
     name: string;
     button: JSX.Element | string;
@@ -31,7 +33,20 @@ export default function MenuBar() {
     {
       name: 'layout',
       button: 'Layout',
-      items: [],
+      items: [
+        {
+          name: 'Waterfall',
+          handler: () => setLayout('Waterfall'),
+          icon: layout === 'Waterfall' ? <BiCheck /> : <></>,
+          content: 'Waterfall',
+        },
+        {
+          name: 'Justified',
+          handler: () => setLayout('Justified'),
+          icon: layout === 'Justified' ? <BiCheck /> : <></>,
+          content: 'Justified',
+        },
+      ],
     },
     {
       name: 'about',

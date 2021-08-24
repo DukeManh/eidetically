@@ -37,6 +37,8 @@ export interface ImageMap {
   [imageID: string]: Image | undefined;
 }
 
+export type Layout = 'Waterfall' | 'Justified';
+
 export interface LayoutContextType {
   navigationWidth: number;
   setNavigationWidth: (val: number) => void;
@@ -51,6 +53,8 @@ export interface LayoutContextType {
   maxZoom: number;
   minZoom: number;
   setZoom: (val: number) => void;
+  layout: Layout;
+  setLayout: (val: Layout) => void;
 }
 
 export interface LibraryContextType {

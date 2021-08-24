@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocalStorage, useMedia } from 'react-use';
 
-import { ProviderProps } from '../../interfaces';
+import { ProviderProps, Layout } from '../../interfaces';
 import LayoutContext from './LayoutContext';
 import { on, off } from '../../utilities/';
 
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };
 const MaxZoom = 10;
+const MinZoom = 1;
 const DefaultSidebarWidth = 250;
 
 export default function LayoutProvider({ children }: ProviderProps) {
@@ -19,7 +20,7 @@ export default function LayoutProvider({ children }: ProviderProps) {
     DefaultSidebarWidth
   );
   const [zoom, setZoom] = useLocalStorage('zoom', defaultZoom);
-  const [minZoom, setMinZoom] = useState(1);
+  const [layout, setLayout] = useLocalStorage<Layout>('layout', 'Waterfall');
 
   useEffect(() => {
     setPropertiesVisible(!isMobile);
@@ -42,18 +43,11 @@ export default function LayoutProvider({ children }: ProviderProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigationWidth]);
 
-  useEffect(() => {
-    if (isMobile) {
-      setMinZoom(5);
-      setZoom((zoom) => Math.max(5, zoom || 0));
-    } else {
-      setMinZoom(1);
-    }
-  }, [isMobile, setZoom]);
-
   return (
     <LayoutContext.Provider
       value={{
+        layout: layout ?? 'Waterfall',
+        setLayout,
         navigationWidth: navigationWidth ?? DefaultSidebarWidth,
         setNavigationWidth,
         navigationVisible: navigationVisible ?? !isMobile,
@@ -64,8 +58,8 @@ export default function LayoutProvider({ children }: ProviderProps) {
         setPropertiesVisible,
         zoom: zoom || defaultZoom,
         maxZoom: MaxZoom,
-        minZoom,
-        setZoom: (val) => setZoom(Math.min(Math.max(minZoom, val), MaxZoom)),
+        minZoom: MinZoom,
+        setZoom: (val) => setZoom(Math.min(Math.max(MinZoom, val), MaxZoom)),
       }}
     >
       {children}

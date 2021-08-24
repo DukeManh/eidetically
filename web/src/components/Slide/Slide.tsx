@@ -44,7 +44,7 @@ export default function Slides() {
 
   return (
     <div className="slides">
-      <Mask visible onClick={toggleSlide} />
+      <Mask visible onClick={toggleSlide} style={{ background: 'black', opacity: 0.85 }} />
       <Swiper
         pagination={{
           dynamicBullets: true,
