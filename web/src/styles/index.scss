@@ -294,10 +294,6 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
-  .slides-hidden {
-    @apply hidden scale-0;
-  }
-
   .slides-button {
     svg {
       @apply w-full;
@@ -355,4 +351,34 @@ $mobile_row_gap: 0.75rem;
 
 .gallery {
   max-height: calc(100vh - #{$menubar_height});
+}
+
+.slides-transition-enter {
+  opacity: 0;
+}
+.slides-transition-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.slides-transition-exit {
+  opacity: 1;
+}
+.slides-transition-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.image-transition-enter {
+  opacity: 0;
+}
+.image-transition-enter-active {
+  opacity: 1;
+  transition: opacity 2000ms;
+}
+.slides-transition-exit {
+  opacity: 1;
+}
+.image-transition-exit-active {
+  opacity: 0;
+  transition: opacity 2000ms;
 }

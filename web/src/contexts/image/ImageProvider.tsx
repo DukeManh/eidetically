@@ -57,10 +57,10 @@ export default function ImageProvider({ children }: ProviderProps) {
         focus: setFocused,
         deleteSelection,
         slideVisible,
-        toggleSlide: () => toggleSlide(!slideVisible),
+        toggleSlide: (val) => toggleSlide(val ?? !slideVisible),
       }}
     >
-      {slideVisible && <Slide />}
+      <Slide />
       {children}
     </ImageContext.Provider>
   );

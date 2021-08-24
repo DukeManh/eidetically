@@ -24,7 +24,7 @@ export default function Figure({ image }: FigureProps) {
       <button
         className={classNames(selected && 'block border-2 border-blue-500 p-[2px]')}
         onClick={handleClick}
-        onDoubleClick={toggleSlide}
+        onDoubleClick={() => toggleSlide()}
         style={{ width: '100%', display: 'block' }}
       >
         <img

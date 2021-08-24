@@ -87,7 +87,7 @@ export interface ImageContextType {
   deleteSelection: () => void;
 
   slideVisible: boolean;
-  toggleSlide: () => void;
+  toggleSlide: (val?: boolean) => void;
 }
 
 export interface AuthContextType {
