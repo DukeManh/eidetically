@@ -30,7 +30,7 @@ export default function PopConfirm({
     <div className="pop-confirm min-h-24 w-64 py-2 px-4 m-1 shadow-lg bg-alert text-gray-200">
       <div className="flex flex-row space-x-2 mb-2">
         <div className="h-full">
-          <HiInformationCircle className="inline align-bottom" />
+          <HiInformationCircle className="inline" />
         </div>
         <div>{content}</div>
       </div>

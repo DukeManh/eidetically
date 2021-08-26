@@ -1,16 +1,20 @@
 import { useRef, ReactNode } from 'react';
 
+import { useLibrary } from '../contexts';
+
 export interface FileUploadProps {
-  onChange: (files: File[]) => void;
   children?: ReactNode;
+  disabled?: boolean;
 }
 
-export default function FileUploadButton({ onChange, children }: FileUploadProps) {
+export default function FileUploadButton({ children, disabled }: FileUploadProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const { uploadImages } = useLibrary();
 
   return (
     <>
       <input
+        disabled={disabled}
         ref={inputRef}
         multiple
         id="select-files"
@@ -19,7 +23,7 @@ export default function FileUploadButton({ onChange, children }: FileUploadProps
         className="w-0 h-0 overflow-hidden cursor-pointer"
         onChange={() => {
           if (inputRef?.current?.files) {
-            onChange(Array.from(inputRef.current.files));
+            uploadImages(Array.from(inputRef.current.files));
           }
         }}
       />

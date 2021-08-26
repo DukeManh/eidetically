@@ -22,7 +22,6 @@ export default function Figure({ image }: FigureProps) {
   return (
     <figure className="pb-8 relative">
       <button
-        className={classNames(selected && 'block border-2 border-blue-500 p-[2px]')}
         onClick={handleClick}
         onDoubleClick={() => toggleSlide()}
         style={{ width: '100%', display: 'block' }}
@@ -35,7 +34,10 @@ export default function Figure({ image }: FigureProps) {
                 }
               : undefined
           }
-          className="cursor-pointer shadow-sm hover:shadow-md"
+          className={classNames(
+            selected && 'border-2 border-blue-500 p-[2px]',
+            'cursor-pointer shadow-sm hover:shadow-md'
+          )}
           alt={image.name}
           src={image.downloadURL}
           loading="lazy"

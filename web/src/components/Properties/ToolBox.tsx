@@ -1,13 +1,14 @@
 import { IconContext } from 'react-icons';
+import ReactTooltip from 'react-tooltip';
 
 import { MdCreateNewFolder } from 'react-icons/md';
 import { BiCut, BiSelectMultiple } from 'react-icons/bi';
 import { IoIosCloseCircle, IoIosCopy } from 'react-icons/io';
-import { RiDeleteBin7Fill, RiSlideshow2Fill, RiEditBoxFill } from 'react-icons/ri';
+import { RiDeleteBin7Fill, RiSlideshow2Fill, RiImageEditLine } from 'react-icons/ri';
 import { ImCloudUpload, ImCloudDownload } from 'react-icons/im';
 
 import { useImage, useAuth } from '../../contexts';
-import ReactTooltip from 'react-tooltip';
+import FileUploadButton from '../FileUploadButton';
 
 export default function ToolBox() {
   const {
@@ -17,12 +18,12 @@ export default function ToolBox() {
     focused,
     deleteSelection,
     toggleSlide,
-    selection,
+    selectedItemsNum,
   } = useImage();
 
   const { user } = useAuth();
 
-  const atLeastOneSelected = !!Object.values(selection).filter((image) => !!image).length;
+  const atLeastOneSelected = selectedItemsNum > 0;
   const oneFocused = !selecting && !!focused;
   const Tools = [
     {
@@ -67,19 +68,23 @@ export default function ToolBox() {
       name: 'Slide',
       handleClick: () => toggleSlide(),
       children: <RiSlideshow2Fill />,
-      disabled: !atLeastOneSelected,
+      disabled: selecting,
     },
     {
       name: 'Upload',
       handleClick: () => {},
-      children: <ImCloudUpload />,
-      disabled: false,
+      children: (
+        <FileUploadButton disabled={atLeastOneSelected}>
+          <ImCloudUpload className="mx-auto" />
+        </FileUploadButton>
+      ),
+      disabled: atLeastOneSelected,
     },
     {
       name: 'Edit',
       handleClick: () => {},
-      children: <RiEditBoxFill />,
-      disabled: !oneFocused,
+      children: <RiImageEditLine />,
+      disabled: !oneFocused || (selecting && selectedItemsNum === 1),
     },
     {
       name: 'Copy',

@@ -98,7 +98,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
       content: <span>Delete</span>,
       icon: <AiOutlineDelete />,
       confirm: {
-        content: `Are you sure to delete '${lib.name}' and its content`,
+        content: "Action can't be reversed, all content will be deleted",
         onConfirm: deleteLib,
       },
     },

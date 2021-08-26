@@ -1,3 +1,4 @@
+import PopConfirm from '../PopConfirm';
 import { useAuth } from '../../contexts';
 
 export default function LoginButton() {
@@ -10,9 +11,17 @@ export default function LoginButton() {
           Sign in
         </button>
       ) : (
-        <button className="loginButton" onClick={logout}>
-          Sign out
-        </button>
+        <PopConfirm
+          content="Are you sure to end the session?"
+          placement="top"
+          onConfirm={logout}
+          cancelText="Cancel"
+          confirmText="Logout"
+        >
+          <button className="loginButton" type="button">
+            Sign out
+          </button>
+        </PopConfirm>
       )}
     </>
   );

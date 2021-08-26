@@ -40,9 +40,15 @@ export default function ImageProvider({ children }: ProviderProps) {
     [imageArray]
   );
 
+  const selectedItemsNum = useMemo(
+    () => Object.values(selection).filter((image) => !!image).length,
+    [selection]
+  );
+
   return (
     <ImageContext.Provider
       value={{
+        selectedItemsNum,
         selecting,
         startSelecting,
         cancelSelecting,

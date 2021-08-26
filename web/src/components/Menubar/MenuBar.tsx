@@ -4,14 +4,13 @@ import { BiCheck } from 'react-icons/bi';
 
 import Trigger from '../Trigger';
 import { MenuItem } from '../../interfaces';
-import { useLibrary, useLayout } from '../../contexts';
+import { useLayout } from '../../contexts';
 
 import Menu from '../Menu';
 import FileUploadButton from '../FileUploadButton';
 
 export default function MenuBar() {
   const [activeItem, setActiveItem] = useState('');
-  const { uploadImages } = useLibrary();
   const { setLayout, layout } = useLayout();
   const MenuItems: Array<{
     name: string;
@@ -26,7 +25,7 @@ export default function MenuBar() {
         {
           name: 'open',
           handler: () => {},
-          content: <FileUploadButton onChange={uploadImages}>Upload...</FileUploadButton>,
+          content: <FileUploadButton>Upload...</FileUploadButton>,
         },
       ],
     },
