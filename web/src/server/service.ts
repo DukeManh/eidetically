@@ -1,4 +1,4 @@
-import { Image } from '../interfaces';
+import { Image, MutableImageProperties } from '../interfaces';
 import { auth, db, storage } from './firebase';
 
 import task from '../components/UploadProgress/task';
@@ -106,6 +106,18 @@ export async function deleteImages(images: Image[]): Promise<void> {
         console.error(error);
       });
     });
+  } else {
+    throw errors.unauthenticated;
+  }
+}
+
+export async function updateImageProperties(
+  image: Image,
+  properties: MutableImageProperties
+): Promise<void> {
+  if (auth.currentUser) {
+    const imageRef = image.library.collection('images').doc(image.id);
+    await imageRef.update(properties);
   } else {
     throw errors.unauthenticated;
   }

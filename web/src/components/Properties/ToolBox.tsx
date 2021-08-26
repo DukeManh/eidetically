@@ -7,7 +7,7 @@ import { RiDeleteBin7Fill, RiSlideshow2Fill, RiEditBoxFill } from 'react-icons/r
 import { ImCloudUpload, ImCloudDownload } from 'react-icons/im';
 
 import { useImage, useAuth } from '../../contexts';
-import Tooltip from '../Tooltip';
+import ReactTooltip from 'react-tooltip';
 
 export default function ToolBox() {
   const {
@@ -93,15 +93,30 @@ export default function ToolBox() {
     <IconContext.Provider value={{ size: '22' }}>
       <div className="flex flex-wrap justify-center">
         {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
-          <Tooltip key={name} text={name}>
-            <div className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}>
-              {!hidden && (
+          <div
+            key={name}
+            data-tip
+            data-for={`${name}-tooltip`}
+            className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}
+          >
+            {!hidden && (
+              <>
                 <button disabled={!user || disabled} onClick={() => handleClick()}>
                   {children}
                 </button>
-              )}
-            </div>
-          </Tooltip>
+                <ReactTooltip
+                  id={`${name}-tooltip`}
+                  type="dark"
+                  effect="solid"
+                  delayShow={1500}
+                  delayHide={100}
+                  className="z-50 duration-100 mt-0 p-0 bg-alert shadow-sm text-xs rounded py-1 px-3"
+                >
+                  <span>{name}</span>
+                </ReactTooltip>
+              </>
+            )}
+          </div>
         ))}
       </div>
     </IconContext.Provider>

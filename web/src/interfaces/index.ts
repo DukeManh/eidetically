@@ -30,6 +30,13 @@ export interface Image extends MetaData {
   library: firebase.firestore.DocumentReference<Partial<Library>>;
   note: string;
   upload_date: firebase.firestore.FieldValue;
+  source: string;
+}
+
+export interface MutableImageProperties {
+  name: string;
+  note: string;
+  source: string;
 }
 
 // imageID-Image object, cursor points to the last document

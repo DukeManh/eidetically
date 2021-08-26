@@ -122,7 +122,8 @@ $mobile_row_gap: 0.75rem;
   }
 
   .sidebar {
-    @apply top-0 bg-secondary z-20 pt-2 border-gray-900 h-full border-opacity-70;
+    @apply top-0 bg-secondary z-20 pt-2 border-gray-900 border-opacity-70;
+    height: calc(100vh - #{$menubar_height});
   }
 
   .mask {
@@ -300,7 +301,7 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
-  .image-properties-input {
+  .imageProperties {
     @apply w-full bg-textArea rounded-md border border-mask p-2 max-w-sm;
   }
 
@@ -353,17 +354,17 @@ $mobile_row_gap: 0.75rem;
   max-height: calc(100vh - #{$menubar_height});
 }
 
-.slides-transition-enter {
+.fade-transition-enter {
   opacity: 0;
 }
-.slides-transition-enter-active {
+.fade-transition-enter-active {
   opacity: 1;
   transition: opacity 200ms;
 }
-.slides-transition-exit {
+.fade-transition-exit {
   opacity: 1;
 }
-.slides-transition-exit-active {
+.fade-transition-exit-active {
   opacity: 0;
   transition: opacity 200ms;
 }

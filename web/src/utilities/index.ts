@@ -26,13 +26,35 @@ export function classNames(...classes: (string | Falsy)[]) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function debounce<T extends (...args: any[]) => any>(cb: T, wait: number) {
+export function deepEqual(a: any, b: any): boolean {
+  if (a === b) return true;
+  if (a === null || b === null) return false;
+  if (typeof a !== 'object' || typeof b !== 'object') return false;
+  if (Array.isArray(a)) {
+    return (
+      Array.isArray(b) &&
+      a.length === b.length &&
+      a.every((item, index) => deepEqual(item, b[index]))
+    );
+  }
+  const aKeys = Object.keys(a);
+  const bKeys = Object.keys(b);
+  if (aKeys.length !== bKeys.length) return false;
+  return aKeys.every((key) => deepEqual(a[key], b[key]));
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function debounce<T extends (...args: any[]) => any>(cb: T, wait: number): T {
   let timeout: NodeJS.Timeout | null = null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function (this: any, ...args: Parameters<T>) {
+    const later = () => {
+      timeout = null;
+      cb.apply(this, args);
+    };
     if (timeout) {
       clearTimeout(timeout);
     }
-    timeout = setTimeout(() => cb.apply(this, args), wait);
+    timeout = setTimeout(later, wait);
   } as T;
 }

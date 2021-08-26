@@ -44,7 +44,7 @@ export default function Slides() {
   }, [flattenArray, focused?.id]);
 
   return (
-    <CSSTransition in={slideVisible} timeout={200} classNames="slides-transition" unmountOnExit>
+    <CSSTransition in={slideVisible} timeout={200} classNames="fade-transition" unmountOnExit>
       <div className="slides">
         <Mask visible onClick={() => toggleSlide} style={{ background: 'black', opacity: 0.85 }} />
         <Swiper
