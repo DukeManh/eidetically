@@ -18,6 +18,7 @@ export default function ToolBox() {
     focused,
     deleteSelection,
     toggleSlide,
+    toggleEditor,
     selectedItemsNum,
   } = useImage();
 
@@ -82,9 +83,9 @@ export default function ToolBox() {
     },
     {
       name: 'Edit',
-      handleClick: () => {},
+      handleClick: () => toggleEditor(),
       children: <RiImageEditLine />,
-      disabled: !oneFocused || (selecting && selectedItemsNum === 1),
+      disabled: !oneFocused,
     },
     {
       name: 'Copy',

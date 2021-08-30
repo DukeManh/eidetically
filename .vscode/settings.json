@@ -4,5 +4,6 @@
     "source.fixAll.eslint": true
   },
   "git.ignoreLimitWarning": true,
-  "eslint.workingDirectories": ["./web", "./web-ext", "./functions"]
+  "eslint.workingDirectories": ["./web", "./web-ext", "./functions"],
+  "cSpell.words": ["Filerobot"]
 }

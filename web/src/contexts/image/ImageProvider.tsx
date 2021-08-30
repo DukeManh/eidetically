@@ -5,6 +5,7 @@ import { ImageContext } from './ImageContext';
 import { deleteImages } from '../../server/service';
 
 import Slide from '../../components/Slide';
+import Editor from '../../components/Editor';
 
 export default function ImageProvider({ children }: ProviderProps) {
   const [selecting, setSelecting] = useState(false);
@@ -13,6 +14,7 @@ export default function ImageProvider({ children }: ProviderProps) {
   const [imageMap, setImageMap] = useState<ImageMap>({});
   const [focused, setFocused] = useState<Image | undefined>(undefined);
   const [slideVisible, toggleSlide] = useState(false);
+  const [editorVisible, toggleEditor] = useState(false);
 
   const startSelecting = useCallback(() => {
     setSelecting(true);
@@ -64,9 +66,12 @@ export default function ImageProvider({ children }: ProviderProps) {
         deleteSelection,
         slideVisible,
         toggleSlide: (val) => toggleSlide(val ?? !slideVisible),
+        editorVisible,
+        toggleEditor: (val) => toggleEditor(val ?? !editorVisible),
       }}
     >
       <Slide />
+      <Editor />
       {children}
     </ImageContext.Provider>
   );

@@ -96,6 +96,8 @@ export interface ImageContextType {
 
   slideVisible: boolean;
   toggleSlide: (val?: boolean) => void;
+  editorVisible: boolean;
+  toggleEditor: (val?: boolean) => void;
 }
 
 export interface AuthContextType {

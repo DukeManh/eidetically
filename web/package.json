@@ -5,6 +5,7 @@
   "dependencies": {
     "@craco/craco": "^6.1.2",
     "css-unit-converter": "^1.1.2",
+    "filerobot-image-editor": "^3.12.17",
     "firebase": "^8.6.2",
     "firebaseui": "^4.8.0",
     "fuse.js": "^6.4.6",
