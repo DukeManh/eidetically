@@ -10,7 +10,7 @@ import Mask from '../Mask';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function Slides() {
-  const { focused, toggleSlide, slideVisible, flattenArray } = useImage();
+  const { focused, toggleSlide, slideVisible, flattenArray, selecting, selection } = useImage();
   const imageRef = useRef<HTMLImageElement | null>(null);
 
   const Buttons = [
@@ -27,7 +27,15 @@ export default function Slides() {
     {
       name: 'reset',
       content: <MdAspectRatio />,
-      onClick: () => {},
+      onClick: () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
+      },
     },
     {
       name: 'exit',
@@ -61,7 +69,7 @@ export default function Slides() {
           slidesPerView={1}
           navigation
         >
-          {flattenArray.map((image) => (
+          {(selecting ? Object.values(selection) : flattenArray).map((image) => (
             <SwiperSlide key={image.id}>
               <div className="h-[95%] pt-14">
                 <div className="h-full mx-auto w-max shadow-lg">

@@ -86,7 +86,7 @@ export interface ImageContextType {
   startSelecting: () => void;
   cancelSelecting: () => void;
 
-  selection: { [imageID: string]: Image | undefined };
+  selection: { [imageID: string]: Image };
   select: (image: Image) => void;
 
   focused: Image | undefined;
@@ -98,6 +98,11 @@ export interface ImageContextType {
   toggleSlide: (val?: boolean) => void;
   editorVisible: boolean;
   toggleEditor: (val?: boolean) => void;
+
+  cutToClipboard: (fromLibrary: string) => void;
+  copyToClipboard: (fromLibrary: string) => void;
+  paste: (toLibrary: string) => void;
+  clipboard: { clipboard: Image[]; operation: 'cut' | 'copy'; fromLibrary: string } | undefined;
 }
 
 export interface AuthContextType {

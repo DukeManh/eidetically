@@ -34,7 +34,7 @@
 $lg: 1024px;
 $primary: #3b3b3b;
 $secondary: #414141;
-$mask: rgba(0, 0, 0, 0.45);
+$mask: rgba(0, 0, 0, 0.5);
 $transition_duration: 300ms;
 $menubar_height: 2.25rem;
 $column_gap: 1.25rem;
@@ -382,4 +382,10 @@ $mobile_row_gap: 0.75rem;
 .image-transition-exit-active {
   opacity: 0;
   transition: opacity 2000ms;
+}
+
+#filerobot-image-editor-root .modal-overlay {
+  transition: background 200ms ease;
+  opacity: 1 !important;
+  background: $mask !important;
 }

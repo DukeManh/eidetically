@@ -2,19 +2,21 @@ import { useState, useCallback, useMemo } from 'react';
 
 import { ProviderProps, Image, ImageMap } from '../../interfaces';
 import { ImageContext } from './ImageContext';
-import { deleteImages } from '../../server/service';
+import { deleteImages, uploadImages } from '../../server/service';
 
 import Slide from '../../components/Slide';
 import Editor from '../../components/Editor';
 
 export default function ImageProvider({ children }: ProviderProps) {
   const [selecting, setSelecting] = useState(false);
-  const [selection, setSelection] = useState<{ [imageID: string]: Image | undefined }>({});
+  const [selection, setSelection] = useState<{ [imageID: string]: Image }>({});
   const [imageArray, setImageArray] = useState<Image[][]>([]);
   const [imageMap, setImageMap] = useState<ImageMap>({});
   const [focused, setFocused] = useState<Image | undefined>(undefined);
   const [slideVisible, toggleSlide] = useState(false);
   const [editorVisible, toggleEditor] = useState(false);
+  const [clipboard, setClipBoard] =
+    useState<{ clipboard: Image[]; operation: 'cut' | 'copy'; fromLibrary: string }>();
 
   const startSelecting = useCallback(() => {
     setSelecting(true);
@@ -26,16 +28,71 @@ export default function ImageProvider({ children }: ProviderProps) {
   }, []);
 
   const select = useCallback((image: Image) => {
-    setSelection((prev) => ({ ...prev, [image.id]: !prev[image.id] ? image : undefined }));
+    setSelection((prev) => {
+      const selection = { ...prev };
+      if (selection[image.id]) {
+        delete selection[image.id];
+      } else {
+        selection[image.id] = image;
+      }
+      return selection;
+    });
   }, []);
 
   const deleteSelection = useCallback(() => {
-    const images = Object.values(selection).filter((image) => !!image) as Image[];
+    const images = Object.values(selection);
     if (images.length) {
       deleteImages(images);
       cancelSelecting();
     }
   }, [cancelSelecting, selection]);
+
+  const copyToClipboard = useCallback(
+    (fromLibrary: string) => {
+      setClipBoard({ clipboard: Object.values(selection), operation: 'copy', fromLibrary });
+      cancelSelecting();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selection]
+  );
+
+  const cutToClipboard = useCallback(
+    (fromLibrary: string) => {
+      setClipBoard({ clipboard: Object.values(selection), operation: 'cut', fromLibrary });
+      cancelSelecting();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selection]
+  );
+
+  const paste = useCallback(
+    async (toLibrary: string) => {
+      if (clipboard) {
+        const fetches = clipboard.clipboard.map(async (image) => {
+          const img = await fetch(image.downloadURL);
+          const blob = await img.blob();
+          const file = new File([blob], image.name, {
+            lastModified: Date.now(),
+            type: blob.type,
+          });
+          return file;
+        });
+
+        await Promise.all(fetches)
+          .then((files) => {
+            uploadImages(files, toLibrary);
+          })
+          .catch(() => console.error('Error fetching medias'));
+
+        if (clipboard.operation === 'cut') {
+          await deleteImages(clipboard.clipboard);
+        }
+
+        setClipBoard(undefined);
+      }
+    },
+    [clipboard]
+  );
 
   const flattenArray = useMemo(
     () => imageArray.reduce((acc, curr) => acc.concat(curr), []),
@@ -68,6 +125,10 @@ export default function ImageProvider({ children }: ProviderProps) {
         toggleSlide: (val) => toggleSlide(val ?? !slideVisible),
         editorVisible,
         toggleEditor: (val) => toggleEditor(val ?? !editorVisible),
+        cutToClipboard,
+        copyToClipboard,
+        paste,
+        clipboard,
       }}
     >
       <Slide />

@@ -4,10 +4,10 @@ import ReactTooltip from 'react-tooltip';
 import { MdContentPaste } from 'react-icons/md';
 import { BiCut, BiSelectMultiple } from 'react-icons/bi';
 import { IoIosCloseCircle, IoIosCopy } from 'react-icons/io';
-import { RiDeleteBin7Fill, RiSlideshow2Fill, RiImageEditLine } from 'react-icons/ri';
+import { RiDeleteBin7Fill, RiSlideshow2Fill, RiImageEditFill } from 'react-icons/ri';
 import { ImCloudUpload, ImCloudDownload } from 'react-icons/im';
 
-import { useImage, useAuth } from '../../contexts';
+import { useImage, useAuth, useLibrary } from '../../contexts';
 import FileUploadButton from '../FileUploadButton';
 
 export default function ToolBox() {
@@ -19,8 +19,14 @@ export default function ToolBox() {
     deleteSelection,
     toggleSlide,
     toggleEditor,
+    cutToClipboard,
+    copyToClipboard,
+    paste,
+    clipboard,
     selectedItemsNum,
   } = useImage();
+
+  const { activeLibrary } = useLibrary();
 
   const { user } = useAuth();
 
@@ -42,34 +48,34 @@ export default function ToolBox() {
       hidden: !selecting,
     },
     {
+      name: 'Copy',
+      handleClick: () => activeLibrary && copyToClipboard(activeLibrary.id),
+      children: <IoIosCopy />,
+      disabled: !atLeastOneSelected,
+    },
+    {
+      name: 'Cut',
+      handleClick: () => activeLibrary && cutToClipboard(activeLibrary.id),
+      children: <BiCut />,
+      disabled: !atLeastOneSelected,
+    },
+    {
+      name: 'Paste',
+      handleClick: () => activeLibrary && paste(activeLibrary.id),
+      children: <MdContentPaste />,
+      disabled: selecting || !clipboard || clipboard?.fromLibrary === activeLibrary?.id,
+    },
+    {
       name: 'Delete',
       handleClick: deleteSelection,
       children: <RiDeleteBin7Fill />,
       disabled: !atLeastOneSelected,
     },
     {
-      name: 'Paste',
-      handleClick: () => {},
-      children: <MdContentPaste />,
-      disabled: true,
-    },
-    {
-      name: 'Copy',
-      handleClick: () => {},
-      children: <IoIosCopy />,
-      disabled: !atLeastOneSelected,
-    },
-    {
-      name: 'Cut',
-      handleClick: () => {},
-      children: <BiCut />,
-      disabled: !atLeastOneSelected,
-    },
-    {
       name: 'Slide',
       handleClick: () => toggleSlide(),
       children: <RiSlideshow2Fill />,
-      disabled: selecting,
+      disabled: selecting && !atLeastOneSelected,
     },
     {
       name: 'Upload',
@@ -84,7 +90,7 @@ export default function ToolBox() {
     {
       name: 'Edit',
       handleClick: () => toggleEditor(),
-      children: <RiImageEditLine />,
+      children: <RiImageEditFill />,
       disabled: !oneFocused || (selecting && selectedItemsNum !== 1),
     },
     {

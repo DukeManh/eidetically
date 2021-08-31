@@ -23,7 +23,7 @@ export default function Figure({ image }: FigureProps) {
     <figure className="pb-8 relative">
       <button
         onClick={handleClick}
-        onDoubleClick={() => toggleSlide()}
+        onDoubleClick={() => !selecting && toggleSlide()}
         style={{ width: '100%', display: 'block' }}
       >
         <img

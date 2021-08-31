@@ -64,19 +64,17 @@ export default function ImageContainer() {
           return [...arr];
         });
 
-        const libImages: { [imageID: string]: Image | undefined } = {};
-        snapshot.docChanges().forEach((change) => {
-          if (change.type !== 'removed') {
-            libImages[change.doc.id] = { id: change.doc.id, ...change.doc.data() } as Image;
-          } else {
-            libImages[change.doc.id] = undefined;
-          }
+        setImageMap((map) => {
+          const imageMap = { ...map };
+          snapshot.docChanges().forEach((change) => {
+            if (change.type !== 'removed') {
+              imageMap[change.doc.id] = { id: change.doc.id, ...change.doc.data() } as Image;
+            } else {
+              delete imageMap[change.doc.id];
+            }
+          });
+          return imageMap;
         });
-
-        setImageMap((map) => ({
-          ...map,
-          ...libImages,
-        }));
 
         setCursor(
           snapshot.docs.length === QUERY_LIMIT ? snapshot.docs[snapshot.docs.length - 1] : undefined
