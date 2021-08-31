@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { v4 as uuidv4 } from 'uuid';
 
 admin.initializeApp();
 
@@ -11,8 +12,8 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
   functions.logger.log(`1 file uploaded to storage: ${name}`);
 
   if (name && metadata) {
-    // Image name has the form `uid/libraryID/imageName`, ex: laLvpMgONMPO5nMyqXuot38U8jp2/rPwfu42CHzverW4mGGWp/CoolImage
-    const [uid, libraryID, imageName] = name.split('/');
+    // Image name has the form `uid/libraryID/imageId`, ex: laLvpMgONMPO5nMyqXuot38U8jp2/rPwfu42CHzverW4mGGWp/55af1e37-0734-46d8-b070-a1e42e4fc392
+    const [uid, libraryID, imageId] = name.split('/');
 
     const firebaseStorageBaseUrl = `https://firebasestorage.googleapis.com/v0/b/${
       storage.bucket().name
@@ -20,20 +21,27 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
     const downloadURL = `${firebaseStorageBaseUrl}/${encodeURIComponent(name)}?alt=media&token=${
       metadata.firebaseStorageDownloadTokens
     }`;
+    const imageName = metadata.name ?? uuidv4();
 
     functions.logger.log('Download Url: ', downloadURL);
 
     // create a image document the uploaded file
     const libRef = db.collection(`firebase_users/${uid}/libraries`).doc(libraryID);
-    const imageRef = libRef.collection('images').doc();
+    const imageRef = libRef.collection('images').doc(imageId);
+    const image = await imageRef.get();
+    if (image.exists) {
+      await imageRef.update({ downloadURL, size });
+      return;
+    }
+
     await imageRef.set({
       note: '',
       library: libRef,
       upload_date: admin.firestore.FieldValue.serverTimestamp(),
       name: imageName,
       downloadURL,
-      contentType: contentType,
-      size: size,
+      contentType,
+      size,
       fullPath: name,
     });
     await libRef.update({

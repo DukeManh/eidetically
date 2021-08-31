@@ -43,7 +43,7 @@ export default function Figure({ image }: FigureProps) {
           loading="lazy"
         />
       </button>
-      <figcaption className="absolute bottom-1 max-w-[90%] left-1/2 transform -translate-x-1/2 pt-1 px-4 text-truncate text-sm text-center leading-6">
+      <figcaption className="absolute bottom-1 max-w-[90%] left-1/2 -translate-x-1/2 pt-1 px-4 text-truncate text-sm text-center leading-6">
         {image.name}
       </figcaption>
     </figure>

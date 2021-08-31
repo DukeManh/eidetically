@@ -1,5 +1,7 @@
-import { Image, MutableImageProperties } from '../interfaces';
+import { v4 as uuidv4 } from 'uuid';
+
 import { auth, db, storage } from './firebase';
+import { Image, MutableImageProperties } from '../interfaces';
 
 import task from '../components/UploadProgress/task';
 
@@ -68,10 +70,15 @@ export async function uploadImages(acceptedFiles: File[], libraryID: string) {
     task.start(acceptedFiles.length);
 
     acceptedFiles.forEach((file) => {
-      const filePath = `${auth.currentUser?.uid}/${libraryID}/${file.name}`;
+      const uuid = uuidv4();
+      const filePath = `${auth.currentUser?.uid}/${libraryID}/${uuid}`;
       promises.push(
         new Promise((resolve) => {
-          const upload = storage.ref(filePath).put(file);
+          const upload = storage.ref(filePath).put(file, {
+            customMetadata: {
+              name: file.name,
+            },
+          });
           const t = task.new(file, upload.cancel);
           upload.then(
             async () => {
@@ -118,6 +125,24 @@ export async function updateImageProperties(
   if (auth.currentUser) {
     const imageRef = image.library.collection('images').doc(image.id);
     await imageRef.update(properties);
+  } else {
+    throw errors.unauthenticated;
+  }
+}
+
+export async function updateImageSource(image: Image, file: File): Promise<void> {
+  if (auth.currentUser) {
+    try {
+      const filePath = image.fullPath;
+
+      await storage.ref(filePath).put(file, {
+        customMetadata: {
+          name: image.name,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
   } else {
     throw errors.unauthenticated;
   }

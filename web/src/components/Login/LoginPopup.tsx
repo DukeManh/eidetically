@@ -34,7 +34,7 @@ export default function LoginPopup() {
     <CSSTransition in={loginVisible} timeout={200} classNames="fade-transition" unmountOnExit>
       <>
         <Mask visible={true} onClick={() => setLoginVisible(!loginVisible)} zIndex={60} />
-        <div className="py-8 w-80 h-96 fixed top-1/4 left-1/2 transform -translate-x-1/2 z-[100] bg-white text-primary rounded-md shadow-lg">
+        <div className="py-8 w-80 h-96 fixed top-1/4 left-1/2 -translate-x-1/2 z-[100] bg-white text-primary rounded-md shadow-lg">
           <p className="text-center font-bold text-lg">Login</p>
           <div className="google-login"></div>
           <GrClose

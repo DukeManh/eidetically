@@ -47,10 +47,15 @@ async function uploadImage(file, libraryId) {
   if (!auth.currentUser) {
     throw new Error('Please login to upload images');
   }
-  const filePath = `${auth.currentUser.uid}/${libraryId}/${file.name}`;
+  const uuid = uuidv4();
+  const filePath = `${auth.currentUser.uid}/${libraryId}/${uuid}`;
   storage
     .ref(filePath)
-    .put(file)
+    .put(file, {
+      customMetadata: {
+        name: file.name,
+      },
+    })
     .catch((error) => {
       console.error(error);
     });
@@ -119,6 +124,7 @@ chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
           });
         })
         .catch((error) => {
+          console.error(error);
           sendMessage({
             status: 'failure',
             message: error.message,
@@ -138,6 +144,7 @@ chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
               });
             })
             .catch((error) => {
+              console.error(error);
               sendMessage({
                 status: 'failure',
                 message: error.message,
@@ -145,6 +152,7 @@ chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
             });
         })
         .catch((error) => {
+          console.error(error);
           sendMessage({
             status: 'failure',
             message: error.message,

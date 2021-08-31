@@ -1,7 +1,7 @@
 import { IconContext } from 'react-icons';
 import ReactTooltip from 'react-tooltip';
 
-import { MdCreateNewFolder } from 'react-icons/md';
+import { MdContentPaste } from 'react-icons/md';
 import { BiCut, BiSelectMultiple } from 'react-icons/bi';
 import { IoIosCloseCircle, IoIosCopy } from 'react-icons/io';
 import { RiDeleteBin7Fill, RiSlideshow2Fill, RiImageEditLine } from 'react-icons/ri';
@@ -25,7 +25,7 @@ export default function ToolBox() {
   const { user } = useAuth();
 
   const atLeastOneSelected = selectedItemsNum > 0;
-  const oneFocused = !selecting && !!focused;
+  const oneFocused = !!focused;
   const Tools = [
     {
       name: 'Select',
@@ -48,21 +48,21 @@ export default function ToolBox() {
       disabled: !atLeastOneSelected,
     },
     {
-      name: 'Group',
+      name: 'Paste',
       handleClick: () => {},
-      children: <MdCreateNewFolder />,
+      children: <MdContentPaste />,
+      disabled: true,
+    },
+    {
+      name: 'Copy',
+      handleClick: () => {},
+      children: <IoIosCopy />,
       disabled: !atLeastOneSelected,
     },
     {
-      name: 'Move',
+      name: 'Cut',
       handleClick: () => {},
       children: <BiCut />,
-      disabled: !atLeastOneSelected,
-    },
-    {
-      name: 'Save',
-      handleClick: () => {},
-      children: <ImCloudDownload />,
       disabled: !atLeastOneSelected,
     },
     {
@@ -85,13 +85,13 @@ export default function ToolBox() {
       name: 'Edit',
       handleClick: () => toggleEditor(),
       children: <RiImageEditLine />,
-      disabled: !oneFocused,
+      disabled: !oneFocused || (selecting && selectedItemsNum !== 1),
     },
     {
-      name: 'Copy',
+      name: 'Save',
       handleClick: () => {},
-      children: <IoIosCopy />,
-      disabled: !oneFocused,
+      children: <ImCloudDownload />,
+      disabled: !atLeastOneSelected,
     },
   ];
 
@@ -114,7 +114,7 @@ export default function ToolBox() {
                   id={`${name}-tooltip`}
                   type="dark"
                   effect="solid"
-                  delayShow={1500}
+                  delayShow={1000}
                   delayHide={100}
                   className="z-50 duration-100 mt-0 p-0 bg-alert shadow-sm text-xs rounded py-1 px-3"
                 >
