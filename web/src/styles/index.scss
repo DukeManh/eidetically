@@ -127,11 +127,7 @@ $mobile_row_gap: 0.75rem;
   }
 
   .mask {
-    @apply fixed top-0 left-0 w-full h-0 opacity-0 bg-mask z-10;
-  }
-
-  .mask-active {
-    @apply h-full opacity-100;
+    @apply fixed top-0 left-0 w-full h-0 bg-mask z-10 h-full opacity-100;
   }
 
   .menubar {
@@ -225,8 +221,7 @@ $mobile_row_gap: 0.75rem;
   }
 
   .toolbox-button {
-    min-height: 3rem;
-    min-width: 3rem;
+    @apply w-12 h-12;
     padding: 1px;
     margin: 2px;
     button {
@@ -376,7 +371,7 @@ $mobile_row_gap: 0.75rem;
   opacity: 1;
   transition: opacity 2000ms;
 }
-.slides-transition-exit {
+.image-transition-exit {
   opacity: 1;
 }
 .image-transition-exit-active {
@@ -384,8 +379,23 @@ $mobile_row_gap: 0.75rem;
   transition: opacity 2000ms;
 }
 
+.scale-transition-enter {
+  transform: scale(0.7);
+}
+.scale-transition-enter-active {
+  transform: scale(1);
+  transition: transform 200ms ease;
+}
+.scale-transition-exit {
+  opacity: 1;
+}
+.scale-transition-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
 #filerobot-image-editor-root .modal-overlay {
-  transition: background 200ms ease;
+  transition: background 200ms ease !important;
   opacity: 1 !important;
   background: $mask !important;
 }

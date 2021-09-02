@@ -28,6 +28,7 @@ const editorConfig = {
       disabledBg: 'rgba(255, 0, 0, 0.1)',
     },
   },
+  tools: ['adjust', 'effects', 'filters', 'rotate', 'crop', 'resize', 'shapes', 'text'],
   translations: {
     en: {
       'toolbar.download': 'Save',

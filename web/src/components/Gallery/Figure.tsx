@@ -8,12 +8,15 @@ export interface FigureProps {
 
 export default function Figure({ image }: FigureProps) {
   const { focus, selection, select, selecting, toggleSlide } = useImage();
-  const { layout, zoom } = useLayout();
+  const { layout, zoom, isMobile, setPropertiesVisible } = useLayout();
 
   const handleClick = () => {
     focus(image);
     if (selecting) {
       select(image);
+    }
+    if (isMobile) {
+      setPropertiesVisible(true);
     }
   };
 

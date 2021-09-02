@@ -1,4 +1,7 @@
 import { CSSProperties, SyntheticEvent } from 'react';
+import { CSSTransition } from 'react-transition-group';
+
+import { noop } from '../utilities';
 
 export interface MaskProps {
   onClick?: (e?: SyntheticEvent) => void;
@@ -8,20 +11,13 @@ export interface MaskProps {
 }
 
 export default function Mask({ onClick, visible, zIndex, style }: MaskProps) {
-  if (onClick) {
-    return (
+  return (
+    <CSSTransition in={visible} timeout={200} classNames="fade-transition" unmountOnExit>
       <button
-        onClick={onClick}
-        className={visible ? 'mask mask-active' : 'mask'}
+        onClick={onClick ?? noop}
+        className="mask"
         style={{ ...style, zIndex: zIndex ? zIndex : 10 }}
       ></button>
-    );
-  }
-
-  return (
-    <div
-      className={visible ? 'mask mask-active' : 'mask'}
-      style={{ ...style, zIndex: zIndex ? zIndex : 10 }}
-    ></div>
+    </CSSTransition>
   );
 }
