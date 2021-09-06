@@ -43,7 +43,7 @@ function signInWithPopup(providerId) {
   });
 }
 
-async function uploadImage(file, libraryId) {
+async function uploadImage(file, source, libraryId) {
   if (!auth.currentUser) {
     throw new Error('Please login to upload images');
   }
@@ -54,6 +54,7 @@ async function uploadImage(file, libraryId) {
     .put(file, {
       customMetadata: {
         name: file.name,
+        source,
       },
     })
     .catch((error) => {
@@ -137,7 +138,7 @@ chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
     case 'uploadImage':
       fileFromUrl(message.payload.url, message.payload.name)
         .then((file) => {
-          uploadImage(file, message.payload.libraryId)
+          uploadImage(file, message.payload.url, message.payload.libraryId)
             .then(() => {
               sendMessage({
                 status: 'success',

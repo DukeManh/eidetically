@@ -75,7 +75,9 @@ $mobile_row_gap: 0.75rem;
   }
 
   button:active,
-  button:focus {
+  button:focus,
+  textarea,
+  input {
     @apply outline-none;
   }
 

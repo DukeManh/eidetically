@@ -22,6 +22,7 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
       metadata.firebaseStorageDownloadTokens
     }`;
     const imageName = metadata.name ?? uuidv4();
+    const source = metadata.source ?? '';
 
     functions.logger.log('Download Url: ', downloadURL);
 
@@ -29,16 +30,20 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
     const libRef = db.collection(`firebase_users/${uid}/libraries`).doc(libraryID);
     const imageRef = libRef.collection('images').doc(imageId);
     const image = await imageRef.get();
+
+    // Storage ref archived
     if (image.exists) {
       await imageRef.update({ downloadURL, size });
       return;
     }
 
+    // New upload
     await imageRef.set({
       note: '',
       library: libRef,
       upload_date: admin.firestore.FieldValue.serverTimestamp(),
       name: imageName,
+      source,
       downloadURL,
       contentType,
       size,

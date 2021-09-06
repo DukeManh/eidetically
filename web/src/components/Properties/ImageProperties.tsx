@@ -50,7 +50,7 @@ export default function ImageProperties() {
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setProperties((props) => ({
       ...props,
       [e.target.name]: e.target.value,
@@ -83,13 +83,13 @@ export default function ImageProperties() {
           rows={4}
           className="imageProperties"
         />
-        <textarea
+        <input
           name="source"
           onChange={handleChange}
           value={properties.source}
           placeholder="source"
-          rows={1}
           className="imageProperties"
+          // rows={1}
         />
         <CSSTransition
           in={unsaved}

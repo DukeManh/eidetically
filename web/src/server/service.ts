@@ -11,11 +11,11 @@ const errors = {
   invalidName: new Error('Choose a library name'),
 };
 
-export async function createLibrary(name: string) {
+export async function createLibrary(libName: string) {
   if (auth.currentUser) {
-    const libName = name.trim();
+    const name = libName.trim();
 
-    if (!libName) {
+    if (!name) {
       throw errors.invalidName;
     }
     const existingLib = await db.libraries().where('name', '==', name).get();
@@ -85,6 +85,7 @@ export async function uploadImages(acceptedFiles: File[], libraryID: string) {
         const upload = storage.ref(filePath).put(file, {
           customMetadata: {
             name: file.name,
+            source: 'Self uploaded',
           },
         });
         const t = task.new(file, upload.cancel);
