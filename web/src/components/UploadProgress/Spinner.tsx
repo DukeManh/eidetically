@@ -1,26 +1,19 @@
-import { useState } from 'react';
-
 export interface SpinnerProps {
   size?: number;
 }
 
-const borders = ['borderLeftColor', 'borderRightColor', 'borderBottomColor', 'borderTopColor'];
-const missingBorder = () => borders[Math.floor(Math.random() * 4)];
-
 export default function Spinner({ size }: SpinnerProps) {
-  const [border] = useState(missingBorder());
+  const animation = `rotation 700ms cubic-bezier(0.37, 0, 0.63, 1) ${
+    Math.random() * 701
+  }ms infinite`;
   return (
     <div
       className="spinner"
       style={{
-        height: size ? size : '1rem',
-        width: size ? size : '1rem',
-        borderColor: '#3EDBF0',
-        borderRadius: '100%',
-        borderWidth: size ? `${(size * 0.2).toFixed(0)}px` : '3px',
-        [border]: 'gray',
-        animation: 'rotation 1000ms cubic-bezier(0.37, 0, 0.63, 1) infinite',
+        animation,
       }}
-    ></div>
+    >
+      <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="logo" width={size || 18}></img>
+    </div>
   );
 }

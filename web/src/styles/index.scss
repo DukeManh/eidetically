@@ -346,6 +346,18 @@ $mobile_row_gap: 0.75rem;
       @apply absolute right-2 top-0 h-full flex flex-row justify-center items-center cursor-pointer;
     }
   }
+
+  .spinner {
+    min-width: 1.2rem;
+    max-width: 1.2rem;
+  }
+
+  .uploadTask {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    column-gap: 1rem;
+  }
 }
 
 .navigation-wrap {

@@ -40,20 +40,16 @@ export default function TaskProgress({ task }: TaskProgressProps) {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      <div className="h-8 flex flex-row space-x-4 items-center cursor-pointer">
-        <div>
-          {task.file.type.startsWith('image') ? (
-            <BsFillImageFill className="h-full" />
-          ) : (
-            <BsFillCameraVideoFill className="h-full" />
-          )}
-        </div>
+      <div className="uploadTask h-8 cursor-default">
+        {task.file.type.startsWith('image') ? (
+          <BsFillImageFill className="h-full" />
+        ) : (
+          <BsFillCameraVideoFill className="h-full" />
+        )}
 
         <div className="text-truncate">{task.file.name}</div>
 
-        <div className="flex-grow"></div>
-
-        <div>{renderStatusIcon()}</div>
+        <div className="h-full w-6 flex items-center">{renderStatusIcon()}</div>
       </div>
     </div>
   );
