@@ -13,5 +13,6 @@ module.exports = {
     'no-console': 'off',
     'prefer-arrow-callback': 'warn',
     'no-unused-vars': 'warn',
+    'no-nested-ternary': 'off',
   },
 };

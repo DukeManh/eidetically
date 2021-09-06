@@ -23,17 +23,12 @@ $(() => {
       $(container).html(html);
       $(container).appendTo(dropArea);
     } else {
-      const arrowIcon = chrome.extension.getURL('../../icons/rightArrowBlack.svg');
-      const blueArrowIcon = chrome.extension.getURL('../icons/rightArrowBlue.svg');
-
       const html = `
             <div class='ei-arrow' id='ei-arrow-left'>
-              <img class='ei-arrow-icon' src='${arrowIcon}' alt='right-arrow' style='transform: rotateY(180deg)'>
             </div>
             <div class='ei-libs-container'>
             </div>
             <div class='ei-arrow' id='ei-arrow-right'>
-              <img class='ei-arrow-icon' src='${arrowIcon}' alt='right-arrow'>
             </div>
           `;
 
@@ -46,8 +41,8 @@ $(() => {
       newLib.classList.add('ei-lib-box');
       $(newLib).html(`
                 <img src='${chrome.extension.getURL(
-                  '../../icons/newFolder.png'
-                )}' alt='new folder icon' width='30' height='30' />
+                  '../../icons/newFolder.svg'
+                )}' alt='new folder icon' width='35' height='30' />
                 <div>New Lib</div>
             `);
       $(newLib).appendTo(libsContainer);
@@ -59,8 +54,8 @@ $(() => {
 
         $(library).html(`
                 <img src='${chrome.extension.getURL(
-                  '../../icons/folder.png'
-                )}' alt='folder icon' width='30' height='30' />
+                  '../../icons/folder.svg'
+                )}' alt='folder icon' width='35' height='35' />
                 <div>${lib.name}</div>
             `);
         $(library).appendTo(libsContainer);
@@ -94,45 +89,56 @@ $(() => {
         ev.target.classList.remove('dragover');
       });
 
+      const resetArrowColor = (mouseOverLeft, mouseOverRight) => {
+        const leftScrollable = libsContainer.scrollLeft() > 0;
+        const rightScrollable =
+          libsContainer.scrollLeft() < libsContainer[0].scrollWidth - libsContainer[0].clientWidth;
+
+        $('#ei-arrow-left').css({
+          'border-color': !leftScrollable
+            ? 'var(--ei-coolGray)'
+            : mouseOverLeft
+            ? 'var(--ei-blue)'
+            : 'white',
+        });
+
+        $('#ei-arrow-right').css({
+          'border-color': !rightScrollable
+            ? 'var(--ei-coolGray)'
+            : mouseOverRight
+            ? 'var(--ei-blue)'
+            : 'white',
+        });
+      };
+
       $('.ei-arrow').each(function () {
         const animationDuration = 250;
         let interval = 0;
-        const icon = $(this).children('img');
         const isLeftArrow = $(this).attr('id') === 'ei-arrow-left';
 
-        function reset() {
-          clearInterval(interval);
-          icon.attr({ src: arrowIcon });
-        }
+        resetArrowColor(false, false);
 
         $(this).on('dragenter', () => {
-          const scrollable = isLeftArrow
-            ? libsContainer.scrollLeft() > 0
-            : libsContainer.scrollLeft() <
-              libsContainer[0].scrollWidth - libsContainer[0].clientWidth;
-
           interval = setInterval(() => {
-            if (scrollable) {
-              icon.attr({ src: blueArrowIcon });
-              libsContainer.animate(
-                {
-                  scrollLeft: libsContainer.scrollLeft() + (isLeftArrow ? -100 : 100),
-                },
-                animationDuration
-              );
-            } else {
-              reset();
-            }
+            resetArrowColor(isLeftArrow, !isLeftArrow);
+            libsContainer.animate(
+              {
+                scrollLeft: libsContainer.scrollLeft() + (isLeftArrow ? -100 : 100),
+              },
+              animationDuration
+            );
           }, animationDuration);
         });
 
         $(this).on('dragleave', () => {
-          reset();
+          resetArrowColor(false, false);
+          clearInterval(interval);
         });
 
         $(this).on('drop', (ev) => {
           ev.preventDefault();
-          reset();
+          resetArrowColor(false, false);
+          clearInterval(interval);
         });
       });
     }

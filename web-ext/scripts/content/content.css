@@ -1,18 +1,21 @@
 :root {
   --ei-bg: #414141;
   --ei-lib: #3a3a3a;
-  --ei-text: #e5e7eb;
   --ei-container-height: 150px;
   --ei-maxZIndex: 9999999999999999999999;
   --ei-easeInOutBack: cubic-bezier(0.68, -0.6, 0.32, 1.6);
   --ei-coolGray: #9ca3af;
-  --ei-blue: #60a5fa;
-  --font: 16px;
+  --ei-blue: #66d6ff;
+  --ei-font: 16px;
 }
 
 .ei-drop-area * {
   all: unset;
   box-sizing: border-box;
+}
+.ei-drop-area {
+  color: white;
+  user-select: none;
 }
 
 .ei-drop-area img {
@@ -24,15 +27,16 @@
 }
 
 .ei-drop-area {
-  font-size: var(--font);
+  font-size: var(--ei-font);
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
   right: 0;
   width: 100%;
   text-align: center;
+  padding: 0 1em;
   background-color: var(--ei-bg);
-  color: var(--ei-text);
+  color: white;
   z-index: var(--ei-maxZIndex);
   height: 0;
   transition: height 400ms var(--ei-easeInOutBack);
@@ -47,30 +51,28 @@
   box-sizing: border-box;
   height: var(--ei-container-height);
   padding: 0.5em 0.5em;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  justify-items: center;
-  gap: 0.5em;
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  column-gap: 1em;
+  align-items: center;
 }
 
 .ei-arrow {
-  width: 9em;
-  margin: 2em 0;
-}
-
-.ei-arrow img {
-  width: 64px;
-  height: 64px;
-  pointer-events: none;
+  width: min-content;
+  height: min-content;
+  box-sizing: border-box;
+  border: solid white;
+  border-width: 0 0.4em 0.4em 0;
+  display: inline-block;
+  padding: 1.3em;
 }
 
 #ei-arrow-right {
-  border-left: 1px solid #e5e7eb;
+  transform: rotate(-45deg);
 }
 
 #ei-arrow-left {
-  border-right: 1px solid #e5e7eb;
+  transform: rotate(135deg);
 }
 
 .ei-lib-box {
@@ -98,6 +100,7 @@
 }
 
 .ei-libs-container {
+  height: 100%;
   flex-shrink: unset;
   padding: 0.5em 0.5em 1em;
   flex-grow: 1;
