@@ -9,6 +9,7 @@
     "firebase": "^8.6.2",
     "firebaseui": "^4.8.0",
     "fuse.js": "^6.4.6",
+    "jszip": "^3.7.1",
     "node-sass": "^6.0.0",
     "postcss-import": "^14.0.2",
     "postcss-nested": "^4.2.3",

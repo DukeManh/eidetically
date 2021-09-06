@@ -64,7 +64,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await renameLibrary(lib.id, newLibName.trim());
+      await renameLibrary(lib.id, newLibName);
       toast.success('Library renamed');
       setRenaming('');
       setError('');

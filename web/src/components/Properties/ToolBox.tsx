@@ -1,5 +1,7 @@
 import { IconContext } from 'react-icons';
 import ReactTooltip from 'react-tooltip';
+import JSZip from 'jszip';
+import toast from 'react-hot-toast';
 
 import { MdContentPaste } from 'react-icons/md';
 import { BiCut, BiSelectMultiple } from 'react-icons/bi';
@@ -7,8 +9,40 @@ import { IoIosCloseCircle, IoIosCopy } from 'react-icons/io';
 import { RiDeleteBin7Fill, RiSlideshow2Fill, RiImageEditFill } from 'react-icons/ri';
 import { ImCloudUpload, ImCloudDownload } from 'react-icons/im';
 
-import { useImage, useAuth, useLibrary } from '../../contexts';
+import { useImage, useLibrary } from '../../contexts';
+import { Image } from '../../interfaces';
 import FileUploadButton from '../FileUploadButton';
+
+const downloadImages = (libraryName: string, images: Image[]) => {
+  const zip = new JSZip();
+
+  const promises = images.map(
+    (image, i) =>
+      new Promise<void>((resolve) => {
+        fetch(image.downloadURL).then((response) => {
+          response.blob().then((blob) => {
+            zip.file(`${image.name}_${i + 1}.${image.contentType.split('/').pop()}`, blob);
+            resolve();
+          });
+        });
+      })
+  );
+
+  Promise.all(promises)
+    .then(() => {
+      zip.generateAsync({ type: 'blob' }).then(function (blob) {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${libraryName}.zip`;
+        a.click();
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error('Error downloading images');
+    });
+};
 
 export default function ToolBox() {
   const {
@@ -24,11 +58,10 @@ export default function ToolBox() {
     paste,
     clipboard,
     selectedItemsNum,
+    selection,
   } = useImage();
 
   const { activeLibrary } = useLibrary();
-
-  const { user } = useAuth();
 
   const atLeastOneSelected = selectedItemsNum > 0;
   const oneFocused = !!focused;
@@ -85,7 +118,7 @@ export default function ToolBox() {
           <ImCloudUpload className="mx-auto" />
         </FileUploadButton>
       ),
-      disabled: atLeastOneSelected,
+      disabled: false,
     },
     {
       name: 'Edit',
@@ -95,7 +128,12 @@ export default function ToolBox() {
     },
     {
       name: 'Save',
-      handleClick: () => {},
+      handleClick: () => {
+        if (activeLibrary) {
+          downloadImages(activeLibrary?.name, Object.values(selection));
+          cancelSelecting();
+        }
+      },
       children: <ImCloudDownload />,
       disabled: !atLeastOneSelected,
     },
@@ -113,7 +151,7 @@ export default function ToolBox() {
           >
             {!hidden && (
               <>
-                <button disabled={!user || disabled} onClick={() => handleClick()}>
+                <button disabled={!activeLibrary || disabled} onClick={() => handleClick()}>
                   {children}
                 </button>
                 <ReactTooltip

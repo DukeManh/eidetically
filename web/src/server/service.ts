@@ -8,10 +8,16 @@ import task from '../components/UploadProgress/task';
 const errors = {
   libExists: new Error('Library exists, choose a different name'),
   unauthenticated: new Error('User not authenticated'),
+  invalidName: new Error('Choose a library name'),
 };
 
 export async function createLibrary(name: string) {
   if (auth.currentUser) {
+    const libName = name.trim();
+
+    if (!libName) {
+      throw errors.invalidName;
+    }
     const existingLib = await db.libraries().where('name', '==', name).get();
 
     if (existingLib.empty) {
@@ -43,8 +49,13 @@ export async function deleteLibrary(libID: string) {
   }
 }
 
-export async function renameLibrary(libID: string, name: string) {
+export async function renameLibrary(libID: string, libName: string) {
   if (auth.currentUser) {
+    const name = libName.trim();
+
+    if (!name) {
+      throw errors.invalidName;
+    }
     const libRef = db.libraries().doc(libID);
     const lib = await libRef.get();
     if (lib.exists && lib.data()?.name !== name) {
@@ -65,34 +76,30 @@ export async function renameLibrary(libID: string, name: string) {
 
 export async function uploadImages(acceptedFiles: File[], libraryID: string) {
   if (auth.currentUser) {
-    const promises: Promise<void>[] = [];
-
     task.start(acceptedFiles.length);
 
-    acceptedFiles.forEach((file) => {
+    const promises = acceptedFiles.map((file) => {
       const uuid = uuidv4();
       const filePath = `${auth.currentUser?.uid}/${libraryID}/${uuid}`;
-      promises.push(
-        new Promise((resolve) => {
-          const upload = storage.ref(filePath).put(file, {
-            customMetadata: {
-              name: file.name,
-            },
-          });
-          const t = task.new(file, upload.cancel);
-          upload.then(
-            async () => {
-              task.complete(t.id);
-              resolve();
-            },
-            (error) => {
-              task.fail(t.id);
-              console.error(error.message);
-              resolve();
-            }
-          );
-        })
-      );
+      return new Promise<void>((resolve) => {
+        const upload = storage.ref(filePath).put(file, {
+          customMetadata: {
+            name: file.name,
+          },
+        });
+        const t = task.new(file, upload.cancel);
+        upload.then(
+          async () => {
+            task.complete(t.id);
+            resolve();
+          },
+          (error) => {
+            task.fail(t.id);
+            console.error(error.message);
+            resolve();
+          }
+        );
+      });
     });
 
     await Promise.all(promises).catch((error) => {

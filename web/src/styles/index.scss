@@ -10,9 +10,7 @@
   #root {
     @apply p-0 m-0 min-h-full h-auto overflow-hidden max-h-screen font-sans;
     font-size: 14px;
-    * {
-      @apply box-border focus:outline-none;
-    }
+    @apply box-border focus:outline-none;
   }
   /* inter-regular - latin */
   /* quicksand-regular - latin */
@@ -74,6 +72,15 @@ $mobile_row_gap: 0.75rem;
       @apply bg-white w-5 h-5;
       border: 1px solid white;
     }
+  }
+
+  button:active,
+  button:focus {
+    @apply outline-none;
+  }
+
+  div {
+    @apply box-border;
   }
 
   .Waterfall {
@@ -145,7 +152,7 @@ $mobile_row_gap: 0.75rem;
       @apply text-gray-400 pr-2;
     }
     .edit-library {
-      @apply text-gray-400 hover:bg-tabActive rounded-lg h-full p-1;
+      @apply text-gray-400 hover:bg-tabActive rounded-lg h-full p-1 outline-none;
       display: none;
 
       .react-icons {

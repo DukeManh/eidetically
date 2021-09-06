@@ -44,7 +44,7 @@ export default function Navigation() {
     if (newLibName) {
       toast.promise(
         new Promise<void>((resolve, reject) => {
-          createLibrary(newLibName.trim())
+          createLibrary(newLibName)
             .then(() => {
               setCreatingNewLib(false);
               setNewLibName(DEFAULT_LIB_NAME);

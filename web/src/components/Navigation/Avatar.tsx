@@ -21,7 +21,7 @@ export default function Avatar() {
             <MdEdit style={{ fill: 'black', height: '100%', width: '100%' }} />
           </div>
           <div className="absolute opacity-0 hover:opacity-100 p-[1px] top-0 left-0 rounded-full w-full h-full bg-mask transition-all">
-            <button className="h-full w-full text-gray-200">Edit Profile</button>
+            <button className="h-full w-full text-gray-200 outline-none">Edit Profile</button>
           </div>
         </>
       )}
