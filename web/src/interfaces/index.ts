@@ -20,19 +20,22 @@ export interface MetaData {
   contentType: string;
   size: number;
   fullPath: string;
+  note: string;
+  name: string;
+  source: string;
 }
 
 // Uploaded image
 export interface Image extends MetaData {
-  name: string;
   downloadURL: string;
   id: string;
   library: firebase.firestore.DocumentReference<Partial<Library>>;
-  note: string;
   upload_date: firebase.firestore.FieldValue;
-  source: string;
 }
 
+export interface ImageFile extends File {
+  metaData?: Partial<MetaData>;
+}
 export interface MutableImageProperties {
   name: string;
   note: string;

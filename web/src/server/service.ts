@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { auth, db, storage } from './firebase';
-import { Image, MutableImageProperties } from '../interfaces';
+import { Image, ImageFile, MutableImageProperties } from '../interfaces';
 
 import task from '../components/UploadProgress/task';
 
@@ -74,7 +74,7 @@ export async function renameLibrary(libID: string, libName: string) {
   }
 }
 
-export async function uploadImages(acceptedFiles: File[], libraryID: string) {
+export async function uploadImages(acceptedFiles: ImageFile[], libraryID: string) {
   if (auth.currentUser) {
     task.start(acceptedFiles.length);
 
@@ -84,8 +84,9 @@ export async function uploadImages(acceptedFiles: File[], libraryID: string) {
       return new Promise<void>((resolve) => {
         const upload = storage.ref(filePath).put(file, {
           customMetadata: {
-            name: file.name,
-            source: 'Self uploaded',
+            note: file?.metaData?.note ?? '',
+            name: file?.metaData?.name ?? '',
+            source: file?.metaData?.source ?? 'Self uploaded',
           },
         });
         const t = task.new(file, upload.cancel);
@@ -133,6 +134,15 @@ export async function updateImageProperties(
   if (auth.currentUser) {
     const imageRef = image.library.collection('images').doc(image.id);
     await imageRef.update(properties);
+
+    const storageRef = storage.ref(image.fullPath);
+    await storageRef.updateMetadata({
+      customMetadata: {
+        note: properties.note,
+        source: properties.source,
+        name: properties.name,
+      },
+    });
   } else {
     throw errors.unauthenticated;
   }

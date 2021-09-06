@@ -23,6 +23,7 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
     }`;
     const imageName = metadata.name ?? uuidv4();
     const source = metadata.source ?? '';
+    const note = metadata.note ?? '';
 
     functions.logger.log('Download Url: ', downloadURL);
 
@@ -39,7 +40,7 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
 
     // New upload
     await imageRef.set({
-      note: '',
+      note,
       library: libRef,
       upload_date: admin.firestore.FieldValue.serverTimestamp(),
       name: imageName,

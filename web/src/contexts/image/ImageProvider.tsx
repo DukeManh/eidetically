@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 
-import { ProviderProps, Image, ImageMap } from '../../interfaces';
+import { ProviderProps, Image, ImageMap, ImageFile } from '../../interfaces';
 import { ImageContext } from './ImageContext';
 import { deleteImages, uploadImages } from '../../server/service';
 
@@ -71,10 +71,15 @@ export default function ImageProvider({ children }: ProviderProps) {
         const fetches = clipboard.clipboard.map(async (image) => {
           const img = await fetch(image.downloadURL);
           const blob = await img.blob();
-          const file = new File([blob], image.name, {
+          const file: ImageFile = new File([blob], image.name, {
             lastModified: Date.now(),
             type: blob.type,
           });
+          file.metaData = {
+            note: image.note,
+            source: image.source,
+            name: image.name,
+          };
           return file;
         });
 
