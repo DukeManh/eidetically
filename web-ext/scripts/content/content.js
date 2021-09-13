@@ -70,11 +70,50 @@ $(() => {
       libBoxes.on('drop', (ev) => {
         const libraryId = $(ev.target).attr('data-libraryId');
         ev.target.classList.remove('dragover');
-        const url = new URL(dragged.src);
+
+        let imageSrc = dragged.src;
+
+        if (dragged.srcset) {
+          let srcset = dragged.srcset.split(/,\s+/).map((src) => src.split(/\s+/));
+
+          srcset = srcset.reduce((acc, sourceAndWidth) => {
+            if (sourceAndWidth.length !== 2) {
+              return acc;
+            }
+            const [src, width] = sourceAndWidth;
+            try {
+              const url = new URL(src);
+
+              if (url.protocol !== 'https') {
+                return acc;
+              }
+            } catch (err) {
+              return acc;
+            }
+
+            const unit = width.slice(-1).toUpperCase();
+            const number = Number.parseInt(width.slice(0, -1), 10);
+            if ((unit === 'X' || unit === 'W') && number && number > 0) {
+              acc.push([src, number]);
+            }
+
+            return acc;
+          }, []);
+
+          if (srcset.length) {
+            // eslint-disable-next-line prefer-destructuring
+            srcset = srcset.sort((src1, src2) =>
+              src1[1] < src2[1] ? 1 : src1[1] === src2[1] ? 0 : -1
+            );
+
+            // eslint-disable-next-line prefer-destructuring
+            imageSrc = srcset[Math.floor((src2.length - 1) / 2)][0];
+          }
+        }
         chrome.runtime.sendMessage({
           command: 'uploadImage',
           payload: {
-            url: dragged.src,
+            url: imageSrc,
             name: dragged.alt || `${url.host}-${(Date.now() / 1000).toFixed()}`,
             libraryId,
           },

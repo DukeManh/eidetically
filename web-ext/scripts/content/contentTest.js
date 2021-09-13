@@ -18,6 +18,42 @@ $(() => {
     ev.target.classList.remove('dragover');
     // const url = new URL(dragged.src);
     console.log(libraryId);
+
+    let imageSrc = dragged.src;
+
+    if (dragged.srcset) {
+      let srcset = dragged.srcset.split(/,\s+/).map((src) => src.split(/\s+/));
+
+      srcset = srcset.reduce((acc, sourceAndWidth) => {
+        if (sourceAndWidth.length !== 2) {
+          return acc;
+        }
+        const [src, width] = sourceAndWidth;
+        try {
+          // eslint-disable-next-line no-unused-vars
+          const url = new URL(src);
+        } catch (error) {
+          console.log(error);
+          return acc;
+        }
+
+        const unit = width.slice(-1).toUpperCase();
+        const number = Number.parseInt(width.slice(0, -1), 10);
+        if ((unit === 'X' || unit === 'W') && number && number > 0) {
+          acc.push([src, number]);
+        }
+
+        return acc;
+      }, []);
+
+      if (srcset.length) {
+        // eslint-disable-next-line prefer-destructuring
+        imageSrc = srcset.sort((src1, src2) =>
+          src1[1] < src2[1] ? 1 : src1[1] === src2[1] ? 0 : -1
+        )[0][0];
+      }
+    }
+    console.log(imageSrc);
   });
 
   libBoxes.on('dragover', (ev) => {
