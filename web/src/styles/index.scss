@@ -12,6 +12,11 @@
     font-size: 14px;
     @apply box-border focus:outline-none;
   }
+  main {
+    height: 100vh;
+    height: -webkit-fill-available;
+    height: stretch;
+  }
   /* inter-regular - latin */
   /* quicksand-regular - latin */
   /* cabin-regular - latin */
@@ -131,8 +136,7 @@ $mobile_row_gap: 0.75rem;
   }
 
   .sidebar {
-    @apply top-0 bg-secondary z-20 pt-2 border-gray-900 border-opacity-70;
-    height: calc(100vh - #{$menubar_height});
+    @apply top-0 h-full bg-secondary z-20 py-2 border-gray-900 border-opacity-70;
   }
 
   .mask {
@@ -363,7 +367,8 @@ $mobile_row_gap: 0.75rem;
 }
 
 .navigation-wrap {
-  max-height: calc(100vh - #{$menubar_height});
+  display: grid;
+  grid-template-rows: 3rem auto 16rem;
 }
 
 .gallery {

@@ -7,7 +7,7 @@ import task from '../components/UploadProgress/task';
 
 const errors = {
   libExists: new Error('Library exists, choose a different name'),
-  unauthenticated: new Error('User not authenticated'),
+  unauthenticated: new Error('Please sign in'),
   invalidName: new Error('Choose a library name'),
 };
 

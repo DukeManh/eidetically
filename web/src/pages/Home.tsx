@@ -8,7 +8,7 @@ import UploadProgress from '../components/UploadProgress';
 
 export default function Home() {
   return (
-    <main className="text-gray-50 bg-primary ">
+    <main className="text-gray-50 bg-primary flex flex-col">
       <Toaster
         toastOptions={{
           style: {
@@ -20,7 +20,7 @@ export default function Home() {
       />
       <UploadProgress />
       <MenuBar />
-      <div className="max-h-screen overflow-hidden relative">
+      <div className="flex-grow overflow-hidden relative">
         <Navigation />
         <Gallery />
         <Properties />

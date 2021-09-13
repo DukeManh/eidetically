@@ -103,7 +103,7 @@ export default function Navigation() {
               left: 0,
             }}
           />
-          <div className="flex-grow flex flex-col h-full pb-8 navigation-wrap">
+          <div className="h-full navigation-wrap">
             <div className="px-6 pt-3 pb-2 w-full max-h-12">
               <span className=" font-medium text-lg">Libraries</span>
               <span className="float-right cursor-pointer">

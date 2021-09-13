@@ -40,7 +40,7 @@ export default function Menu({ items, style, className }: ContextMenuProps) {
 
   return (
     <div style={{ ...style }} className={classnames}>
-      <div className="py-2 flex flex-col space-y-1 min-w-[14rem]">
+      <div className="py-2 flex flex-col space-y-1 min-w-[14rem] max-w-[16rem]">
         {items.map(({ handler, name, content, icon, confirm }) =>
           confirm ? (
             <PopConfirm

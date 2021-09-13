@@ -12,7 +12,7 @@ export default function Gallery() {
 
   return (
     <div
-      className="className h-screen relative flex flex-col justify-start pb-12"
+      className="h-full relative flex flex-col justify-start pb-12"
       style={{
         marginLeft: navigationVisible && !isMobile ? navigationWidth : '0',
         marginRight: propertiesVisible && !isMobile ? DefaultSidebarWidth : '0',

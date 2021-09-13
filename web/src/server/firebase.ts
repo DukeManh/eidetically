@@ -45,7 +45,7 @@ export const storage = firebase.storage();
 export const db = {
   libraries: () => {
     if (!auth?.currentUser?.uid) {
-      throw new Error('User not logged in');
+      throw new Error('Please sign in');
     }
     return collection<Library | Partial<Library>>(
       `firebase_users/${auth.currentUser.uid}/libraries`
@@ -53,7 +53,7 @@ export const db = {
   },
   images: (libID: string) => {
     if (!auth?.currentUser?.uid) {
-      throw new Error('User not logged in');
+      throw new Error('Please sign in');
     }
     return collection<Image | Partial<Image>>(
       `firebase_users/${auth.currentUser.uid}/libraries/${libID}/images`
