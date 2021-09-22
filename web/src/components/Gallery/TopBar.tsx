@@ -20,8 +20,8 @@ export default function TopBar() {
   const { query, setQuery } = useQuery();
 
   return (
-    <div className="md:px-4 min-h-[6rem] max-h-24 h-10 top-0 space-y-2">
-      <div className="h-3/4 flex flex-row justify-between">
+    <div className="px-1 md:px-4 flex flex-col items-center">
+      <div className="h-3/4 w-full flex flex-row justify-between">
         <div className="topbarColumn justify-start space-x-4 flex-shrink-0">
           <BiMenuAltLeft
             size={28}

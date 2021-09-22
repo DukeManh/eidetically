@@ -12,7 +12,7 @@ export default function Gallery() {
 
   return (
     <div
-      className="h-full relative flex flex-col justify-start pb-12"
+      className="galleryWrap"
       style={{
         marginLeft: navigationVisible && !isMobile ? navigationWidth : '0',
         marginRight: propertiesVisible && !isMobile ? DefaultSidebarWidth : '0',
@@ -20,7 +20,7 @@ export default function Gallery() {
     >
       <TopBar />
 
-      <div className="flex-grow overflow-y-auto min-h-0 pt-6 px-4">
+      <div className="flex-grow overflow-y-auto px-4 p-2 flex flex-col">
         <Switch>
           <Route path="/" exact>
             <Welcome />

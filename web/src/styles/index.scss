@@ -193,6 +193,15 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
+  @keyframes blinking {
+    from {
+      background: rgba(59, 130, 246, 0.25);
+    }
+    to {
+      background: rgba(59, 130, 246, 0.6);
+    }
+  }
+
   .tab-active {
     @apply bg-tabActive font-medium;
   }
@@ -353,6 +362,10 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
+  .dropzoneBg {
+    animation: blinking 1200ms ease alternate infinite;
+  }
+
   .spinner {
     min-width: 1.2rem;
     max-width: 1.2rem;
@@ -366,13 +379,19 @@ $mobile_row_gap: 0.75rem;
   }
 }
 
-.navigation-wrap {
+.navigationWrap {
   display: grid;
   grid-template-rows: 3rem auto 16rem;
 }
 
-.gallery {
-  max-height: calc(100vh - #{$menubar_height});
+.galleryWrap {
+  @apply relative pb-4;
+  display: grid;
+  grid-template-rows: 5rem auto;
+  row-gap: 1rem;
+  // 100% height causing images not scrollable on mobiles
+  // Specify specific heights like height = viewHeight - menuBarHeight
+  height: calc(100vh - 2.25rem);
 }
 
 .fade-transition-enter {

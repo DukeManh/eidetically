@@ -138,12 +138,16 @@ export default function ImageContainer() {
   );
 
   return (
-    <div className="p-2 relative min-h-full" {...getRootProps()}>
-      {isDragActive && (
-        <div className="w-full h-full border-2 border-dotted bg-blue-500 bg-opacity-20 border-blue-600 absolute top-0 left-0 dropZone" />
-      )}
+    <div className="flex-grow min-h-0" {...getRootProps()}>
+      <div className="relative w-full p-2 min-h-full">
+        {isDragActive && (
+          <div className="w-full h-full border-[3px] border-blue-500 z-[50] absolute top-0 left-0">
+            <div className="h-full dropzoneBg"></div>
+          </div>
+        )}
 
-      <Images images={searchResults || flattenArray} />
+        <Images images={searchResults || flattenArray} />
+      </div>
 
       <div className="py-4 mx-auto flex flex-row justify-center">
         {!!cursor && activeLibrary && flattenArray.length < activeLibrary?.image_count && (
