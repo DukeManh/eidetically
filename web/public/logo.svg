@@ -1,80 +1,29 @@
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" class="css-ze2te4 css-qd6ojx"
-  viewBox="0 0 100 100" width="110" height="110">
-  <defs>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient8555">
-      <stop id="SvgjsStop8556" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop8557" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-    <linearGradient id="SvgjsLinearGradient3459">
-      <stop id="SvgjsStop3460" stop-color="#00ff8f" offset="0"></stop>
-      <stop id="SvgjsStop3461" stop-color="#00a1ff" offset="1"></stop>
-    </linearGradient>
-  </defs>
-  <g transform="translate(-12.5, -12.5) scale(1.25)" class="css-11z2e3b"
-    fill="url(&quot;#SvgjsLinearGradient8555&quot;)">
-    <path xmlns="http://www.w3.org/2000/svg"
-      d="M35,65.833c0-8.587,3.535-16.36,9.219-21.956c-3.063-1.406-6.458-2.21-10.052-2.21C20.82,41.667,10,52.487,10,65.833  C10,79.18,20.82,90,34.167,90c3.594,0,6.988-0.804,10.052-2.21C38.535,82.194,35,74.421,35,65.833z"
-      fill="url(&quot;#SvgjsLinearGradient3459&quot;)"></path>
-    <path xmlns="http://www.w3.org/2000/svg"
-      d="M65.833,65c-8.587,0-16.36-3.535-21.956-9.222c-1.406,3.066-2.21,6.461-2.21,10.055C41.667,79.18,52.487,90,65.833,90  C79.18,90,90,79.18,90,65.833c0-3.594-0.804-6.988-2.21-10.055C82.194,61.465,74.421,65,65.833,65z"
-      fill="url(&quot;#SvgjsLinearGradient3459&quot;)"></path>
-    <path xmlns="http://www.w3.org/2000/svg"
-      d="M65.833,10c-3.594,0-6.988,0.804-10.055,2.21C61.465,17.806,65,25.579,65,34.167c0,8.587-3.535,16.36-9.222,21.956  c3.066,1.406,6.461,2.21,10.055,2.21C79.18,58.333,90,47.513,90,34.167C90,20.82,79.18,10,65.833,10z"
-      fill="url(&quot;#SvgjsLinearGradient3459&quot;)"></path>
-    <path xmlns="http://www.w3.org/2000/svg"
-      d="M34.167,35c8.587,0,16.36,3.535,21.956,9.219c1.406-3.063,2.21-6.458,2.21-10.052C58.333,20.82,47.513,10,34.167,10  C20.82,10,10,20.82,10,34.167c0,3.594,0.804,6.988,2.21,10.052C17.806,38.535,25.579,35,34.167,35z"
-      fill="url(&quot;#SvgjsLinearGradient3459&quot;)"></path>
-  </g>
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0)">
+<path d="M250 558.33C250 472.46 285.35 394.73 342.19 338.77C311.56 324.71 277.61 316.67 241.67 316.67C108.2 316.67 0 424.87 0 558.33C0 691.8 108.2 800 241.67 800C277.61 800 311.55 791.96 342.19 777.9C285.35 721.94 250 644.21 250 558.33Z" fill="url(#paint0_linear)"/>
+<path d="M558.33 550C472.46 550 394.73 514.65 338.77 457.78C324.71 488.44 316.67 522.39 316.67 558.33C316.67 691.8 424.87 800 558.33 800C691.8 800 800 691.8 800 558.33C800 522.39 791.96 488.45 777.9 457.78C721.94 514.65 644.21 550 558.33 550Z" fill="url(#paint1_linear)"/>
+<path d="M558.33 0C522.39 0 488.45 8.04 457.78 22.1C514.65 78.06 550 155.79 550 241.67C550 327.54 514.65 405.27 457.78 461.23C488.44 475.29 522.39 483.33 558.33 483.33C691.8 483.33 800 375.13 800 241.67C800 108.2 691.8 0 558.33 0Z" fill="url(#paint2_linear)"/>
+<path d="M241.67 250C327.54 250 405.27 285.35 461.23 342.19C475.29 311.56 483.33 277.61 483.33 241.67C483.33 108.2 375.13 0 241.67 0C108.2 0 0 108.2 0 241.67C0 277.61 8.04 311.55 22.1 342.19C78.06 285.35 155.79 250 241.67 250Z" fill="url(#paint3_linear)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear" x1="0" y1="316.67" x2="342.19" y2="316.67" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FF8F"/>
+<stop offset="1" stop-color="#00A1FF"/>
+</linearGradient>
+<linearGradient id="paint1_linear" x1="316.67" y1="457.78" x2="800" y2="457.78" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FF8F"/>
+<stop offset="1" stop-color="#00A1FF"/>
+</linearGradient>
+<linearGradient id="paint2_linear" x1="457.78" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FF8F"/>
+<stop offset="1" stop-color="#00A1FF"/>
+</linearGradient>
+<linearGradient id="paint3_linear" x1="0" y1="0" x2="483.33" y2="0" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FF8F"/>
+<stop offset="1" stop-color="#00A1FF"/>
+</linearGradient>
+<clipPath id="clip0">
+<rect width="800" height="800" fill="white"/>
+</clipPath>
+</defs>
 </svg>

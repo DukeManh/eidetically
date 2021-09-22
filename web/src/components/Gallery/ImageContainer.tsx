@@ -11,6 +11,9 @@ import { RouterParams, Image } from '../../interfaces';
 import { db } from '../../server/firebase';
 
 import Images from './Images';
+import NoImage from './NoImage';
+import ImageNotFound from './ImageNotFound';
+import ImageLoading from './ImageLoading';
 
 const QUERY_LIMIT = 50;
 
@@ -137,16 +140,34 @@ export default function ImageContainer() {
     [query.get('s'), loadingImages]
   );
 
+  const renderImages = () => {
+    if (loadingImages) {
+      return <ImageLoading />;
+    }
+
+    if (!flattenArray.length) {
+      return <NoImage />;
+    }
+
+    if (searchResults?.length) {
+      return <Images images={searchResults} />;
+    } else if (searchResults) {
+      return <ImageNotFound />;
+    }
+
+    return <Images images={flattenArray} />;
+  };
+
   return (
     <div className="flex-grow min-h-0" {...getRootProps()}>
-      <div className="relative w-full p-2 min-h-full">
+      <div className="relative w-full p-2 h-full">
         {isDragActive && (
           <div className="w-full h-full border-[3px] border-blue-500 z-[50] absolute top-0 left-0">
             <div className="h-full dropzoneBg"></div>
           </div>
         )}
 
-        <Images images={searchResults || flattenArray} />
+        {renderImages()}
       </div>
 
       <div className="py-4 mx-auto flex flex-row justify-center">

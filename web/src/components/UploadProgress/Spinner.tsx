@@ -3,14 +3,13 @@ export interface SpinnerProps {
 }
 
 export default function Spinner({ size }: SpinnerProps) {
-  const animation = `rotation 700ms cubic-bezier(0.37, 0, 0.63, 1) ${
-    Math.random() * 701
-  }ms infinite`;
+  const animationDelay = `${Math.random() * 701}ms`;
+
   return (
     <div
-      className="spinner"
+      className="spinner rotate"
       style={{
-        animation,
+        animationDelay: animationDelay,
       }}
     >
       <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="logo" width={size || 18}></img>

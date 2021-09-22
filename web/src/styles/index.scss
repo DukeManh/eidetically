@@ -79,6 +79,7 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
+  div,
   button:active,
   button:focus,
   textarea,
@@ -371,9 +372,13 @@ $mobile_row_gap: 0.75rem;
     max-width: 1.2rem;
   }
 
+  .rotate {
+    animation: rotation 700ms cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+
   .uploadTask {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1.5rem auto 1.5rem;
     align-items: center;
     column-gap: 1rem;
   }
