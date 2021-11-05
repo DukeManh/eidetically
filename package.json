@@ -7,11 +7,11 @@
     "start": "cd web && npm run start",
     "build": "cd web && npm run build",
     "type-check": "cd web && npm run type-check",
-    "lint": "npm run eslint \"**/*.js\" \"**/*.tsx\" \"**/*.ts\"",
+    "lint": "npm run eslint functions web",
     "install:web": "cd web && npm install",
     "install:functions": "cd functions && npm install",
     "postinstall": "run-p install:*",
-    "eslint": "eslint --max-warnings 0",
+    "eslint": "eslint --max-warnings 0 --fix",
     "prettier": "prettier --write \"./**/*.{md,jsx,tsx,ts,json,html,css,js,yml}\""
   },
   "husky": {

@@ -8,6 +8,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
+  ignorePatterns: [
+    '**/node_modules/**', // Ignore built files.
+  ],
   rules: {
     'func-names': 'off',
     'no-console': 'off',
