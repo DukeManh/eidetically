@@ -16,3 +16,4 @@ web-ext/scripts/utils/
 **/*.ttf
 **/*.woff
 **/*.woff2
+**/.env*
