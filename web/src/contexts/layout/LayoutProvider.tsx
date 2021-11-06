@@ -8,7 +8,7 @@ import { on, off } from '../../utilities/';
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };
 const MaxZoom = 10;
 const MinZoom = 1;
-const DefaultSidebarWidth = 250;
+const DefaultSidebarWidth = 300;
 
 export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);

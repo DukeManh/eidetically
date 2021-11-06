@@ -58,3 +58,9 @@ export function debounce<T extends (...args: any[]) => any>(cb: T, wait: number)
     timeout = setTimeout(later, wait);
   } as T;
 }
+
+export function copyToClipboard(text: string) {
+  if (isBrowser) {
+    navigator.clipboard.writeText(text);
+  }
+}

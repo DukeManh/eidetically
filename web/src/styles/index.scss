@@ -53,17 +53,6 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
-  // Non-clickable button
-  @mixin buttonDisabled {
-    &:disabled {
-      @apply text-gray-400 bg-tabFocus;
-      @apply transform-none shadow-none cursor-default;
-      .react-icons {
-        fill: #9ca3af;
-      }
-    }
-  }
-
   // Image zoom slider thumb
   @mixin sliderThumb {
     -webkit-appearance: none;
@@ -244,14 +233,15 @@ $mobile_row_gap: 0.75rem;
   }
 
   .toolbox-button {
-    @apply w-12 h-12;
-    padding: 1px;
+    @apply w-10 h-10;
     margin: 2px;
     button {
-      @apply bg-tabActive transition-all hover:scale-95 w-full h-full flex flex-col
-      justify-center items-center duration-75 rounded-lg rounded-bl-md rounded-tr-md active:delay-700;
+      @apply hover:bg-tabFocus transition-all hover:scale-95 w-full h-full flex flex-col justify-center items-center rounded-lg;
 
-      @include buttonDisabled;
+      &:disabled {
+        @apply text-gray-400 hover:bg-transparent;
+        @apply transform-none shadow-none cursor-default;
+      }
     }
   }
 

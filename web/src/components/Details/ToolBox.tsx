@@ -7,11 +7,10 @@ import { MdContentPaste } from 'react-icons/md';
 import { BiCut, BiSelectMultiple } from 'react-icons/bi';
 import { IoIosCloseCircle, IoIosCopy } from 'react-icons/io';
 import { RiDeleteBin7Fill, RiSlideshow2Fill, RiImageEditFill } from 'react-icons/ri';
-import { ImCloudUpload, ImCloudDownload } from 'react-icons/im';
+import { ImCloudDownload } from 'react-icons/im';
 
 import { useImage, useLibrary } from '../../contexts';
 import { Image } from '../../interfaces';
-import FileUploadButton from '../FileUploadButton';
 
 const downloadImages = (libraryName: string, images: Image[]) => {
   const zip = new JSZip();
@@ -111,16 +110,6 @@ export default function ToolBox() {
       disabled: selecting && !atLeastOneSelected,
     },
     {
-      name: 'Upload',
-      handleClick: () => {},
-      children: (
-        <FileUploadButton disabled={atLeastOneSelected}>
-          <ImCloudUpload className="mx-auto" />
-        </FileUploadButton>
-      ),
-      disabled: false,
-    },
-    {
       name: 'Edit',
       handleClick: () => toggleEditor(),
       children: <RiImageEditFill />,
@@ -141,7 +130,7 @@ export default function ToolBox() {
 
   return (
     <IconContext.Provider value={{ size: '22' }}>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center border-b border-gray-500">
         {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
           <div
             key={name}
@@ -158,9 +147,9 @@ export default function ToolBox() {
                   id={`${name}-tooltip`}
                   type="dark"
                   effect="solid"
-                  delayShow={1000}
+                  delayShow={500}
                   delayHide={100}
-                  className="z-50 duration-100 mt-0 p-0 bg-alert shadow-sm text-xs rounded py-1 px-3"
+                  className="z-[999] duration-100 mt-0 p-0 bg-alert shadow-sm text-xs rounded py-1 px-3"
                 >
                   <span>{name}</span>
                 </ReactTooltip>

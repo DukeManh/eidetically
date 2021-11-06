@@ -2,7 +2,7 @@ import { Toaster } from 'react-hot-toast';
 
 import MenuBar from '../components/Menubar';
 import Navigation from '../components/Navigation';
-import Properties from '../components/Properties';
+import Details from '../components/Details';
 import Gallery from '../components/Gallery';
 import UploadProgress from '../components/UploadProgress';
 
@@ -23,7 +23,7 @@ export default function Home() {
       <div className="flex-grow overflow-hidden relative">
         <Navigation />
         <Gallery />
-        <Properties />
+        <Details />
       </div>
     </main>
   );

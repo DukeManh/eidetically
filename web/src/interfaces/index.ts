@@ -30,7 +30,8 @@ export interface Image extends MetaData {
   downloadURL: string;
   id: string;
   library: firebase.firestore.DocumentReference<Partial<Library>>;
-  upload_date: firebase.firestore.FieldValue;
+  upload_date: firebase.firestore.Timestamp;
+  last_updated: firebase.firestore.Timestamp;
 }
 
 export interface ImageFile extends File {

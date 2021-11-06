@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 import { auth, db, storage } from './firebase';
@@ -84,9 +85,8 @@ export async function uploadImages(acceptedFiles: ImageFile[], libraryID: string
       return new Promise<void>((resolve) => {
         const upload = storage.ref(filePath).put(file, {
           customMetadata: {
-            note: file?.metaData?.note ?? '',
-            name: file?.metaData?.name ?? '',
-            source: file?.metaData?.source ?? 'Self uploaded',
+            name: file?.name ?? uuid,
+            source: 'Self uploaded',
           },
         });
         const t = task.new(file, upload.cancel);
@@ -133,7 +133,10 @@ export async function updateImageProperties(
 ): Promise<void> {
   if (auth.currentUser) {
     const imageRef = image.library.collection('images').doc(image.id);
-    await imageRef.update(properties);
+    await imageRef.update({
+      ...properties,
+      last_updated: firebase.firestore.FieldValue.serverTimestamp(),
+    });
 
     const storageRef = storage.ref(image.fullPath);
     await storageRef.updateMetadata({

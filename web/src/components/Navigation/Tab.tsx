@@ -9,6 +9,7 @@ import { AiOutlineDelete, AiOutlineShareAlt } from 'react-icons/ai';
 import { Library, MenuItem } from '../../interfaces';
 import { useLibrary } from '../../contexts';
 import { renameLibrary, deleteLibrary } from '../../server/service';
+import { copyToClipboard, isBrowser } from '../../utilities';
 
 import Trigger from '../Trigger';
 import Menu from '../Menu';
@@ -54,8 +55,8 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
   };
 
   const shareLib = () => {
-    if (window) {
-      navigator.clipboard.writeText(`${window.location.origin}/${lib.id}`);
+    if (isBrowser) {
+      copyToClipboard(`${window.location.origin}/${lib.id}`);
     }
     toast.success('Link copied to clipboard');
     setMenuVisible(false);

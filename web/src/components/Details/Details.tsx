@@ -1,8 +1,8 @@
-import { useLayout, useImage } from '../../contexts';
-
 import Mask from '../Mask';
 import ImageProperties from './ImageProperties';
 import ToolBox from './ToolBox';
+
+import { useLayout, useImage } from '../../contexts';
 
 export default function Properties() {
   const { propertiesVisible, setPropertiesVisible, DefaultSidebarWidth, isMobile } = useLayout();
@@ -13,15 +13,14 @@ export default function Properties() {
       <Mask visible={propertiesVisible && isMobile} onClick={() => setPropertiesVisible(false)} />
       {propertiesVisible && (
         <div
-          className="sidebar absolute right-0 overflow-y-scroll"
+          className="sidebar absolute right-0 overflow-scroll"
           style={{
             width: DefaultSidebarWidth,
           }}
         >
-          <div className="mx-auto px-6 py-6 flex flex-col space-y-6 max-w-lg">
+          <div className="mx-auto p-3 flex flex-col space-y-6 max-w-lg">
             <ToolBox />
-            <div className="h-[1px] w-1/2 mx-auto bg-gray-300"></div>
-            {focused && <ImageProperties />}
+            {focused && <ImageProperties image={focused} />}
           </div>
         </div>
       )}
