@@ -1,4 +1,4 @@
-import Information from './Information';
+import ImageInformation from './ImageInformation';
 import UpdateForm from './UpdateForm';
 import Preview from './Preview';
 
@@ -9,7 +9,7 @@ export default function ImageProperties({ image }: ImageProps) {
     <div className="m-2 flex flex-col items-center space-y-4">
       <Preview image={image} />
       <UpdateForm image={image} />
-      <Information image={image} />
+      <ImageInformation image={image} />
     </div>
   );
 }

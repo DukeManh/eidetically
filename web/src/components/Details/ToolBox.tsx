@@ -9,6 +9,8 @@ import { IoIosCloseCircle, IoIosCopy } from 'react-icons/io';
 import { RiDeleteBin7Fill, RiSlideshow2Fill, RiImageEditFill } from 'react-icons/ri';
 import { ImCloudDownload } from 'react-icons/im';
 
+import Separator from './Separator';
+
 import { useImage, useLibrary } from '../../contexts';
 import { Image } from '../../interfaces';
 
@@ -130,33 +132,36 @@ export default function ToolBox() {
 
   return (
     <IconContext.Provider value={{ size: '22' }}>
-      <div className="flex flex-wrap justify-center border-b border-gray-500">
-        {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
-          <div
-            key={name}
-            data-tip
-            data-for={`${name}-tooltip`}
-            className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}
-          >
-            {!hidden && (
-              <>
-                <button disabled={!activeLibrary || disabled} onClick={() => handleClick()}>
-                  {children}
-                </button>
-                <ReactTooltip
-                  id={`${name}-tooltip`}
-                  type="dark"
-                  effect="solid"
-                  delayShow={500}
-                  delayHide={100}
-                  className="z-[999] duration-100 mt-0 p-0 bg-alert shadow-sm text-xs rounded py-1 px-3"
-                >
-                  <span>{name}</span>
-                </ReactTooltip>
-              </>
-            )}
-          </div>
-        ))}
+      <div>
+        <div className="flex flex-wrap justify-center">
+          {Tools.map(({ hidden, disabled, children, handleClick, name }) => (
+            <div
+              key={name}
+              data-tip
+              data-for={`${name}-tooltip`}
+              className={hidden ? 'hidden w-0 h-0' : 'toolbox-button'}
+            >
+              {!hidden && (
+                <>
+                  <button disabled={!activeLibrary || disabled} onClick={() => handleClick()}>
+                    {children}
+                  </button>
+                  <ReactTooltip
+                    id={`${name}-tooltip`}
+                    type="dark"
+                    effect="solid"
+                    delayShow={500}
+                    delayHide={100}
+                    className="z-[999] duration-100 mt-0 p-0 bg-alert shadow-sm text-xs rounded py-1 px-3"
+                  >
+                    <span>{name}</span>
+                  </ReactTooltip>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+        <Separator />
       </div>
     </IconContext.Provider>
   );
