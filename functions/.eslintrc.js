@@ -19,12 +19,8 @@ module.exports = {
     project: ['tsconfig.json', 'tsconfig.dev.json'],
     sourceType: 'module',
   },
-  ignorePatterns: [
-    '/lib/**/*', // Ignore built files.
-  ],
   plugins: ['@typescript-eslint', 'import'],
   rules: {
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'require-jsdoc': 'off',
     'max-len': 'off',
   },

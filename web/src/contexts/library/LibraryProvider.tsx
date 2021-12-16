@@ -16,7 +16,7 @@ export default function LibraryProvider({ children }: ProviderProps) {
 
   const activeLibrary = useMemo(() => {
     const library = libraries.find((lib) => lib.id === active);
-    return library ? library : undefined;
+    return library || undefined;
   }, [active, libraries]);
 
   useEffect(() => {

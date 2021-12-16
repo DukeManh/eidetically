@@ -16,7 +16,7 @@ export default function Mask({ onClick, visible, zIndex, style }: MaskProps) {
       <button
         onClick={onClick ?? noop}
         className="mask"
-        style={{ ...style, zIndex: zIndex ? zIndex : 10 }}
+        style={{ ...style, zIndex: zIndex || 10 }}
       ></button>
     </CSSTransition>
   );

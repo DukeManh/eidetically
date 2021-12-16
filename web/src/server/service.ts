@@ -29,9 +29,8 @@ export async function createLibrary(libName: string) {
       });
 
       return lib.id;
-    } else {
-      throw errors.libExists;
     }
+    throw errors.libExists;
   } else {
     throw errors.unauthenticated;
   }

@@ -7,16 +7,16 @@
     "start": "cd web && npm run start",
     "build": "cd web && npm run build",
     "type-check": "cd web && npm run type-check",
-    "lint": "npm run eslint functions web",
+    "lint": "npm run eslint",
     "install:web": "cd web && npm install",
     "install:functions": "cd functions && npm install",
     "postinstall": "run-p install:*",
-    "eslint": "eslint --max-warnings 0 --fix",
+    "eslint": "eslint --fix \"**/*.{jsx,tsx,ts,js}\"",
     "prettier": "prettier --write \"./**/*.{md,jsx,tsx,ts,json,html,css,js,yml}\""
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run lint"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
@@ -34,14 +34,16 @@
   },
   "homepage": "https://github.com/DukeManh/eidetically#readme",
   "devDependencies": {
-    "eslint": "^7.31.0",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "eslint": "7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^3.4.0",
     "husky": "^4.3.8",
     "lint-staged": "^11.0.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.2"
+    "prettier": "2.3.2"
   }
 }

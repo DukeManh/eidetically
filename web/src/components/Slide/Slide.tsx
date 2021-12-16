@@ -4,10 +4,10 @@ import { ImZoomIn, ImZoomOut, ImExit } from 'react-icons/im';
 import { MdAspectRatio } from 'react-icons/md';
 import { CSSTransition } from 'react-transition-group';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { useImage } from '../../contexts';
 
 import Mask from '../Mask';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function Slides() {
   const { focused, toggleSlide, slideVisible, flattenArray, selecting, selection } = useImage();
@@ -30,10 +30,8 @@ export default function Slides() {
       onClick: () => {
         if (!document.fullscreenElement) {
           document.documentElement.requestFullscreen();
-        } else {
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-          }
+        } else if (document.exitFullscreen) {
+          document.exitFullscreen();
         }
       },
     },

@@ -31,7 +31,7 @@ const downloadImages = (libraryName: string, images: Image[]) => {
 
   Promise.all(promises)
     .then(() => {
-      zip.generateAsync({ type: 'blob' }).then(function (blob) {
+      zip.generateAsync({ type: 'blob' }).then((blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;

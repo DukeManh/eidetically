@@ -1,10 +1,9 @@
 import { useState, useRef, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineDelete, AiOutlineShareAlt } from 'react-icons/ai';
 import { HiExternalLink } from 'react-icons/hi';
 import { BiRename } from 'react-icons/bi';
-import { AiOutlineDelete, AiOutlineShareAlt } from 'react-icons/ai';
 
 import { Library, MenuItem } from '../../interfaces';
 import { useLibrary } from '../../contexts';

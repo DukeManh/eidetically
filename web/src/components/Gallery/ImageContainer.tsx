@@ -151,7 +151,8 @@ export default function ImageContainer() {
 
     if (searchResults?.length) {
       return <Images images={searchResults} />;
-    } else if (searchResults) {
+    }
+    if (searchResults) {
       return <ImageNotFound />;
     }
 

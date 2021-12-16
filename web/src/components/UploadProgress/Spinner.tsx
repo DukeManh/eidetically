@@ -9,7 +9,7 @@ export default function Spinner({ size }: SpinnerProps) {
     <div
       className="spinner rotate"
       style={{
-        animationDelay: animationDelay,
+        animationDelay,
       }}
     >
       <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="logo" width={size || 18}></img>

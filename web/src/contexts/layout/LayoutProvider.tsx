@@ -3,7 +3,7 @@ import { useLocalStorage, useMedia } from 'react-use';
 
 import { ProviderProps, Layout } from '../../interfaces';
 import LayoutContext from './LayoutContext';
-import { on, off } from '../../utilities/';
+import { on, off } from '../../utilities';
 
 const BreakPoints = { sm: 640, md: 768, lg: 1024 };
 const MaxZoom = 10;

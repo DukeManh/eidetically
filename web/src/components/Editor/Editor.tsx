@@ -61,7 +61,7 @@ export default function Editor() {
             if (window) {
               const x = document.querySelector('div[title="Undo"]');
               if (x) {
-                const cursor = window.getComputedStyle(x).cursor;
+                const { cursor } = window.getComputedStyle(x);
                 const touched = cursor !== 'not-allowed';
 
                 if (touched) {

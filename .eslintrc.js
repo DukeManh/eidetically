@@ -8,10 +8,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
-  ignorePatterns: [
-    '**/node_modules/**', // Ignore built files.
-  ],
+  plugins: ['prettier'],
   rules: {
+    'prettier/prettier': 'error',
     'func-names': 'off',
     'no-console': 'off',
     'prefer-arrow-callback': 'warn',

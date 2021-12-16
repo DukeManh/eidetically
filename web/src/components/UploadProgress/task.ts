@@ -68,7 +68,7 @@ const newTask = (file: File, cancel: TaskCancel) => {
 };
 
 const completeTask = (id: string) => {
-  const tasks = state.tasks;
+  const { tasks } = state;
   state = {
     ...state,
     // push complete task to the back
@@ -76,7 +76,7 @@ const completeTask = (id: string) => {
       .map((task) => (task.id === id ? { ...task, state: 'success' } : task))
       .sort((a, b) => {
         if (a.state < b.state) return -1;
-        else if (a.state > b.state) return 1;
+        if (a.state > b.state) return 1;
         return 0;
       }) as Task[],
     uploaded: state.uploaded + 1,
@@ -85,7 +85,7 @@ const completeTask = (id: string) => {
 };
 
 const failTask = (id: string) => {
-  const tasks = state.tasks;
+  const { tasks } = state;
   state = {
     ...state,
     tasks: tasks.map((task) => (task.id === id ? { ...task, state: 'error' } : task)),

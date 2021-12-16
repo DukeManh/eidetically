@@ -34,7 +34,6 @@
   "scripts": {
     "start": "PORT=8000 TAILWIND_MODE=watch craco start",
     "build": "craco build",
-    "lint": "eslint --ext .js,.ts,.tsx,.jsx .",
     "test": "craco test",
     "eject": "react-scripts eject",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
