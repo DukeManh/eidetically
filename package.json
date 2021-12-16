@@ -12,7 +12,7 @@
     "install:functions": "cd functions && npm install",
     "postinstall": "run-p install:*",
     "eslint": "eslint --fix \"**/*.{jsx,tsx,ts,js}\"",
-    "prettier": "prettier --write \"./**/*.{md,jsx,tsx,ts,json,html,css,js,yml}\""
+    "prettier": "prettier --write *"
   },
   "husky": {
     "hooks": {

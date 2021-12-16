@@ -3,6 +3,17 @@
 @tailwind components;
 @use "sass:math";
 
+$lg: 1024px;
+$primary: #3b3b3b;
+$secondary: #414141;
+$mask: rgba(0, 0, 0, 0.5);
+$transition_duration: 300ms;
+$menubar_height: 2.25rem;
+$column_gap: 1.25rem;
+$row_gap: 1rem;
+$mobile_column_gap: 0.5rem;
+$mobile_row_gap: 0.75rem;
+
 // Base style
 @layer base {
   html,
@@ -12,6 +23,27 @@
     font-size: 14px;
     @apply box-border focus:outline-none;
   }
+
+  body * {
+    // For Google Chrome
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(218, 218, 218, 0.8);
+      border-radius: 1rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    // For Firefox
+    scrollbar-color: rgba(218, 218, 218, 0.8) transparent !important;
+    scrollbar-width: 0.4rem !important;
+  }
+
   main {
     min-height: -webkit-fill-available;
     height: 100vh;
@@ -33,17 +65,6 @@
       /* Safari, Android, iOS */ url('./fonts/hind-v11-latin-regular.svg#Hind') format('svg'); /* Legacy iOS */
   }
 }
-
-$lg: 1024px;
-$primary: #3b3b3b;
-$secondary: #414141;
-$mask: rgba(0, 0, 0, 0.5);
-$transition_duration: 300ms;
-$menubar_height: 2.25rem;
-$column_gap: 1.25rem;
-$row_gap: 1rem;
-$mobile_column_gap: 0.5rem;
-$mobile_row_gap: 0.75rem;
 
 @layer components {
   // Mobile breakpoint mixin
@@ -174,6 +195,7 @@ $mobile_row_gap: 0.75rem;
       transform: rotate(360deg);
     }
   }
+
   @keyframes progress-animation {
     from {
       background-position: 100%;
