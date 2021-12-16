@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable no-undef */
 $(() => {
   const dropArea = document.createElement('div');

@@ -151,7 +151,7 @@ $mobile_row_gap: 0.75rem;
   }
 
   .mask {
-    @apply fixed top-0 left-0 w-full h-0 bg-mask z-10 h-full opacity-100;
+    @apply fixed top-0 left-0 w-full bg-mask z-10 h-full opacity-100;
   }
 
   .menubar {

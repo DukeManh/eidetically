@@ -101,7 +101,6 @@ $(() => {
           }, []);
 
           if (srcset.length) {
-            // eslint-disable-next-line prefer-destructuring
             srcset = srcset.sort((src1, src2) =>
               src1[1] < src2[1] ? 1 : src1[1] === src2[1] ? 0 : -1
             );
