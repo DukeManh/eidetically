@@ -18,7 +18,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
-    "@types/uuid": "8.3.1",
+    "@types/uuid": "8.3.3",
     "eslint-config-google": "0.14.0",
     "firebase-functions-test": "0.2.3",
     "typescript": "3.9.10"
