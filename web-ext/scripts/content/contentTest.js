@@ -1,5 +1,7 @@
-/* eslint-disable no-undef */
+import { selectFromSrcset, filterSrcset, createCanvas } from './lib.js';
+
 $(() => {
+  let dragged;
   const dropArea = document.createElement('div');
   const container = document.createElement('div');
   container.classList.add('ei-drop-container');
@@ -14,44 +16,20 @@ $(() => {
   libBoxes.on('drop', (ev) => {
     const libraryId = $(ev.target).attr('data-libraryId');
     ev.target.classList.remove('dragover');
-    // const url = new URL(dragged.src);
     console.log(libraryId);
 
     let imageSrc = dragged.src;
-
     if (dragged.srcset) {
-      let srcset = dragged.srcset.split(/,\s+/).map((src) => src.split(/\s+/));
+      let srcset = dragged.srcset.split(/,\s+/).map((src) => src.trim().split(/\s+/));
 
-      srcset = srcset.reduce((acc, sourceAndWidth) => {
-        if (sourceAndWidth.length !== 2) {
-          return acc;
-        }
-        const [src, width] = sourceAndWidth;
-        try {
-          // eslint-disable-next-line no-unused-vars
-          const url = new URL(src);
-        } catch (error) {
-          console.log(error);
-          return acc;
-        }
-
-        const unit = width.slice(-1).toUpperCase();
-        const number = Number.parseInt(width.slice(0, -1), 10);
-        if ((unit === 'X' || unit === 'W') && number && number > 0) {
-          acc.push([src, number]);
-        }
-
-        return acc;
-      }, []);
-
+      srcset = filterSrcset(srcset);
       if (srcset.length) {
-        // eslint-disable-next-line prefer-destructuring
-        imageSrc = srcset.sort((src1, src2) =>
-          src1[1] < src2[1] ? 1 : src1[1] === src2[1] ? 0 : -1
-        )[0][0];
+        const { midLow, midHigh } = selectFromSrcset(srcset);
+        console.log(midHigh, midLow);
+        [imageSrc] = srcset[midHigh];
       }
+      console.log(imageSrc);
     }
-    console.log(imageSrc);
   });
 
   libBoxes.on('dragover', (ev) => {
@@ -114,26 +92,6 @@ $(() => {
       clearInterval(interval);
     });
   });
-
-  function dragImageSize(imgWidth, imgHeight) {
-    const width = 150;
-    const height = (imgHeight / imgWidth) * width;
-    return { width, height };
-  }
-
-  function createCanvas(img) {
-    const canvas = document.createElement('canvas');
-    const { width, height } = dragImageSize(img.width, img.height);
-    canvas.width = width;
-    canvas.height = height;
-
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0, width, height);
-
-    return canvas;
-  }
 
   $(document).on('dragstart', 'img', (ev) => {
     dropArea.classList.add('show');

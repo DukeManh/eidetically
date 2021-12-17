@@ -17,4 +17,16 @@ module.exports = {
     'no-unused-vars': 'warn',
     'no-nested-ternary': 'off',
   },
+  overrides: [
+    {
+      files: ['web-ext/**/*.js'],
+      rules: {
+        'import/extensions': 'off',
+      },
+      env: {
+        jquery: true,
+        webextensions: true,
+      },
+    },
+  ],
 };

@@ -69,9 +69,7 @@ async function getLibraries() {
     .orderBy('name');
   const response = await librariesRef.get();
   const snapshots = response.docs;
-  const libs = snapshots.map((doc) => {
-    return { id: doc.id, ...doc.data() };
-  });
+  const libs = snapshots.map((doc) => ({ id: doc.id, ...doc.data() }));
   return libs;
 }
 

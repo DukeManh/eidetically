@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 $(() => {
   $('.wrapper').css({
     'max-height': '1000px',
