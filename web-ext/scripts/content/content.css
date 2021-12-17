@@ -45,6 +45,7 @@
 .ei-drop-area.show {
   height: var(--ei-container-height);
   border-top: 1px var(--ei-coolGray) solid;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .ei-drop-container {
@@ -119,4 +120,14 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+.ei-error-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
 }

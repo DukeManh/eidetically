@@ -10,22 +10,19 @@ $(() => {
 
   // Render drop area content for a library list
   function fillDropArea(error, libs) {
-    const container = document.createElement('div');
-    container.classList.add('ei-drop-container');
-
     // Failed to get libraries
     if (error) {
+      const container = document.createElement('div');
+      container.classList.add('ei-error-container');
       const html = `
-            <div class='ei-libs-container'>
-                <p>
-                    ${error}
-                </p>
-            </div>
+          <div>${error}</div>
           `;
-
       $(container).html(html);
       $(container).appendTo(dropArea);
     } else {
+      const container = document.createElement('div');
+      container.classList.add('ei-drop-container');
+
       const html = `
             <div class='ei-arrow' id='ei-arrow-left'>
             </div>
