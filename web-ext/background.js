@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
+/* eslint-disable no-var */
 
 /* Using var to make background variables available to the popup script */
-/* eslint-disable no-var */
 var firebaseConfig = {
   apiKey: 'AIzaSyCUgKWDq2dxiXW3SYBFknfXka7DpYMGacw',
   authDomain: 'dropit-7ae30.firebaseapp.com',
@@ -33,14 +33,11 @@ function signInWithPopup(providerId) {
       break;
   }
 
-  if (!provider) {
-    return;
+  if (provider) {
+    auth.signInWithPopup(provider).catch((error) => {
+      console.error(error);
+    });
   }
-
-  // eslint-disable-next-line consistent-return
-  return auth.signInWithPopup(provider).catch((error) => {
-    console.error(error);
-  });
 }
 
 async function uploadImage(file, source, libraryId) {

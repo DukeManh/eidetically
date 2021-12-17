@@ -3,14 +3,17 @@ $(() => {
   let dragged;
   let libraries = null;
 
+  // Drop area container
   const dropArea = document.createElement('div');
   dropArea.classList.add('ei-drop-area');
   $(dropArea).appendTo(document.body);
 
+  // Render drop area content for a library list
   function fillDropArea(error, libs) {
     const container = document.createElement('div');
     container.classList.add('ei-drop-container');
 
+    // Failed to get libraries
     if (error) {
       const html = `
             <div class='ei-libs-container'>
@@ -37,16 +40,7 @@ $(() => {
 
       const libsContainer = $('.ei-libs-container');
 
-      const newLib = document.createElement('div');
-      newLib.classList.add('ei-lib-box');
-      $(newLib).html(`
-                <img src='${chrome.extension.getURL(
-                  '../../icons/newFolder.svg'
-                )}' alt='new folder icon' width='35' height='30' />
-                <div>New Lib</div>
-            `);
-      $(newLib).appendTo(libsContainer);
-
+      // Create library boxes
       libs.forEach((lib) => {
         const library = document.createElement('div');
         $(library).attr('data-libraryId', lib.id);
@@ -56,13 +50,14 @@ $(() => {
                 <img src='${chrome.extension.getURL(
                   '../../icons/folder.svg'
                 )}' alt='folder icon' width='35' height='35' />
-                <div>${lib.name}</div>
+                <div class="ei-lib-name">${lib.name}</div>
             `);
         $(library).appendTo(libsContainer);
       });
 
       const libBoxes = $('.ei-lib-box');
 
+      // Add hover effect
       libBoxes.on('dragenter', (ev) => {
         ev.target.classList.add('dragover');
       });
@@ -73,6 +68,7 @@ $(() => {
 
         let imageSrc = dragged.src;
 
+        // Extract image sources
         if (dragged.srcset) {
           let srcset = dragged.srcset.split(/,\s+/).map((src) => src.split(/\s+/));
 
@@ -105,10 +101,10 @@ $(() => {
               src1[1] < src2[1] ? 1 : src1[1] === src2[1] ? 0 : -1
             );
 
-            // eslint-disable-next-line prefer-destructuring
-            imageSrc = srcset[Math.floor((src2.length - 1) / 2)][0];
+            [imageSrc] = srcset[Math.floor((src2.length - 1) / 2)];
           }
         }
+        // Upload the extracted message
         chrome.runtime.sendMessage({
           command: 'uploadImage',
           payload: {
@@ -127,7 +123,8 @@ $(() => {
         ev.target.classList.remove('dragover');
       });
 
-      const resetArrowColor = (mouseOverLeft, mouseOverRight) => {
+      // Update overflow arrows colors, blue on hover, gray-outed if disabled, white if scrollable
+      const updateArrowColor = (mouseOverLeft, mouseOverRight) => {
         const leftScrollable = libsContainer.scrollLeft() > 0;
         const rightScrollable =
           libsContainer.scrollLeft() < libsContainer[0].scrollWidth - libsContainer[0].clientWidth;
@@ -149,16 +146,17 @@ $(() => {
         });
       };
 
+      // Scroll the box area if hover over an arrow
       $('.ei-arrow').each(function () {
-        const animationDuration = 250;
+        const animationDuration = 200;
         let interval = 0;
         const isLeftArrow = $(this).attr('id') === 'ei-arrow-left';
 
-        resetArrowColor(false, false);
+        updateArrowColor(false, false);
 
         $(this).on('dragenter', () => {
           interval = setInterval(() => {
-            resetArrowColor(isLeftArrow, !isLeftArrow);
+            updateArrowColor(isLeftArrow, !isLeftArrow);
             libsContainer.animate(
               {
                 scrollLeft: libsContainer.scrollLeft() + (isLeftArrow ? -100 : 100),
@@ -169,25 +167,27 @@ $(() => {
         });
 
         $(this).on('dragleave', () => {
-          resetArrowColor(false, false);
+          updateArrowColor(false, false);
           clearInterval(interval);
         });
 
         $(this).on('drop', (ev) => {
           ev.preventDefault();
-          resetArrowColor(false, false);
+          updateArrowColor(false, false);
           clearInterval(interval);
         });
       });
     }
   }
 
+  // Calculate image thumbnail sizes
   function dragImageSize(imgWidth, imgHeight) {
     const width = 150;
     const height = (imgHeight / imgWidth) * width;
     return { width, height };
   }
 
+  // Drag thumbnail image
   function createCanvas(img) {
     const canvas = document.createElement('canvas');
     const { width, height } = dragImageSize(img.width, img.height);

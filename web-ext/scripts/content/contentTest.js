@@ -5,7 +5,6 @@ $(() => {
   container.classList.add('ei-drop-container');
 
   const libsContainer = $('.ei-libs-container');
-
   const libBoxes = $('.ei-lib-box');
 
   libBoxes.on('dragenter', (ev) => {
@@ -63,7 +62,7 @@ $(() => {
     ev.target.classList.remove('dragover');
   });
 
-  const resetColor = (mouseOverLeft, mouseOverRight) => {
+  const updateArrowColor = (mouseOverLeft, mouseOverRight) => {
     const leftScrollable = libsContainer.scrollLeft() > 0;
     const rightScrollable =
       libsContainer.scrollLeft() < libsContainer[0].scrollWidth - libsContainer[0].clientWidth;
@@ -86,15 +85,15 @@ $(() => {
   };
 
   $('.ei-arrow').each(function () {
-    const animationDuration = 250;
+    const animationDuration = 200;
     let interval = 0;
     const isLeftArrow = $(this).attr('id') === 'ei-arrow-left';
 
-    resetColor(false, false);
+    updateArrowColor(false, false);
 
     $(this).on('dragenter', () => {
       interval = setInterval(() => {
-        resetColor(isLeftArrow, !isLeftArrow);
+        updateArrowColor(isLeftArrow, !isLeftArrow);
         libsContainer.animate(
           {
             scrollLeft: libsContainer.scrollLeft() + (isLeftArrow ? -100 : 100),
@@ -105,13 +104,13 @@ $(() => {
     });
 
     $(this).on('dragleave', () => {
-      resetColor(false, false);
+      updateArrowColor(false, false);
       clearInterval(interval);
     });
 
     $(this).on('drop', (ev) => {
       ev.preventDefault();
-      resetColor(false, false);
+      updateArrowColor(false, false);
       clearInterval(interval);
     });
   });

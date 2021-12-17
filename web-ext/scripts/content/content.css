@@ -112,3 +112,11 @@
   gap: 1em;
   overflow-x: scroll;
 }
+
+.ei-lib-name {
+  max-width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
