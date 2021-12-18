@@ -2,13 +2,17 @@
   "manifest_version": 2,
   "name": "Eidetically",
   "version": "1.0",
+  "author": "Duke Manh",
 
-  "description": "Allows dragging and dropping medias from any websites to your cloud storage",
+  "description": "Extension to allow saving images to firebase storage",
   "homepage_url": "https://dropit-app.netlify.app/",
+
   "icons": {
     "48": "icons/logo48.png",
     "96": "icons/logo96.png"
   },
+
+  "permissions": ["https://*/", "background"],
 
   "web_accessible_resources": ["icons/*", "scripts/content/content.js", "scripts/content/lib.js"],
 
@@ -29,6 +33,7 @@
   ],
 
   "background": {
+    "persistent": false,
     "scripts": [
       "scripts/utils/jwt-decode.js",
       "scripts/utils/firebase-app.js",
