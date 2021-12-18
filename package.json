@@ -12,15 +12,11 @@
     "install:functions": "cd functions && npm install",
     "postinstall": "run-p install:*",
     "eslint": "eslint --fix \"**/*.{jsx,tsx,ts,js}\"",
-    "prettier": "prettier --write *"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "prettier": "prettier --write --ignore-unknown *",
+    "prepare": "husky install"
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*": "prettier --write --ignore-unknown *"
   },
   "repository": {
     "type": "git",
