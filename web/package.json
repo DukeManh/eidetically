@@ -6,7 +6,7 @@
     "@craco/craco": "6.4.3",
     "css-unit-converter": "1.1.2",
     "filerobot-image-editor": "3.12.17",
-    "firebase": "8.6.2",
+    "firebase": "8.10.0",
     "firebaseui": "4.8.1",
     "fuse.js": "6.4.6",
     "jszip": "3.7.1",
