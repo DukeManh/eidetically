@@ -7,6 +7,12 @@ import Home from './pages/Home';
 
 SwiperCore.use([Navigation, Pagination, A11y, Keyboard]);
 
+const IconStyles = {
+  color: 'white',
+  className: 'react-icons',
+  size: '18',
+};
+
 function App() {
   return (
     <BrowserRouter>
@@ -14,9 +20,7 @@ function App() {
         <LayoutProvider>
           <LibraryProvider>
             <ImageProvider>
-              <IconContext.Provider
-                value={{ color: 'white', className: 'react-icons', size: '18' }}
-              >
+              <IconContext.Provider value={{ ...IconStyles }}>
                 <Home />
               </IconContext.Provider>
             </ImageProvider>
