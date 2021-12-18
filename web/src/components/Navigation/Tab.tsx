@@ -48,7 +48,8 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
       {
         loading: `Deleting library ${lib.name}`,
         success: 'Library deleted',
-        error: (error) => error.message,
+        error: (error) =>
+          error instanceof Error ? error.message : "Library can't be deleted, try again",
       }
     );
   };
@@ -69,9 +70,10 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
       setRenaming('');
       setError('');
     } catch (error) {
-      console.error(error);
-      toast.error(error.message);
-      setError(error.message);
+      if (error instanceof Error) {
+        toast.error(error.message);
+        setError(error.message);
+      }
     }
   };
 

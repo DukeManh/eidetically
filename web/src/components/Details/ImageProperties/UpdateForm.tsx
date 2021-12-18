@@ -15,7 +15,6 @@ export default function Form({ image }: ImageProps) {
       note: image.note || '',
       source: image.source || '',
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [image.name, image.note, image.source]
   );
 
@@ -49,7 +48,9 @@ export default function Form({ image }: ImageProps) {
       await updateImageProperties(image, properties);
       toast.success('Image properties updated');
     } catch (error) {
-      toast.error(error.message);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     } finally {
       setUpdating(false);
     }
