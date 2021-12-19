@@ -90,7 +90,7 @@ importers:
       react-dropzone: 11.4.2
       react-hot-toast: 2.1.1
       react-icons: 4.3.1
-      react-is: 16.8.0
+      react-is: 16.13.1
       react-rnd: 10.3.5
       react-router-dom: 5.3.0
       react-scripts: 4.0.3
@@ -107,7 +107,7 @@ importers:
       '@testing-library/dom': 7.31.2
       css-unit-converter: 1.1.2
       csstype: 2.6.2
-      filerobot-image-editor: 3.12.17_react-is@16.8.0
+      filerobot-image-editor: 3.12.17_react-is@16.13.1
       firebase: 9.6.1
       firebaseui: 6.0.0_firebase@9.6.1
       fuse.js: 6.4.6
@@ -122,7 +122,7 @@ importers:
       react-dropzone: 11.4.2_react@17.0.2
       react-hot-toast: 2.1.1_83aecc314a46186883faa129c0399856
       react-icons: 4.3.1_react@17.0.2
-      react-is: 16.8.0
+      react-is: 16.13.1
       react-rnd: 10.3.5_react-dom@17.0.2+react@17.0.2
       react-router-dom: 5.3.0_react@17.0.2
       react-scripts: 4.0.3_7ab31f2f5b54652336e9cd60188f20ef
@@ -4353,7 +4353,7 @@ packages:
       '@babel/helper-module-imports': 7.16.0
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
-      styled-components: 5.1.1_8664c81e76d91ff8d342098285a7a7f8
+      styled-components: 5.1.1_1f55980affd76ea66174a1939c753673
     dev: false
 
   /babel-plugin-styled-components/2.0.2_styled-components@5.1.1:
@@ -4365,7 +4365,7 @@ packages:
       '@babel/helper-module-imports': 7.16.0
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
-      styled-components: 5.1.1_8664c81e76d91ff8d342098285a7a7f8
+      styled-components: 5.1.1_1f55980affd76ea66174a1939c753673
     dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
@@ -7078,7 +7078,7 @@ packages:
     dev: false
     optional: true
 
-  /filerobot-image-editor/3.12.17_react-is@16.8.0:
+  /filerobot-image-editor/3.12.17_react-is@16.13.1:
     resolution: {integrity: sha512-NEy8k5sK7G9OE7Ni7bsUDTii+FeMtfy+Ro1xhpp0euyzunhUBnFLTpXTBtmZ3Up60tIqEC+of7BCwquIrTcV2w==}
     dependencies:
       '@quickbaseoss/babel-plugin-styled-components-css-namespace': 1.0.1_styled-components@5.1.1
@@ -7087,7 +7087,7 @@ packages:
       js-sha1: 0.6.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      styled-components: 5.1.1_8664c81e76d91ff8d342098285a7a7f8
+      styled-components: 5.1.1_1f55980affd76ea66174a1939c753673
       throttle-debounce: 2.3.0
       uuid: 3.4.0
     transitivePeerDependencies:
@@ -12223,10 +12223,6 @@ packages:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
-  /react-is/16.8.0:
-    resolution: {integrity: sha512-LOy+3La39aduxaPfuj+lCXC5RQ8ukjVPAAsFJ3yQ+DIOLf4eR9OMKeWKF0IzjRyE95xMj5QELwiXGgfQsIJguA==}
-    dev: false
-
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
@@ -13767,7 +13763,7 @@ packages:
       webpack: 4.44.2
     dev: false
 
-  /styled-components/5.1.1_8664c81e76d91ff8d342098285a7a7f8:
+  /styled-components/5.1.1_1f55980affd76ea66174a1939c753673:
     resolution: {integrity: sha512-1ps8ZAYu2Husx+Vz8D+MvXwEwvMwFv+hqqUwhNlDN5ybg6A+3xyW1ECrAgywhvXapNfXiz79jJyU0x22z0FFTg==}
     peerDependencies:
       react: '>= 16.8.0'
@@ -13784,7 +13780,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-is: 16.8.0
+      react-is: 16.13.1
       shallowequal: 1.1.0
       supports-color: 5.5.0
     dev: false
