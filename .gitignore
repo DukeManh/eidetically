@@ -6,4 +6,6 @@
 # Ignore firebase cloud functions debug logs files
 **/*-debug.log
 
+.pnpm-debug.log
+
 storage.rules

@@ -86,7 +86,6 @@ export default function ImageContainer() {
 
       unsubscribes.current.push(unsubscribe);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [cursor, setImageArray, setImageMap, imageArray.length]
   );
 

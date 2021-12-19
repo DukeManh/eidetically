@@ -4,16 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd web && npm run start",
-    "build": "cd web && npm run build",
-    "type-check": "cd web && npm run type-check",
-    "lint": "npm run eslint",
-    "install:web": "cd web && npm install",
-    "install:functions": "cd functions && npm install",
-    "postinstall": "run-p install:*",
+    "start": "pnpm run start --dir web",
+    "build": "pnpm run build --dir web",
+    "type-check": "pnpm run type-check --dir web",
+    "lint": "pnpm run eslint",
     "eslint": "eslint --fix \"**/*.{jsx,tsx,ts,js}\"",
     "prettier": "prettier --write --ignore-unknown *",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "preinstall": "npx only-allow pnpm"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown *"
@@ -39,7 +37,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "husky": "7.0.4",
     "lint-staged": "12.1.2",
-    "npm-run-all": "4.1.5",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "typescript": "4.4.4"
   }
 }

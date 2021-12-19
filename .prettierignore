@@ -17,3 +17,4 @@ web-ext/scripts/utils/
 **/*.woff
 **/*.woff2
 **/.env*
+pnpm-lock.yaml
