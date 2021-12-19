@@ -1,4 +1,5 @@
-import firebase from 'firebase/app';
+import { DocumentReference, Timestamp } from 'firebase/firestore';
+import { User } from 'firebase/auth';
 import { ReactNode, Dispatch, SetStateAction } from 'react';
 import { TriggerProps } from 'rc-trigger';
 
@@ -29,9 +30,9 @@ export interface MetaData {
 export interface Image extends MetaData {
   downloadURL: string;
   id: string;
-  library: firebase.firestore.DocumentReference<Partial<Library>>;
-  upload_date: firebase.firestore.Timestamp;
-  last_updated: firebase.firestore.Timestamp;
+  library: DocumentReference<Partial<Library>>;
+  upload_date: Timestamp;
+  last_updated: Timestamp;
 }
 
 export interface ImageFile extends File {
@@ -110,7 +111,7 @@ export interface ImageContextType {
 }
 
 export interface AuthContextType {
-  user: firebase.User | null;
+  user: User | null;
 
   loginVisible: boolean;
   setLoginVisible: Dispatch<SetStateAction<boolean>>;

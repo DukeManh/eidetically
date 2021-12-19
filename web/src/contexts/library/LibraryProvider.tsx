@@ -6,6 +6,7 @@ import { LibraryContext } from './LibraryContext';
 import { useAuth } from '../auth';
 import { db } from '../../server/firebase';
 import { uploadImages } from '../../server/service';
+import { onSnapshot, orderBy, query } from 'firebase/firestore';
 
 export default function LibraryProvider({ children }: ProviderProps) {
   const { user } = useAuth();
@@ -49,8 +50,8 @@ export default function LibraryProvider({ children }: ProviderProps) {
     let unsubscribe;
     if (user) {
       setLoading(true);
-      const librariesRef = db.libraries().orderBy('name');
-      unsubscribe = librariesRef.onSnapshot((snapshot) => {
+      const librariesRef = query(db.libraries(), orderBy('name'));
+      unsubscribe = onSnapshot(librariesRef, (snapshot) => {
         const nextLibraries = snapshot.docs.map(
           (lib) => ({ ...lib.data(), id: lib.id } as Library)
         );

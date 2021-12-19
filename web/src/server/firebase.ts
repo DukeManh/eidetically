@@ -1,9 +1,14 @@
-import firebase from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import * as firebaseui from 'firebaseui';
 
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+import { getAuth } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
+import {
+  getFirestore,
+  collection,
+  FirestoreDataConverter,
+  QueryDocumentSnapshot,
+} from 'firebase/firestore';
 
 import { Library, Image } from '../interfaces';
 
@@ -27,37 +32,36 @@ const firebaseConfig = {
   measurementId: REACT_APP_MEASUREMENT_ID,
 };
 
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 
-const typeConverter = <T>() => ({
+const typeConverter = <T>(): FirestoreDataConverter<T> => ({
   toFirestore: (data: T) => data,
-  fromFirestore: (snapshot: firebase.firestore.QueryDocumentSnapshot) => snapshot.data() as T,
+  fromFirestore: (snapshot: QueryDocumentSnapshot) => snapshot.data() as T,
 });
 
-export const collection = <T>(collectionPath: string) =>
-  firebase.firestore().collection(collectionPath).withConverter(typeConverter<T>());
-
-export { firebase };
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-export const storage = firebase.storage();
+export { firebaseApp };
+export const auth = getAuth(firebaseApp);
+export const firestore = getFirestore(firebaseApp);
+export const storage = getStorage(firebaseApp);
 
 export const db = {
   libraries: () => {
     if (!auth?.currentUser?.uid) {
       throw new Error('Please sign in');
     }
-    return collection<Library | Partial<Library>>(
+    return collection(
+      firestore,
       `firebase_users/${auth.currentUser.uid}/libraries`
-    );
+    ).withConverter<Library>(typeConverter<Library>());
   },
   images: (libID: string) => {
     if (!auth?.currentUser?.uid) {
       throw new Error('Please sign in');
     }
-    return collection<Image | Partial<Image>>(
+    return collection(
+      firestore,
       `firebase_users/${auth.currentUser.uid}/libraries/${libID}/images`
-    );
+    ).withConverter<Image>(typeConverter<Image>());
   },
 };
 

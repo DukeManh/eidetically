@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+
 import { AuthContext } from './AuthContext';
 import { ProviderProps } from '../../interfaces';
 import { auth } from '../../server/firebase';
@@ -16,7 +18,7 @@ export default function StorageProvider({ children }: ProviderProps) {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged((firebaseUser) => {
+    onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
       if (firebaseUser) {
         setLoginVisible(false);

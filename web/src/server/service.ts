@@ -1,10 +1,20 @@
-import firebase from 'firebase';
+import {
+  addDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
-
-import { auth, db, storage } from './firebase';
-import { Image, ImageFile, MutableImageProperties } from '../interfaces';
+import { collection, serverTimestamp } from 'firebase/firestore';
+import { ref, updateMetadata, uploadBytesResumable } from 'firebase/storage';
 
 import task from '../components/UploadProgress/task';
+import { auth, db, storage } from './firebase';
+import { Image, ImageFile, Library, MutableImageProperties } from '../interfaces';
 
 const errors = {
   libExists: new Error('Library exists, choose a different name'),
@@ -19,14 +29,14 @@ export async function createLibrary(libName: string) {
     if (!name) {
       throw errors.invalidName;
     }
-    const existingLib = await db.libraries().where('name', '==', name).get();
+    const existingLib = await getDocs(query(db.libraries(), where('name', '==', name)));
 
     if (existingLib.empty) {
-      const lib = await db.libraries().add({
+      const lib = await addDoc(db.libraries(), {
         name,
         image_count: 0,
         owner: auth.currentUser.uid,
-      });
+      } as Library);
 
       return lib.id;
     }
@@ -39,8 +49,8 @@ export async function createLibrary(libName: string) {
 export async function deleteLibrary(libID: string) {
   if (auth.currentUser) {
     try {
-      const libRef = db.libraries().doc(libID);
-      await libRef.delete();
+      const libRef = doc(db.libraries(), libID);
+      await deleteDoc(libRef);
     } catch (error) {
       console.error(error);
     }
@@ -56,13 +66,13 @@ export async function renameLibrary(libID: string, libName: string) {
     if (!name) {
       throw errors.invalidName;
     }
-    const libRef = db.libraries().doc(libID);
-    const lib = await libRef.get();
-    if (lib.exists && lib.data()?.name !== name) {
-      const sameNameLib = await db.libraries().where('name', '==', name).get();
+    const libRef = doc(db.libraries(), libID);
+    const lib = await getDoc(libRef);
+    if (lib.exists() && lib.data()?.name !== name) {
+      const sameNameLib = await getDocs(query(db.libraries(), where('name', '==', name)));
 
       if (sameNameLib.empty) {
-        libRef.update({
+        updateDoc(libRef, {
           name,
         });
       } else {
@@ -82,7 +92,8 @@ export async function uploadImages(acceptedFiles: ImageFile[], libraryID: string
       const uuid = uuidv4();
       const filePath = `${auth.currentUser?.uid}/${libraryID}/${uuid}`;
       return new Promise<void>((resolve) => {
-        const upload = storage.ref(filePath).put(file, {
+        const uploadRef = ref(storage, filePath);
+        const upload = uploadBytesResumable(uploadRef, file, {
           customMetadata: {
             name: file?.name ?? uuid,
             source: 'Self uploaded',
@@ -116,8 +127,8 @@ export async function uploadImages(acceptedFiles: ImageFile[], libraryID: string
 export async function deleteImages(images: Image[]): Promise<void> {
   if (auth.currentUser) {
     images.forEach((image) => {
-      const imageRef = image.library.collection('images').doc(image.id);
-      imageRef.delete().catch((error) => {
+      const imageRef = doc(collection(image.library, 'images'), image.id);
+      deleteDoc(imageRef).catch((error) => {
         console.error(error);
       });
     });
@@ -131,14 +142,14 @@ export async function updateImageProperties(
   properties: MutableImageProperties
 ): Promise<void> {
   if (auth.currentUser) {
-    const imageRef = image.library.collection('images').doc(image.id);
-    await imageRef.update({
+    const imageRef = doc(collection(image.library, 'images'), image.id);
+    await updateDoc(imageRef, {
       ...properties,
-      last_updated: firebase.firestore.FieldValue.serverTimestamp(),
+      last_updated: serverTimestamp(),
     });
 
-    const storageRef = storage.ref(image.fullPath);
-    await storageRef.updateMetadata({
+    const storageRef = ref(storage, image.fullPath);
+    await updateMetadata(storageRef, {
       customMetadata: {
         note: properties.note,
         source: properties.source,
@@ -155,7 +166,7 @@ export async function updateImageSource(image: Image, file: File): Promise<void>
     try {
       const filePath = image.fullPath;
 
-      await storage.ref(filePath).put(file, {
+      await uploadBytesResumable(ref(storage, filePath), file, {
         customMetadata: {
           name: image.name,
         },

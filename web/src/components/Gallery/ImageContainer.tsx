@@ -1,4 +1,12 @@
-import firebase from 'firebase';
+import {
+  query as dbQuery,
+  startAfter,
+  limit,
+  orderBy,
+  Query,
+  onSnapshot,
+  QueryDocumentSnapshot,
+} from 'firebase/firestore';
 import Fuse from 'fuse.js';
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -23,8 +31,7 @@ export default function ImageContainer() {
   const [loadingImages, setLoadingImages] = useState(true);
 
   const unsubscribes = useRef<Array<() => void>>([]);
-  const [cursor, setCursor] =
-    useState<firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>>();
+  const [cursor, setCursor] = useState<QueryDocumentSnapshot>();
 
   const fuse = useRef<Fuse<Image>>();
 
@@ -43,26 +50,26 @@ export default function ImageContainer() {
       const listenerIndex = imageArray.length;
 
       setLoadingImages(true);
-      let imagesRef: firebase.firestore.Query<Image | Partial<Image>>;
+      let imagesRef: Query<Image>;
 
       if (cursor) {
-        imagesRef = db.images(libID).orderBy('upload_date').startAfter(cursor).limit(QUERY_LIMIT);
+        imagesRef = dbQuery(
+          db.images(libID),
+          orderBy('upload_date'),
+          startAfter(cursor),
+          limit(QUERY_LIMIT)
+        );
       } else {
-        imagesRef = db
-          .libraries()
-          .doc(libID)
-          .collection('images')
-          .orderBy('upload_date')
-          .limit(QUERY_LIMIT);
+        imagesRef = dbQuery<Image>(db.images(libID), orderBy('upload_date'), limit(QUERY_LIMIT));
       }
 
-      const unsubscribe = imagesRef.onSnapshot((snapshot) => {
+      const unsubscribe = onSnapshot(imagesRef, (snapshot) => {
         setLoadingImages(false);
 
         setImageArray((arr) => {
           arr[listenerIndex] = snapshot.docs.map((img) => ({
-            id: img.id,
             ...img.data(),
+            id: img.id,
           })) as Image[];
           return [...arr];
         });
@@ -71,7 +78,7 @@ export default function ImageContainer() {
           const imageMap = { ...map };
           snapshot.docChanges().forEach((change) => {
             if (change.type !== 'removed') {
-              imageMap[change.doc.id] = { id: change.doc.id, ...change.doc.data() } as Image;
+              imageMap[change.doc.id] = { ...change.doc.data(), id: change.doc.id } as Image;
             } else {
               delete imageMap[change.doc.id];
             }

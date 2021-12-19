@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import firebase from 'firebase/app';
+import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 import { GrClose } from 'react-icons/gr';
 import { CSSTransition } from 'react-transition-group';
 
@@ -10,9 +10,9 @@ import Mask from '../Mask';
 
 const authUIConfig = {
   signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    GoogleAuthProvider.PROVIDER_ID,
+    GithubAuthProvider.PROVIDER_ID,
+    FacebookAuthProvider.PROVIDER_ID,
   ],
   signInFlow: 'popup',
   callbacks: {
