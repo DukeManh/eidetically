@@ -82,7 +82,7 @@ importers:
       npm: file:tailwindcss/postcss7-compat@^2.1.2
       postcss: 8.4.5
       postcss-import: 14.0.2
-      postcss-nested: 4.2.3
+      postcss-nested: 5.0.6
       rc-dropdown: 3.2.0
       rc-trigger: 5.2.10
       react: 17.0.2
@@ -114,7 +114,7 @@ importers:
       jszip: 3.7.1
       node-sass: 6.0.1
       postcss-import: 14.0.2_postcss@8.4.5
-      postcss-nested: 4.2.3
+      postcss-nested: 5.0.6_postcss@8.4.5
       rc-dropdown: 3.2.0_react-dom@17.0.2+react@17.0.2
       rc-trigger: 5.2.10_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
@@ -11329,6 +11329,17 @@ packages:
     dependencies:
       postcss: 7.0.39
       postcss-selector-parser: 6.0.7
+    dev: true
+
+  /postcss-nested/5.0.6_postcss@8.4.5:
+    resolution: {integrity: sha512-rKqm2Fk0KbA8Vt3AdGN0FB9OBOMDVajMG6ZCf/GoHgdxUJ4sBFp0A/uMIRm+MJUdo33YXEtjqIz8u7DAp8B7DA==}
+    engines: {node: '>=12.0'}
+    peerDependencies:
+      postcss: ^8.2.14
+    dependencies:
+      postcss: 8.4.5
+      postcss-selector-parser: 6.0.7
+    dev: false
 
   /postcss-nesting/7.0.1:
     resolution: {integrity: sha512-FrorPb0H3nuVq0Sff7W2rnc3SmIcruVC6YwpcS+k687VxyxO33iE1amna7wHuRVzM8vfiYofXSBHNAZ3QhLvYg==}
