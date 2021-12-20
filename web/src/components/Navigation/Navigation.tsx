@@ -115,7 +115,7 @@ export default function Navigation() {
               </span>
             </div>
             <div className="w-full min-h-0 flex-grow overflow-y-scroll" ref={container}>
-              <div className="px-4 flex flex-col space-y-[1px] justify-start items-start">
+              <div className="px-2 flex flex-col space-y-[1px] justify-start items-start">
                 <form
                   className={
                     creatingNewLib

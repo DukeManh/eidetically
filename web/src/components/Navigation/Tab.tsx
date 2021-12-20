@@ -1,5 +1,5 @@
 import { useState, useRef, FormEvent } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineShareAlt } from 'react-icons/ai';
 import { HiExternalLink } from 'react-icons/hi';
@@ -134,13 +134,10 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
         ></input>
       </form>
       {!(renaming === lib.id) && (
-        <div className={activeLibrary?.id === lib.id ? 'tab tab-active' : 'tab'}>
-          <Link
-            to={`/libraries/${lib.id}`}
-            className="w-3/4 h-full inline-block py-1 px-3 flex-grow text-truncate"
-          >
+        <NavLink to={`/libraries/${lib.id}`} className="tab" activeClassName="tab tab-active">
+          <span className="w-3/4 h-full inline-block py-[5px] px-4 flex-grow text-truncate">
             {lib.name}
-          </Link>
+          </span>
           <span className="image-count">{lib.image_count}</span>
           <Trigger
             popupPlacement="bottomLeft"
@@ -152,7 +149,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
               <AiOutlineEdit />
             </button>
           </Trigger>
-        </div>
+        </NavLink>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { BiCheck } from 'react-icons/bi';
 
 import Trigger from '../Trigger';
@@ -55,13 +55,13 @@ export default function MenuBar() {
   ];
 
   return (
-    <nav className="h-9 bg-secondary relative text-gray-100 border-b border-gray-600 z-50">
-      <span className="align-text-top menubar pl-2 inline-flex flex-row justify-start items-center">
-        <div className="menu-item mr-2">
-          <Link to="/">
-            <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="logo" width={18}></img>
-          </Link>
-        </div>
+    <nav className="h-9 p-1 bg-secondary relative text-gray-100 border-b border-gray-600 z-50 flex flex-row items-center">
+      <div className="menubar pl-2 flex flex-row justify-start items-center">
+        <NavLink to="/">
+          <div className="menu-item px-4 pxy-2">
+            <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="logo" width={20}></img>
+          </div>
+        </NavLink>
         {MenuItems.map((item) => (
           <Trigger
             popupPlacement="bottomLeft"
@@ -75,7 +75,7 @@ export default function MenuBar() {
             </div>
           </Trigger>
         ))}
-      </span>
+      </div>
     </nav>
   );
 }

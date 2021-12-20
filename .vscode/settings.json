@@ -1,6 +1,7 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.fixAll": true
   },
   "git.ignoreLimitWarning": true,
   "eslint.workingDirectories": ["./web", "./web-ext", "./functions"],

@@ -35,7 +35,7 @@ export default function LoginPopup() {
       <Mask visible={loginVisible} zIndex={100} />
       <CSSTransition in={loginVisible} timeout={200} classNames="scale-transition" unmountOnExit>
         <div className="fixed h-full w-full flex justify-center items-center z-[100]">
-          <div className="relative py-8 w-80 h-96  rounded-md shadow-lg bg-white text-primary">
+          <div className="relative py-8 w-72 h-80  rounded-md shadow-lg bg-white text-primary">
             <p className="text-center font-bold text-lg">Login</p>
             <div className="google-login"></div>
             <GrClose

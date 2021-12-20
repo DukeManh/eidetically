@@ -35,12 +35,12 @@ export function Item({ item }: ItemProps) {
 export default function Menu({ items, style, className }: ContextMenuProps) {
   const classnames = classNames(
     className,
-    'z-50 w-min bg-dropdown shadow-sm rounded-lg pointer-events-auto'
+    'z-50 w-52 bg-dropdown shadow-sm rounded-lg pointer-events-auto'
   );
 
   return (
     <div style={{ ...style }} className={classnames}>
-      <div className="py-2 flex flex-col space-y-1 min-w-[14rem] max-w-[16rem]">
+      <div className="py-1 flex flex-col space-y-1">
         {items.map(({ handler, name, content, icon, confirm }) =>
           confirm ? (
             <PopConfirm

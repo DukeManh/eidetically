@@ -20,7 +20,7 @@ $mobile_row_gap: 0.75rem;
   body,
   #root {
     @apply p-0 m-0 min-h-full h-full overflow-hidden max-h-screen font-sans;
-    font-size: 14px;
+    font-size: 16px;
     @apply box-border focus:outline-none;
   }
 
@@ -166,7 +166,7 @@ $mobile_row_gap: 0.75rem;
     @apply w-full focus:bg-tabFocus hover:bg-tabFocus cursor-pointer rounded-lg flex flex-row items-center;
 
     .image-count {
-      @apply text-gray-400 pr-2;
+      @apply text-gray-400 pr-3;
     }
     .edit-library {
       @apply text-gray-400 hover:bg-tabActive rounded-lg h-full p-1 outline-none;
@@ -187,35 +187,9 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes progress-animation {
-    from {
-      background-position: 100%;
-    }
-    to {
-      background-position: 0;
-    }
-  }
-
-  @keyframes blinking {
-    from {
-      background: rgba(59, 130, 246, 0.25);
-    }
-    to {
-      background: rgba(59, 130, 246, 0.6);
-    }
-  }
-
   .tab-active {
     @apply bg-tabActive font-medium;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   }
 
   .tab-hidden {
@@ -258,7 +232,7 @@ $mobile_row_gap: 0.75rem;
     @apply w-10 h-10;
     margin: 2px;
     button {
-      @apply hover:bg-tabFocus transition-all hover:scale-95 w-full h-full flex flex-col justify-center items-center rounded-lg;
+      @apply hover:bg-tabFocus transition-all hover:scale-95 w-full h-full flex flex-col justify-center items-center rounded-lg border-none;
 
       &:disabled {
         @apply text-gray-400 hover:bg-transparent;
@@ -460,4 +434,31 @@ $mobile_row_gap: 0.75rem;
   transition: background 200ms ease !important;
   opacity: 1 !important;
   background: $mask !important;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progress-animation {
+  from {
+    background-position: 100%;
+  }
+  to {
+    background-position: 0;
+  }
+}
+
+@keyframes blinking {
+  from {
+    background: rgba(59, 130, 246, 0.25);
+  }
+  to {
+    background: rgba(59, 130, 246, 0.6);
+  }
 }
