@@ -70,7 +70,7 @@ export default function MenuBar() {
             popup={<Menu items={item.items} className="rounded-t-none" />}
             key={item.name}
           >
-            <div className="menu-item">
+            <div className={activeItem === item.name ? 'menu-item active' : 'menu-item'}>
               <button onClick={() => setActiveItem(item.name)}>{item.button}</button>
             </div>
           </Trigger>

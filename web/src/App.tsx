@@ -10,7 +10,7 @@ SwiperCore.use([Navigation, Pagination, A11y, Keyboard]);
 const IconStyles = {
   color: 'white',
   className: 'react-icons',
-  size: '18',
+  size: '1.25rem',
 };
 
 function App() {

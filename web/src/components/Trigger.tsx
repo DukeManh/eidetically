@@ -35,9 +35,21 @@ export default function Trigger({
   onPopupVisibleChange,
   action,
   hideAction,
+  popupVisible,
   ...props
 }: RCTriggerProps) {
-  useKey('Escape', () => (onPopupVisibleChange || noop)(false));
+  useKey(
+    'Escape',
+    () => {
+      if (popupVisible) {
+        (onPopupVisibleChange || noop)(false);
+      }
+    },
+    {
+      target: document,
+    },
+    [popupVisible]
+  );
 
   return (
     <RCTrigger
@@ -49,6 +61,7 @@ export default function Trigger({
       getPopupContainer={() => document.querySelector('main') || document.body}
       popupClassName="absolute z-50"
       onPopupVisibleChange={onPopupVisibleChange}
+      popupVisible={popupVisible}
       {...props}
     >
       {children}

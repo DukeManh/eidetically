@@ -80,10 +80,11 @@ $mobile_row_gap: 0.75rem;
     -moz-appearance: none;
     @apply appearance-none  rounded-full transform bg-primary;
     border: 2px solid white;
-    width: 11px;
-    height: 11px;
+    width: 1rem;
+    height: 1rem;
 
-    &:active {
+    &:active,
+    &:hover {
       @apply bg-white w-5 h-5;
       border: 1px solid white;
     }
@@ -93,7 +94,7 @@ $mobile_row_gap: 0.75rem;
   button:active,
   button:focus,
   textarea,
-  input {
+  input:focus {
     @apply outline-none;
   }
 
@@ -157,8 +158,11 @@ $mobile_row_gap: 0.75rem;
   .menubar {
     vertical-align: -moz-middle-with-baseline;
     vertical-align: -webkit-baseline-middle;
-    & > div {
+    .menu-item {
       @apply px-2 p-1 hover:bg-black hover:bg-opacity-25 rounded-md;
+    }
+    .menu-item.active {
+      @apply bg-black bg-opacity-25;
     }
   }
 
@@ -187,7 +191,7 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
-  .tab-active {
+  .tab.active {
     @apply bg-tabActive font-medium;
     box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
   }
@@ -196,11 +200,11 @@ $mobile_row_gap: 0.75rem;
     @apply w-0 h-0 overflow-hidden;
   }
 
-  .tab-editing {
+  .tab.editing {
     @apply z-50 mb-2 py-1 px-3 border border-blue-500;
   }
 
-  .tab-editing-error {
+  .tab.editing-error {
     @apply border-red-400;
   }
 
@@ -239,6 +243,10 @@ $mobile_row_gap: 0.75rem;
         @apply transform-none shadow-none cursor-default;
       }
     }
+  }
+
+  .buttonIcon {
+    @apply cursor-pointer rounded-full hover:bg-tabActive active:bg-tabActive mx-1;
   }
 
   .zoom-slider {
@@ -332,17 +340,13 @@ $mobile_row_gap: 0.75rem;
     @apply overflow-hidden overflow-ellipsis whitespace-nowrap;
   }
 
-  .topbarColumn {
-    @apply flex flex-row items-center;
-  }
-
   .searchForm {
     @apply relative flex-shrink-[2] overflow-hidden;
     .searchIcon {
-      @apply absolute h-full bg-tabFocus rounded-l-md w-8 flex flex-row justify-center items-center cursor-pointer active:bg-tabActive;
+      @apply absolute h-full rounded-l-md w-8 flex flex-row justify-center items-center cursor-pointer active:bg-tabActive;
     }
     .searchBox {
-      @apply max-w-full bg-textArea  focus:shadow-inner py-1 pr-8 pl-11 rounded-md caret-gray-400;
+      @apply max-w-full h-[2.7rem] w-80 bg-textArea  focus:shadow-inner py-1 pr-8 pl-11 rounded-md caret-gray-400;
     }
     .cancelIcon {
       @apply absolute right-2 top-0 h-full flex flex-row justify-center items-center cursor-pointer;
@@ -373,16 +377,6 @@ $mobile_row_gap: 0.75rem;
 .navigationWrap {
   display: grid;
   grid-template-rows: 3rem auto 16rem;
-}
-
-.galleryWrap {
-  @apply relative pb-4;
-  display: grid;
-  grid-template-rows: 5rem auto;
-  row-gap: 1rem;
-  // 100% height causing images not scrollable on mobiles
-  // Specify specific heights like height = viewHeight - menuBarHeight
-  height: calc(100vh - 2.25rem);
 }
 
 .fade-transition-enter {

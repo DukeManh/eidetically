@@ -1,11 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const noop = (...args: unknown[]) => {};
 
-export function on<T extends Window | Document | HTMLElement | EventTarget>(
-  obj: T | null,
-  event: string,
-  handler: (e: Event) => void
-): void {
+export function on<
+  T extends Window | Document | HTMLElement | EventTarget,
+  K extends keyof HTMLElementEventMap
+>(obj: T | null, event: K, handler: EventListenerOrEventListenerObject) {
   (obj?.addEventListener || noop)(event, handler);
 }
 

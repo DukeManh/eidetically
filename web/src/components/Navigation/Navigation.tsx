@@ -69,7 +69,11 @@ export default function Navigation() {
 
   return (
     <>
-      <Mask visible={navigationVisible && isMobile} onClick={() => setNavigationVisible(false)} />
+      <Mask
+        visible={navigationVisible && isMobile}
+        onClick={() => setNavigationVisible(false)}
+        zIndex={12}
+      />
 
       {navigationVisible && (
         <Sidebar
@@ -92,6 +96,10 @@ export default function Navigation() {
           }}
         >
           <Mask
+            setVisible={(val) => {
+              setCreatingNewLib(val);
+              !val && setRenaming('');
+            }}
             visible={!!creatingNewLib || !!renaming}
             onClick={() => {
               setCreatingNewLib(false);
@@ -104,14 +112,12 @@ export default function Navigation() {
             }}
           />
           <div className="h-full navigationWrap">
-            <div className="px-6 pt-3 pb-2 w-full max-h-12">
+            <div className="px-4 pt-3 pb-2 w-full">
               <span className=" font-medium text-lg">Libraries</span>
               <span className="float-right cursor-pointer">
-                <AiOutlinePlus
-                  className="inline align-middle"
-                  size={18}
-                  onClick={enterLibraryName}
-                />
+                <button className="buttonIcon" onClick={enterLibraryName}>
+                  <AiOutlinePlus className="inline align-middle m-1" />
+                </button>
               </span>
             </div>
             <div className="w-full min-h-0 flex-grow overflow-y-scroll" ref={container}>
@@ -120,8 +126,8 @@ export default function Navigation() {
                   className={
                     creatingNewLib
                       ? error
-                        ? 'tab tab-editing tab-editing-error'
-                        : 'tab tab-editing'
+                        ? 'tab editing editing-error'
+                        : 'tab editing'
                       : 'tab-hidden'
                   }
                   onSubmit={newLibrary}

@@ -166,7 +166,7 @@ export default function ImageContainer() {
   };
 
   return (
-    <div className="flex-grow min-h-0" {...getRootProps()}>
+    <div className="overflow-y-scroll flex-grow min-h-0 px-4" {...getRootProps()}>
       <div className="relative w-full p-2 h-full">
         {isDragActive && (
           <div className="w-full h-full border-[3px] border-blue-500 z-[50] absolute top-0 left-0">

@@ -26,10 +26,10 @@ export default function Information({ infos }: InformationProps) {
       <div className="w-full flex flex-col space-y-2">
         <h3 className="text-lg font-bold mb-2">Information</h3>
         {infos.map(({ name, value }, i) => (
-          <>
+          <div key={name.toString()}>
             <DataField name={name} value={value} />
             {i < infos.length - 1 && <Separator />}
-          </>
+          </div>
         ))}
       </div>
     </div>

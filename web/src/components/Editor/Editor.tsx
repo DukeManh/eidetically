@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Filerobot from 'filerobot-image-editor';
 
 import { useImage } from '../../contexts';

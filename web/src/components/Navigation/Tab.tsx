@@ -116,11 +116,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
     <>
       <form
         className={
-          renaming === lib.id
-            ? error
-              ? 'tab tab-editing tab-editing-error'
-              : 'tab tab-editing'
-            : 'tab-hidden'
+          renaming === lib.id ? (error ? 'tab editing editing-error' : 'tab editing') : 'tab-hidden'
         }
         onSubmit={handleSubmit}
       >
@@ -134,7 +130,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
         ></input>
       </form>
       {!(renaming === lib.id) && (
-        <NavLink to={`/libraries/${lib.id}`} className="tab" activeClassName="tab tab-active">
+        <NavLink to={`/libraries/${lib.id}`} className="tab" activeClassName="tab active">
           <span className="w-3/4 h-full inline-block py-[5px] px-4 flex-grow text-truncate">
             {lib.name}
           </span>

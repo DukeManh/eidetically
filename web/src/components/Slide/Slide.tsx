@@ -1,5 +1,4 @@
 import { useRef, useMemo } from 'react';
-import { useKey } from 'react-use';
 import { ImZoomIn, ImZoomOut, ImExit } from 'react-icons/im';
 import { MdAspectRatio } from 'react-icons/md';
 import { CSSTransition } from 'react-transition-group';
@@ -42,8 +41,6 @@ export default function Slides() {
     },
   ];
 
-  useKey('Escape', () => toggleSlide(false));
-
   const initialSlide = useMemo(() => {
     const index = flattenArray.findIndex((img) => img.id === focused?.id);
     return index !== -1 ? index : 0;
@@ -52,7 +49,12 @@ export default function Slides() {
   return (
     <CSSTransition in={slideVisible} timeout={200} classNames="fade-transition" unmountOnExit>
       <div className="slides">
-        <Mask visible onClick={() => toggleSlide} style={{ background: 'black', opacity: 0.85 }} />
+        <Mask
+          setVisible={toggleSlide}
+          visible
+          onClick={() => toggleSlide}
+          style={{ background: 'black', opacity: 0.95 }}
+        />
         <Swiper
           pagination={{
             dynamicBullets: true,

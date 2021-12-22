@@ -6,7 +6,7 @@ import ToolBox from './ToolBox';
 
 import { useLayout, useImage } from '../../contexts';
 
-export default function Properties() {
+export default function Details() {
   const { propertiesVisible, setPropertiesVisible, DefaultSidebarWidth, isMobile } = useLayout();
   const { focused } = useImage();
 
