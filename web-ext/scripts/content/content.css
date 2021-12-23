@@ -27,6 +27,7 @@
 }
 
 .ei-drop-area {
+  overflow: hidden;
   font-size: var(--ei-font);
   box-sizing: border-box;
   position: fixed;
