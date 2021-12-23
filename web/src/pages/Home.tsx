@@ -6,7 +6,7 @@ import Gallery from '../components/Gallery';
 import UploadProgress from '../components/UploadProgress';
 
 const toastOptions: ToastOptions = {
-  position: 'top-right',
+  position: 'top-center',
   style: {
     background: '#1F1F1F',
     color: 'rgba(249, 250, 251)',

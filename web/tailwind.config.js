@@ -745,6 +745,7 @@ module.exports = {
       shadow: 'box-shadow',
       transform: 'transform',
       dimension: 'height, width',
+      position: 'top, right, bottom, left',
     },
     transitionTimingFunction: {
       DEFAULT: 'cubic-bezier(0.4, 0, 0.2, 1)',
