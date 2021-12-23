@@ -12,9 +12,9 @@ export default function TopBar() {
 
   return (
     <div className="py-2 px-1 flex flex-row flex-wrap justify-between space-y-2 border-b border-gray-600 relative z-[11]">
-      <div className="flex-grow flex flex-row justify-start items-center space-x-4 flex-shrink-0">
+      <div className="flex-grow flex flex-row justify-between items-center space-x-2 md:space-x-4 pr-8 md:pr-0">
         <button
-          className="buttonIcon p-1"
+          className="buttonIcon md:p-1"
           onClick={() => {
             setNavigationVisible(!navigationVisible);
           }}
@@ -23,7 +23,8 @@ export default function TopBar() {
         </button>
         <SearchBar />
       </div>
-      <div className="flex-grow flex flex-row items-center justify-end space-x-6 flex-shrink">
+      <div className="flex-grow flex flex-row items-center justify-between space-x-6">
+        <div></div>
         <Zoom />
         <button
           className="buttonIcon p-2"

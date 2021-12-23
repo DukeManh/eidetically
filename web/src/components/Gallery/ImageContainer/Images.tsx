@@ -1,9 +1,9 @@
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import { Image } from '../../interfaces';
-import { useLayout } from '../../contexts';
+import { Image } from '../../../interfaces';
+import { useLayout } from '../../../contexts';
 
-import Figure from './Figure';
+import Figure from '../Figure';
 
 export interface ImagesProps {
   images: Image[];

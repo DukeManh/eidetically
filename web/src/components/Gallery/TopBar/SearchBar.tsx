@@ -19,15 +19,14 @@ export default function SearchBar() {
         value={query.get('s') || ''}
       ></input>
       {!!query.get('s') && (
-        <div className="cancelIcon">
+        <button className="buttonIcon cancelIcon p-[0.1rem]">
           <ImCancelCircle
-            size={'1rem'}
             className="hover:text-gray-300 active:text-tabActive transition-colors"
             onClick={() => {
               setQuery('s', '');
             }}
           />
-        </div>
+        </button>
       )}
     </form>
   );

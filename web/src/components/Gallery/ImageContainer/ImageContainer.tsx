@@ -13,17 +13,19 @@ import { useParams } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { useDebounce } from 'react-use';
 
-import useQuery from '../../hooks/useQuery';
-import { useImage, useLibrary } from '../../contexts';
-import { RouterParams, Image } from '../../interfaces';
-import { db } from '../../server/firebase';
+import useQuery from '../../../hooks/useQuery';
+import { useImage, useLibrary } from '../../../contexts';
+import { RouterParams, Image } from '../../../interfaces';
+import { db } from '../../../server/firebase';
 
 import Images from './Images';
-import NoImage from './NoImage';
+import NoImage from '../NoImage';
 import ImageNotFound from './ImageNotFound';
 import ImageLoading from './ImageLoading';
+import LoadMore from './LoadMore';
+import DropZoneBackground from './DropZoneBackground';
 
-const QUERY_LIMIT = 50;
+const QUERY_LIMIT = 5;
 
 export default function ImageContainer() {
   const { setActiveLibrary, loading: loadingLib, uploadImages, activeLibrary } = useLibrary();
@@ -168,24 +170,22 @@ export default function ImageContainer() {
   return (
     <div className="overflow-y-scroll flex-grow min-h-0 px-4" {...getRootProps()}>
       <div className="relative w-full p-2 h-full">
-        {isDragActive && (
-          <div className="w-full h-full border-[3px] border-blue-500 z-[50] absolute top-0 left-0">
-            <div className="h-full dropzoneBg"></div>
-          </div>
-        )}
+        <div
+          className="relative"
+          style={{
+            minHeight: 'calc(100% - 3rem)',
+          }}
+        >
+          <DropZoneBackground active={isDragActive} />
 
-        {renderImages()}
-      </div>
+          {renderImages()}
+        </div>
 
-      <div className="py-4 mx-auto flex flex-row justify-center">
-        {!!cursor && activeLibrary && flattenArray.length < activeLibrary?.image_count && (
-          <button
-            className="py-1 px-2 rounded-sm border border-white transition-colors hover:bg-tabFocus shadow-md"
-            onClick={() => loadMore(libParam)}
-          >
-            Load more
-          </button>
-        )}
+        <div className="py-4 mx-auto flex flex-row justify-center">
+          {!!cursor && activeLibrary && flattenArray.length < activeLibrary?.image_count && (
+            <LoadMore onClick={() => loadMore(libParam)} />
+          )}
+        </div>
       </div>
     </div>
   );

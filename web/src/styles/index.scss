@@ -341,15 +341,15 @@ $mobile_row_gap: 0.75rem;
   }
 
   .searchForm {
-    @apply relative flex-shrink-[2] overflow-hidden;
+    @apply relative flex-grow md:flex-grow-0 md:w-88 overflow-hidden;
     .searchIcon {
       @apply absolute h-full rounded-l-md w-8 flex flex-row justify-center items-center cursor-pointer active:bg-tabActive;
     }
     .searchBox {
-      @apply max-w-full h-[2.7rem] w-80 bg-textArea  focus:shadow-inner py-1 pr-8 pl-11 rounded-md caret-gray-400;
+      @apply max-w-full h-[2.5rem] w-full bg-textArea  focus:shadow-inner py-1 p-11 rounded-md caret-gray-400;
     }
     .cancelIcon {
-      @apply absolute right-2 top-0 h-full flex flex-row justify-center items-center cursor-pointer;
+      @apply absolute w-10 top-0 right-0 h-full flex flex-row justify-center items-center cursor-pointer;
     }
   }
 
