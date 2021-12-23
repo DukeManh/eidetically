@@ -201,7 +201,7 @@ $mobile_row_gap: 0.75rem;
     @apply w-full focus:bg-tabFocus hover:bg-tabFocus cursor-pointer rounded-lg flex flex-row items-center transform;
 
     &:active {
-      transform: scale(99%), translateY(1px);
+      transform: scale(99%) translateY(1px);
     }
 
     .image-count {

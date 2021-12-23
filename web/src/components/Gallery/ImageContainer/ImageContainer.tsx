@@ -25,7 +25,7 @@ import ImageLoading from './ImageLoading';
 import LoadMore from './LoadMore';
 import DropZoneBackground from './DropZoneBackground';
 
-const QUERY_LIMIT = 5;
+const QUERY_LIMIT = 15;
 
 export default function ImageContainer() {
   const { setActiveLibrary, loading: loadingLib, uploadImages, activeLibrary } = useLibrary();
