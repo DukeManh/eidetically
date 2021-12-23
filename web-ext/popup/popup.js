@@ -4,7 +4,7 @@ $(() => {
   });
 
   const bg = chrome.extension.getBackgroundPage();
-  if (!bg.auth.currentUser) {
+  if (!bg?.auth?.currentUser) {
     $('.loginProvider').on('click', function () {
       const providerId = $(this).attr('data-provider-id');
 
@@ -38,7 +38,7 @@ $(() => {
     $('#userInfo').html(userCard);
 
     $('.signOutButton').on('click', () => {
-      bg.auth.signOut();
+      bg.auth?.signOut();
       window.location.reload();
     });
   }
