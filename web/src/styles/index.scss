@@ -90,6 +90,33 @@ $mobile_row_gap: 0.75rem;
     }
   }
 
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes progress-animation {
+    from {
+      background-position: 100%;
+    }
+    to {
+      background-position: 0;
+    }
+  }
+
+  @keyframes blinking {
+    from {
+      background: rgba(59, 130, 246, 0.25);
+    }
+    to {
+      background: rgba(59, 130, 246, 0.6);
+    }
+  }
+
   div,
   button:active,
   button:focus,
@@ -158,16 +185,24 @@ $mobile_row_gap: 0.75rem;
   .menubar {
     vertical-align: -moz-middle-with-baseline;
     vertical-align: -webkit-baseline-middle;
-    .menu-item {
-      @apply px-2 p-1 hover:bg-black hover:bg-opacity-25 rounded-md;
-    }
-    .menu-item.active {
+  }
+
+  .menu-item {
+    @apply px-2 p-1 hover:bg-black hover:bg-opacity-25 rounded-md;
+  }
+
+  .menu-item {
+    &.active {
       @apply bg-black bg-opacity-25;
     }
   }
 
   .tab {
-    @apply w-full focus:bg-tabFocus hover:bg-tabFocus cursor-pointer rounded-lg flex flex-row items-center transform active:scale-[99%] active:translate-y-[1px];
+    @apply w-full focus:bg-tabFocus hover:bg-tabFocus cursor-pointer rounded-lg flex flex-row items-center transform;
+
+    &:active {
+      transform: scale(99%), translateY(1px);
+    }
 
     .image-count {
       @apply text-gray-400 pr-3;
@@ -189,23 +224,21 @@ $mobile_row_gap: 0.75rem;
         display: none;
       }
     }
-  }
 
-  .tab.active {
-    @apply bg-tabActive font-medium;
-    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    &.active {
+      @apply bg-tabActive font-medium;
+      box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    }
+    &.editing {
+      @apply z-50 mb-2 py-1 px-3 border border-blue-500;
+    }
+    &.editing-error {
+      @apply border-red-400;
+    }
   }
 
   .tab-hidden {
     @apply w-0 h-0 overflow-hidden;
-  }
-
-  .tab.editing {
-    @apply z-50 mb-2 py-1 px-3 border border-blue-500;
-  }
-
-  .tab.editing-error {
-    @apply border-red-400;
   }
 
   .profile-stat {
@@ -428,31 +461,4 @@ $mobile_row_gap: 0.75rem;
   transition: background 200ms ease !important;
   opacity: 1 !important;
   background: $mask !important;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes progress-animation {
-  from {
-    background-position: 100%;
-  }
-  to {
-    background-position: 0;
-  }
-}
-
-@keyframes blinking {
-  from {
-    background: rgba(59, 130, 246, 0.25);
-  }
-  to {
-    background: rgba(59, 130, 246, 0.6);
-  }
 }
