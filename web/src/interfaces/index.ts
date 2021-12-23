@@ -55,9 +55,9 @@ export interface LayoutContextType {
   navigationWidth: number;
   setNavigationWidth: (val: number) => void;
   navigationVisible: boolean;
-  setNavigationVisible: (val: boolean) => void;
-  propertiesVisible: boolean;
-  setPropertiesVisible: (val: boolean) => void;
+  toggleNavigation: (val: boolean) => void;
+  detailsVisible: boolean;
+  toggleDetails: (val: boolean) => void;
   DefaultSidebarWidth: number;
 
   isMobile: boolean;

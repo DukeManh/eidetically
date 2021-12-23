@@ -18,7 +18,7 @@ export default function Navigation() {
     navigationWidth,
     DefaultSidebarWidth,
     navigationVisible,
-    setNavigationVisible,
+    toggleNavigation,
     setNavigationWidth,
     isMobile,
   } = useLayout();
@@ -71,7 +71,7 @@ export default function Navigation() {
     <>
       <Mask
         visible={navigationVisible && isMobile}
-        onClick={() => setNavigationVisible(false)}
+        onClick={() => toggleNavigation(false)}
         zIndex={12}
       />
 

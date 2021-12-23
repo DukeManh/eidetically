@@ -7,8 +7,7 @@ import SearchBar from './SearchBar';
 import Zoom from './Zoom';
 
 export default function TopBar() {
-  const { navigationVisible, setNavigationVisible, propertiesVisible, setPropertiesVisible } =
-    useLayout();
+  const { navigationVisible, toggleNavigation, detailsVisible, toggleDetails } = useLayout();
 
   return (
     <div className="py-2 px-1 flex flex-row flex-wrap justify-between space-y-2 border-b border-gray-600 relative z-[11]">
@@ -16,7 +15,7 @@ export default function TopBar() {
         <button
           className="buttonIcon md:p-1"
           onClick={() => {
-            setNavigationVisible(!navigationVisible);
+            toggleNavigation(!navigationVisible);
           }}
         >
           <BiMenuAltLeft size={32} className="cursor-pointer" />
@@ -29,7 +28,7 @@ export default function TopBar() {
         <button
           className="buttonIcon p-2"
           onClick={() => {
-            setPropertiesVisible(!propertiesVisible);
+            toggleDetails(!detailsVisible);
           }}
         >
           <ImInfo size={22} className="cursor-pointer flex-shrink-0" />

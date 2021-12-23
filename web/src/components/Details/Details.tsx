@@ -7,13 +7,13 @@ import ToolBox from './ToolBox';
 import { useLayout, useImage } from '../../contexts';
 
 export default function Details() {
-  const { propertiesVisible, setPropertiesVisible, DefaultSidebarWidth, isMobile } = useLayout();
+  const { detailsVisible, toggleDetails, DefaultSidebarWidth, isMobile } = useLayout();
   const { focused } = useImage();
 
   return (
     <>
-      <Mask visible={propertiesVisible && isMobile} onClick={() => setPropertiesVisible(false)} />
-      {propertiesVisible && (
+      <Mask visible={detailsVisible && isMobile} onClick={() => toggleDetails(false)} />
+      {detailsVisible && (
         <div
           className="sidebar absolute right-0 overflow-scroll"
           style={{

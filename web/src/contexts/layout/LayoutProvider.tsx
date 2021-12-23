@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useLocalStorage, useMedia } from 'react-use';
 
 import { ProviderProps, Layout } from '../../interfaces';
@@ -13,8 +13,8 @@ const DefaultSidebarWidth = 300;
 export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);
   const defaultZoom = isMobile ? 1 : 3;
-  const [propertiesVisible, setPropertiesVisible] = useLocalStorage('propertiesVisible', !isMobile);
-  const [navigationVisible, setNavigationVisible] = useLocalStorage('navigationVisible', !isMobile);
+  const [detailsVisible, toggleDetails] = useLocalStorage('detailsVisible', !isMobile);
+  const [navigationVisible, toggleNavigation] = useLocalStorage('navigationVisible', !isMobile);
   const [navigationWidth, setNavigationWidth] = useLocalStorage(
     'navigationWidth',
     DefaultSidebarWidth
@@ -23,8 +23,8 @@ export default function LayoutProvider({ children }: ProviderProps) {
   const [layout, setLayout] = useLocalStorage<Layout>('layout', 'Waterfall');
 
   useEffect(() => {
-    setPropertiesVisible(!isMobile);
-    setNavigationVisible(!isMobile);
+    toggleDetails(!isMobile);
+    toggleNavigation(!isMobile);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
@@ -43,6 +43,26 @@ export default function LayoutProvider({ children }: ProviderProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigationWidth]);
 
+  const toggleNav = useCallback(
+    (val) => {
+      if (val && isMobile) {
+        toggleDetails(false);
+      }
+      toggleNavigation(val);
+    },
+    [isMobile, toggleDetails, toggleNavigation]
+  );
+
+  const toggleDet = useCallback(
+    (val) => {
+      if (val && isMobile) {
+        toggleNavigation(false);
+      }
+      toggleDetails(val);
+    },
+    [isMobile, toggleDetails, toggleNavigation]
+  );
+
   return (
     <LayoutContext.Provider
       value={{
@@ -51,11 +71,11 @@ export default function LayoutProvider({ children }: ProviderProps) {
         navigationWidth: navigationWidth ?? DefaultSidebarWidth,
         setNavigationWidth,
         navigationVisible: navigationVisible ?? !isMobile,
-        setNavigationVisible,
+        toggleNavigation: toggleNav,
         isMobile,
         DefaultSidebarWidth,
-        propertiesVisible: propertiesVisible ?? !isMobile,
-        setPropertiesVisible,
+        detailsVisible: detailsVisible ?? !isMobile,
+        toggleDetails: toggleDet,
         zoom: zoom || defaultZoom,
         maxZoom: MaxZoom,
         minZoom: MinZoom,

@@ -8,7 +8,7 @@ import Welcome from './Welcome';
 import Details from '../Details';
 
 export default function Gallery() {
-  const { navigationVisible, propertiesVisible, navigationWidth, DefaultSidebarWidth, isMobile } =
+  const { navigationVisible, detailsVisible, navigationWidth, DefaultSidebarWidth, isMobile } =
     useLayout();
 
   return (
@@ -21,7 +21,7 @@ export default function Gallery() {
       <div
         className="relative"
         style={{
-          paddingRight: propertiesVisible && !isMobile ? DefaultSidebarWidth : '0',
+          paddingRight: detailsVisible && !isMobile ? DefaultSidebarWidth : '0',
         }}
       >
         <div
