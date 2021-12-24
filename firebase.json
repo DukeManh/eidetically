@@ -1,9 +1,7 @@
 {
   "functions": {
-    "predeploy": [
-      "pnpm --prefix \"$RESOURCE_DIR\" run lint",
-      "pnpm --prefix \"$RESOURCE_DIR\" run build"
-    ],
+    "runtime": "nodejs16",
+    "predeploy": ["pnpm -w run lint", "pnpm --dir functions run build"],
     "source": "functions"
   },
   "emulators": {
