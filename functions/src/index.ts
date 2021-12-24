@@ -78,15 +78,15 @@ exports.deleteImageStorage = functions.firestore
 
 exports.deleteLibrary = functions.firestore
   .document('firebase_users/{uid}/libraries/{libraryID}')
-  .onDelete(async (snap, context) => {
+  .onDelete(async (snap) => {
     const batchSize = 50;
     const { id: libraryID } = snap;
 
-    functions.logger.log(`Library ${libraryID} deleted`);
-
-    const collectionRef = db.collection(
-      `firebase_users/${context.auth?.uid}/libraries/${libraryID}/images`
+    functions.logger.log(
+      `Deleting ${libraryID} library and its subcollection: ${snap.ref.collection('images').path}`
     );
+
+    const collectionRef = snap.ref.collection('images');
     const query = collectionRef.orderBy('upload_date').limit(batchSize);
 
     return new Promise((resolve, reject) => {
@@ -101,11 +101,12 @@ async function deleteQueryBatch(
 ) {
   const snapshot = await query.get();
 
+  const batchSize = snapshot.size;
+
   functions.logger.log(
-    'Deleting the next batch of image documents under images collection from the recently deleted library'
+    `Deleting the next batch of ${batchSize} image documents in the recently deleted library`
   );
 
-  const batchSize = snapshot.size;
   if (batchSize === 0) {
     // When there are no documents left, we are done
     resolve(undefined);
