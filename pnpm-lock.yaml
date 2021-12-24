@@ -56,6 +56,7 @@ importers:
   web:
     specifiers:
       '@craco/craco': 6.4.3
+      '@tailwindcss/line-clamp': ^0.3.0
       '@testing-library/dom': 8.11.1
       '@testing-library/jest-dom': 5.16.1
       '@testing-library/react': 12.1.2
@@ -104,6 +105,7 @@ importers:
       web-vitals: 1.1.2
     dependencies:
       '@craco/craco': 6.4.3_087e166b5d8b7063a5b1a1a2756ca956
+      '@tailwindcss/line-clamp': 0.3.0_00c8fcea36e7ebb784460590946ebc50
       '@testing-library/dom': 8.11.1
       css-unit-converter: 1.1.2
       csstype: 2.6.2
@@ -2838,6 +2840,14 @@ packages:
       loader-utils: 2.0.2
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@tailwindcss/line-clamp/0.3.0_00c8fcea36e7ebb784460590946ebc50:
+    resolution: {integrity: sha512-ffDDclrqr3sy8cpChCozedDUAN8enxqAiWeH8d4dGQ2hcXlxf51+7KleveFi/n/TxEuRVApoL7hICeDOdYPKpg==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dependencies:
+      tailwindcss: /@tailwindcss/postcss7-compat/2.2.17
     dev: false
 
   /@tailwindcss/postcss7-compat/2.2.17:

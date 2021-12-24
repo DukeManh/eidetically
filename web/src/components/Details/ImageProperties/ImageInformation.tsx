@@ -14,7 +14,7 @@ export default function ImageInformation({ image }: ImageProps) {
   }, [image.downloadURL]);
 
   const infos = [
-    { name: 'Size', value: `${image.size} KB` },
+    { name: 'Size', value: `${Math.ceil(image.size / 1000)} KB` },
     { name: 'File type', value: image.contentType },
     {
       name: 'Last updated',
