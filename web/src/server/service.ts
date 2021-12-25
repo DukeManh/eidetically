@@ -15,6 +15,7 @@ import { ref, updateMetadata, uploadBytesResumable } from 'firebase/storage';
 import task from '../components/UploadProgress/task';
 import { auth, db, storage } from './firebase';
 import { Image, ImageFile, Library, MutableImageProperties } from '../interfaces';
+import { createImagePreview } from '../utilities';
 
 const errors = {
   libExists: new Error('Library exists, choose a different name'),
@@ -84,33 +85,59 @@ export async function renameLibrary(libID: string, libName: string) {
   }
 }
 
+async function uploadImage(image: ImageFile, libraryID: string) {
+  const uuid = uuidv4();
+  const imagePath = `${auth.currentUser?.uid}/${libraryID}/${uuid}`;
+  const imageName = image.name || uuid;
+
+  const preview = await createImagePreview(image);
+
+  const files = [
+    {
+      file: image,
+      path: imagePath,
+      isPreview: false,
+      name: imageName,
+    },
+    {
+      file: preview,
+      path: `${imagePath}-preview`,
+      isPreview: true,
+      name: imageName,
+    },
+  ];
+
+  return files.map(({ file, path, isPreview, name }) => {
+    const fileRef = ref(storage, path);
+    return uploadBytesResumable(fileRef, file, {
+      customMetadata: {
+        isPreview: isPreview ? 'true' : 'false',
+        name,
+        source: 'Self Uploaded',
+      },
+    });
+  });
+}
+
 export async function uploadImages(acceptedFiles: ImageFile[], libraryID: string) {
   if (auth.currentUser) {
     task.start(acceptedFiles.length);
 
     const promises = acceptedFiles.map((file) => {
-      const uuid = uuidv4();
-      const filePath = `${auth.currentUser?.uid}/${libraryID}/${uuid}`;
       return new Promise<void>((resolve) => {
-        const uploadRef = ref(storage, filePath);
-        const upload = uploadBytesResumable(uploadRef, file, {
-          customMetadata: {
-            name: file?.name ?? uuid,
-            source: 'Self uploaded',
-          },
+        uploadImage(file, libraryID).then((uploads) => {
+          const t = task.new(file, () => uploads.every((upload) => upload.cancel()));
+          Promise.all(uploads)
+            .then(async () => {
+              task.complete(t.id);
+              resolve();
+            })
+            .catch((error) => {
+              task.fail(t.id);
+              console.error(error.message);
+              resolve();
+            });
         });
-        const t = task.new(file, upload.cancel);
-        upload.then(
-          async () => {
-            task.complete(t.id);
-            resolve();
-          },
-          (error) => {
-            task.fail(t.id);
-            console.error(error.message);
-            resolve();
-          }
-        );
       });
     });
 

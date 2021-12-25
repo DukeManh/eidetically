@@ -39,7 +39,7 @@ export default function Figure({ image }: FigureProps) {
             'cursor-pointer shadow-sm hover:shadow-md'
           )}
           alt={image.name}
-          src={image.downloadURL}
+          src={image.previewURL || image.downloadURL}
           loading="lazy"
         />
       </button>

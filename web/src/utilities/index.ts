@@ -1,3 +1,5 @@
+import Resizer from 'react-image-file-resizer';
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const noop = (...args: unknown[]) => {};
 
@@ -62,4 +64,30 @@ export function copyToClipboard(text: string) {
   if (isBrowser) {
     navigator.clipboard.writeText(text);
   }
+}
+
+export function createImagePreview(image: File): Promise<File> {
+  return new Promise((resolve, reject) => {
+    try {
+      Resizer.imageFileResizer(
+        image,
+        500,
+        1000,
+        'JPEG',
+        100,
+        0,
+        (blob) => {
+          const resizedImage = new File([blob as Blob], image.name, {
+            type: image.type,
+          });
+
+          resolve(resizedImage);
+        },
+        'blob'
+      );
+    } catch (error) {
+      console.error(error);
+      reject(error);
+    }
+  });
 }

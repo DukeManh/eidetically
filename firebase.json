@@ -1,7 +1,7 @@
 {
   "functions": {
     "runtime": "nodejs16",
-    "predeploy": ["pnpm -w run lint", "pnpm --dir functions run build"],
+    "predeploy": ["pnpm -w prettier", "pnpm -w run lint", "pnpm --dir functions run build"],
     "source": "functions"
   },
   "emulators": {

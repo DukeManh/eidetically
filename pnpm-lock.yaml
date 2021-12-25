@@ -49,13 +49,14 @@ importers:
       uuid: 8.3.2
     devDependencies:
       '@types/uuid': 8.3.3
-      eslint-config-google: 0.14.0_eslint@7.32.0
+      eslint-config-google: 0.14.0
       firebase-functions-test: 0.3.3_70dbcfcd1d5c3bba34abded8440b8fc7
       typescript: 4.5.4
 
   web:
     specifiers:
       '@craco/craco': 6.4.3
+      '@squoosh/lib': ^0.4.0
       '@tailwindcss/line-clamp': ^0.3.0
       '@testing-library/dom': 8.11.1
       '@testing-library/jest-dom': 5.16.1
@@ -91,6 +92,7 @@ importers:
       react-dropzone: 11.4.2
       react-hot-toast: 2.1.1
       react-icons: 4.3.1
+      react-image-file-resizer: ^0.4.7
       react-is: 16.13.1
       react-rnd: 10.3.5
       react-router-dom: 5.3.0
@@ -105,6 +107,7 @@ importers:
       web-vitals: 1.1.2
     dependencies:
       '@craco/craco': 6.4.3_087e166b5d8b7063a5b1a1a2756ca956
+      '@squoosh/lib': 0.4.0
       '@tailwindcss/line-clamp': 0.3.0_00c8fcea36e7ebb784460590946ebc50
       '@testing-library/dom': 8.11.1
       css-unit-converter: 1.1.2
@@ -124,6 +127,7 @@ importers:
       react-dropzone: 11.4.2_react@17.0.2
       react-hot-toast: 2.1.1_83aecc314a46186883faa129c0399856
       react-icons: 4.3.1_react@17.0.2
+      react-image-file-resizer: 0.4.7
       react-is: 16.13.1
       react-rnd: 10.3.5_react-dom@17.0.2+react@17.0.2
       react-router-dom: 5.3.0_react@17.0.2
@@ -2724,6 +2728,14 @@ packages:
     resolution: {integrity: sha512-MZPUxrmFubI36XS1DI3qmI0YdN1gks62JtFZvxR67ljjSNCeK6U08Zx4msEWOXuofgqUt6zPHSi1H9fbjR/NRA==}
     dependencies:
       '@sinonjs/commons': 1.8.3
+    dev: false
+
+  /@squoosh/lib/0.4.0:
+    resolution: {integrity: sha512-O1LyugWLZjMI4JZeZMA5vzfhfPjfMZXH5/HmVkRagP8B70wH3uoR7tjxfGNdSavey357MwL8YJDxbGwBBdHp7Q==}
+    engines: {node: ' ^12.5.0 || ^14.0.0 || ^16.0.0 '}
+    dependencies:
+      wasm-feature-detect: 1.2.11
+      web-streams-polyfill: 3.2.0
     dev: false
 
   /@surma/rollup-plugin-off-main-thread/1.4.2:
@@ -6432,13 +6444,11 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-config-google/0.14.0_eslint@7.32.0:
+  /eslint-config-google/0.14.0:
     resolution: {integrity: sha512-WsbX4WbjuMvTdeVL6+J3rK1RGhCTqjsFjX7UMSMgZiyxxaNLkoJENbrGExzERFeoTpGw3F3FypTiWAP9ZXzkEw==}
     engines: {node: '>=0.10.0'}
     peerDependencies:
       eslint: '>=5.16.0'
-    dependencies:
-      eslint: 7.32.0
     dev: true
 
   /eslint-config-prettier/8.3.0_eslint@7.32.0:
@@ -12235,6 +12245,10 @@ packages:
       react: 17.0.2
     dev: false
 
+  /react-image-file-resizer/0.4.7:
+    resolution: {integrity: sha512-Dak7Ecrd6WEV5LjqoRYFI49ASn7eB1VTlrw6dri9HeIMS6aJang4nli6q5xeckEMY+7QwgqgWqAQD5tgkm4bJg==}
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -14650,6 +14664,10 @@ packages:
       makeerror: 1.0.12
     dev: false
 
+  /wasm-feature-detect/1.2.11:
+    resolution: {integrity: sha512-HUqwaodrQGaZgz1lZaNioIkog9tkeEJjrM3eq4aUL04whXOVDRc/o2EGb/8kV0QX411iAYWEqq7fMBmJ6dKS6w==}
+    dev: false
+
   /watchpack-chokidar2/2.0.1:
     resolution: {integrity: sha512-nCFfBIPKr5Sh61s4LPpy1Wtfi0HE8isJ3d2Yb5/Ppw2P2B/3eVSEBjKfN0fmHJSK14+31KwMKmcrzs2GM4P0Ww==}
     requiresBuild: true
@@ -14672,6 +14690,11 @@ packages:
     resolution: {integrity: sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA==}
     dependencies:
       minimalistic-assert: 1.0.1
+    dev: false
+
+  /web-streams-polyfill/3.2.0:
+    resolution: {integrity: sha512-EqPmREeOzttaLRm5HS7io98goBgZ7IVz79aDvqjD0kYXLtFZTc0T/U6wHTPKyIjb+MdN7DFIIX6hgdBEpWmfPA==}
+    engines: {node: '>= 8'}
     dev: false
 
   /web-vitals/1.1.2:

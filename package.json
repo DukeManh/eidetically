@@ -6,6 +6,7 @@
   "scripts": {
     "start": "pnpm run start --dir web",
     "build": "pnpm run build --dir web",
+    "deploy-functions": "pnpm run deploy --dir functions",
     "type-check": "pnpm run type-check --dir web",
     "lint": "pnpm run eslint",
     "eslint": "eslint --fix \"**/*.{jsx,tsx,ts,js}\"",

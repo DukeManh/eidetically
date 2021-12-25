@@ -9,7 +9,7 @@ export default function Preview({ image }: ImageProps) {
       </div>
       <div className="m-2 mb-4 rounded-lg overflow-hidden shadow-sm">
         <img
-          src={image.downloadURL}
+          src={image.previewURL || image.downloadURL}
           alt={image.name}
           className="object-cover max-h-64 w-full h-full"
         ></img>

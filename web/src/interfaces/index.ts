@@ -29,6 +29,7 @@ export interface MetaData {
 // Uploaded image
 export interface Image extends MetaData {
   downloadURL: string;
+  previewURL: string;
   id: string;
   library: DocumentReference<Partial<Library>>;
   upload_date: Timestamp;
