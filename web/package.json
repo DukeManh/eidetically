@@ -62,7 +62,7 @@
     "@testing-library/user-event": "12.8.3",
     "@types/jest": "27.0.3",
     "@types/lodash": "4.14.178",
-    "@types/node": "12.20.37",
+    "@types/node": "16.11.17",
     "@types/node-sass": "4.11.2",
     "@types/react": "17.0.37",
     "@types/react-dom": "17.0.11",

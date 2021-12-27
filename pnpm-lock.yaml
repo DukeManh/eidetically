@@ -49,7 +49,7 @@ importers:
       uuid: 8.3.2
     devDependencies:
       '@types/uuid': 8.3.3
-      eslint-config-google: 0.14.0
+      eslint-config-google: 0.14.0_eslint@7.32.0
       firebase-functions-test: 0.3.3_70dbcfcd1d5c3bba34abded8440b8fc7
       typescript: 4.5.4
 
@@ -64,7 +64,7 @@ importers:
       '@testing-library/user-event': 12.8.3
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.178
-      '@types/node': 12.20.37
+      '@types/node': 16.11.17
       '@types/node-sass': 4.11.2
       '@types/react': 17.0.37
       '@types/react-dom': 17.0.11
@@ -106,7 +106,7 @@ importers:
       uuid: 8.3.2
       web-vitals: 1.1.2
     dependencies:
-      '@craco/craco': 6.4.3_087e166b5d8b7063a5b1a1a2756ca956
+      '@craco/craco': 6.4.3_3f600e4d0887717f3e0bdabde3547997
       '@squoosh/lib': 0.4.0
       '@tailwindcss/line-clamp': 0.3.0_00c8fcea36e7ebb784460590946ebc50
       '@testing-library/dom': 8.11.1
@@ -145,7 +145,7 @@ importers:
       '@testing-library/user-event': 12.8.3_@testing-library+dom@8.11.1
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.178
-      '@types/node': 12.20.37
+      '@types/node': 16.11.17
       '@types/node-sass': 4.11.2
       '@types/react': 17.0.37
       '@types/react-dom': 17.0.11
@@ -1661,7 +1661,7 @@ packages:
       minimist: 1.2.5
     dev: false
 
-  /@craco/craco/6.4.3_087e166b5d8b7063a5b1a1a2756ca956:
+  /@craco/craco/6.4.3_3f600e4d0887717f3e0bdabde3547997:
     resolution: {integrity: sha512-RzkXYmNzRCGUyG7mM+IUMM+nvrpSfA34352sPSGQN76UivAmCAht3sI4v5JKgzO05oUK9Zwi6abCKD7iKXI8hQ==}
     engines: {node: '>=6'}
     hasBin: true
@@ -1669,7 +1669,7 @@ packages:
       react-scripts: ^4.0.0
     dependencies:
       cosmiconfig: 7.0.1
-      cosmiconfig-typescript-loader: 1.0.1_861e5f60dcd52a8caaf61940af2ee565
+      cosmiconfig-typescript-loader: 1.0.1_00264fd83560919cd06c986889baae0a
       cross-spawn: 7.0.3
       lodash: 4.17.21
       react-scripts: 4.0.3_7ab31f2f5b54652336e9cd60188f20ef
@@ -3160,11 +3160,11 @@ packages:
   /@types/node-sass/4.11.2:
     resolution: {integrity: sha512-pOFlTw/OtZda4e+yMjq6/QYuvY0RDMQ+mxXdWj7rfSyf18V8hS4SfgurO+MasAkQsv6Wt6edOGlwh5QqJml9gw==}
     dependencies:
-      '@types/node': 12.20.37
+      '@types/node': 17.0.0
     dev: true
 
-  /@types/node/12.20.37:
-    resolution: {integrity: sha512-i1KGxqcvJaLQali+WuypQnXwcplhtNtjs66eNsZpp2P2FL/trJJxx/VWsM0YCL2iMoIJrbXje48lvIQAQ4p2ZA==}
+  /@types/node/16.11.17:
+    resolution: {integrity: sha512-C1vTZME8cFo8uxY2ui41xcynEotVkczIVI5AjLmy5pkpBv/FtG+jhtOlfcPysI8VRVwoOMv6NJm44LGnoMSWkw==}
     dev: true
 
   /@types/node/17.0.0:
@@ -5386,16 +5386,16 @@ packages:
       vary: 1.1.2
     dev: false
 
-  /cosmiconfig-typescript-loader/1.0.1_861e5f60dcd52a8caaf61940af2ee565:
+  /cosmiconfig-typescript-loader/1.0.1_00264fd83560919cd06c986889baae0a:
     resolution: {integrity: sha512-At4Ms7dDDxhfCLCg5D4HDO+B/7hl8mLZs+cjtbNIAb3sv+g7Piu1ryR5K9MpmWUVZkoCXN4mck9vx8ITcqfdvQ==}
     engines: {node: '>=12', npm: '>=7'}
     peerDependencies:
       '@types/node': '*'
       typescript: '>=3'
     dependencies:
-      '@types/node': 12.20.37
+      '@types/node': 16.11.17
       cosmiconfig: 7.0.1
-      ts-node: 10.4.0_861e5f60dcd52a8caaf61940af2ee565
+      ts-node: 10.4.0_00264fd83560919cd06c986889baae0a
       typescript: 4.5.4
     transitivePeerDependencies:
       - '@swc/core'
@@ -6444,11 +6444,13 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-config-google/0.14.0:
+  /eslint-config-google/0.14.0_eslint@7.32.0:
     resolution: {integrity: sha512-WsbX4WbjuMvTdeVL6+J3rK1RGhCTqjsFjX7UMSMgZiyxxaNLkoJENbrGExzERFeoTpGw3F3FypTiWAP9ZXzkEw==}
     engines: {node: '>=0.10.0'}
     peerDependencies:
       eslint: '>=5.16.0'
+    dependencies:
+      eslint: 7.32.0
     dev: true
 
   /eslint-config-prettier/8.3.0_eslint@7.32.0:
@@ -14214,7 +14216,7 @@ packages:
     resolution: {integrity: sha512-Z86EW+fFFh/IFB1fqQ3/+7Zpf9t2ebOAxNI/V6Wo7r5gqiqtxmgTlQ1qbqQcjLKYeSHPTsEmvlJUDg/EuL0uHQ==}
     dev: false
 
-  /ts-node/10.4.0_861e5f60dcd52a8caaf61940af2ee565:
+  /ts-node/10.4.0_00264fd83560919cd06c986889baae0a:
     resolution: {integrity: sha512-g0FlPvvCXSIO1JDF6S232P5jPYqBkRL9qly81ZgAOSU7rwI0stphCgd2kLiCrU9DjQCrJMWEqcNSjQL02s6d8A==}
     hasBin: true
     peerDependencies:
@@ -14233,7 +14235,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 12.20.37
+      '@types/node': 16.11.17
       acorn: 8.6.0
       acorn-walk: 8.2.0
       arg: 4.1.3
