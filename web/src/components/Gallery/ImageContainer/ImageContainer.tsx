@@ -62,11 +62,7 @@ export default function ImageContainer() {
           limit(QUERY_LIMIT)
         );
       } else {
-        imagesRef = dbQuery<Image>(
-          db.images(libID),
-          orderBy('upload_date', 'desc'),
-          limit(QUERY_LIMIT)
-        );
+        imagesRef = dbQuery<Image>(db.images(libID), orderBy('upload_date'), limit(QUERY_LIMIT));
       }
 
       const unsubscribe = onSnapshot(imagesRef, (snapshot) => {

@@ -28,7 +28,12 @@ export default function ImageInformation({ image }: ImageProps) {
       name: 'Link',
       value: (
         <>
-          <a className="text-blue-400 align-middle" href={image.downloadURL}>
+          <a
+            className="text-blue-400 align-middle"
+            href={image.downloadURL}
+            target="_blank"
+            rel="noreferrer"
+          >
             {`${image.name.slice(0, 20).trim()}${image.name.length > 20 ? '...' : ''}`}
           </a>
           <button

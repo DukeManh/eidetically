@@ -33,7 +33,7 @@
   ],
 
   "background": {
-    "persistent": false,
+    "persistent": true,
     "scripts": [
       "scripts/utils/jwt-decode.js",
       "scripts/utils/firebase-app.js",
@@ -41,6 +41,7 @@
       "scripts/utils/firebase-firestore.js",
       "scripts/utils/firebase-storage.js",
       "scripts/utils/uuidv4.min.js",
+      "scripts/utils/image-blob-reduce.js",
       "background.js"
     ]
   },

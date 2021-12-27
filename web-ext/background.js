@@ -40,23 +40,39 @@ function signInWithPopup(providerId) {
   }
 }
 
-async function uploadImage(file, source, libraryId) {
+async function uploadImage(image, source, libraryId) {
   if (!auth.currentUser) {
     throw new Error('Please login to upload images');
   }
+
+  const resizer = ImageBlobReduce();
+  const previewBlob = await resizer.toBlob(image, { max: 800 });
+  const previewImage = new File([previewBlob], image.name, {
+    type: image.type,
+  });
+
   const uuid = uuidv4();
   const filePath = `${auth.currentUser.uid}/${libraryId}/${uuid}`;
-  storage
-    .ref(filePath)
-    .put(file, {
+  const previewPath = `${filePath}-preview`;
+
+  return Promise.all([
+    storage.ref(filePath).put(image, {
       customMetadata: {
-        name: file.name,
+        name: image.name,
+        isPreview: 'false',
         source,
       },
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    }),
+    storage.ref(previewPath).put(previewImage, {
+      customMetadata: {
+        name: image.name,
+        isPreview: 'true',
+        source,
+      },
+    }),
+  ]).catch((error) => {
+    console.error(error);
+  });
 }
 
 async function getLibraries() {
@@ -76,6 +92,7 @@ async function getLibraries() {
 async function fileFromUrl(url, name) {
   const image = await fetch(url);
   const blob = await image.blob();
+
   return new File([blob], name, {
     lastModified: Date.now(),
     type: blob.type,
