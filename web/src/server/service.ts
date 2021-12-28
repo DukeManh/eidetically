@@ -85,9 +85,9 @@ export async function renameLibrary(libID: string, libName: string) {
   }
 }
 
-async function uploadImage(image: ImageFile, libraryID: string) {
+async function uploadImage(image: ImageFile, libraryID: string, storagePath?: string) {
   const uuid = uuidv4();
-  const imagePath = `${auth.currentUser?.uid}/${libraryID}/${uuid}`;
+  const imagePath = storagePath || `${auth.currentUser?.uid}/${libraryID}/${uuid}`;
   const imageName = image.name || uuid;
 
   const preview = await createImagePreview(image);
@@ -188,19 +188,23 @@ export async function updateImageProperties(
   }
 }
 
-export async function updateImageSource(image: Image, file: File): Promise<void> {
+export function updateImageSource(image: Image, file: File): Promise<void> {
   if (auth.currentUser) {
-    try {
-      const filePath = image.fullPath;
-
-      await uploadBytesResumable(ref(storage, filePath), file, {
-        customMetadata: {
-          name: image.name,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    return new Promise((resolve, reject) => {
+      uploadImage(file, image.library.id, image.fullPath)
+        .then((uploads) => {
+          Promise.all(uploads)
+            .then(() => {
+              resolve();
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   } else {
     throw errors.unauthenticated;
   }

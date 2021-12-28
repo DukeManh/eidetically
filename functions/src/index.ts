@@ -55,7 +55,11 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
     // An existing image is being replaced
     if (image.exists && image.data()?.previewURL && image.data()?.downloadURL) {
       functions.logger.log(`1 file is replaced: ${fullName}`);
-      await imageRef.update({ downloadURL, size });
+      await imageRef.update({
+        ...(isPreview ? { previewURL: downloadURL } : { downloadURL }),
+        last_updated: admin.firestore.FieldValue.serverTimestamp(),
+        size,
+      });
       return;
     }
 
@@ -66,6 +70,7 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
         note,
         library: libRef,
         upload_date: admin.firestore.FieldValue.serverTimestamp(),
+        last_updated: admin.firestore.FieldValue.serverTimestamp(),
         name: imageName,
         source,
         ...(!isPreview && { contentType }),

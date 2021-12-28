@@ -1,4 +1,5 @@
 import Filerobot from 'filerobot-image-editor';
+import toast from 'react-hot-toast';
 
 import { useImage } from '../../contexts';
 import { updateImageSource } from '../../server/service';
@@ -74,7 +75,9 @@ export default function Editor() {
                         type: imageMime,
                         lastModified: Date.now(),
                       });
-                      await updateImageSource(focused, file);
+                      updateImageSource(focused, file).catch((error) => {
+                        toast.error(`Error saving image: ${error}`);
+                      });
                     },
                     imageMime,
                     0.8

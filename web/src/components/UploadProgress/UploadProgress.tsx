@@ -24,7 +24,7 @@ export default function UploadProgress() {
   if (!state.tasks.length) return null;
 
   return (
-    <div className="w-72 md:w-80 text-gray-300 z-50 fixed bottom-8 right-8 overflow-hidden rounded-md shadow">
+    <div className="w-72 md:w-80 text-gray-300 z-50 fixed bottom-2 right-2 overflow-hidden rounded-md shadow">
       <div className="bg-alert h-12 overflow-hidden p-2 relative flex flex-row items-center space-x-3 font-medium">
         <div className="pl-2">{`Uploaded ${state.uploaded}/${state.uploadsCount}`}</div>
         <div className="flex-grow"></div>

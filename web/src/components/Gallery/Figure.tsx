@@ -27,6 +27,7 @@ export default function Figure({ image }: FigureProps) {
         style={{ width: '100%', display: 'block' }}
       >
         <img
+          key={image.previewURL}
           style={
             layout === 'Justified'
               ? {
