@@ -1,20 +1,27 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Eidetically",
   "version": "1.0",
   "author": "Duke Manh",
 
   "description": "Extension to allow saving images to firebase storage",
-  "homepage_url": "https://dropit-app.netlify.app/",
+  "homepage_url": "https://eidetically.vercel.app/",
 
   "icons": {
     "48": "icons/logo48.png",
     "96": "icons/logo96.png"
   },
 
-  "permissions": ["https://*/", "background"],
+  "permissions": ["background", "storage"],
 
-  "web_accessible_resources": ["icons/*", "scripts/content/content.js", "scripts/content/lib.js"],
+  "host_permissions": ["https://*/"],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "scripts/content/content.js", "scripts/content/lib.js"],
+      "matches": ["https://*/"]
+    }
+  ],
 
   "browser_action": {
     "default_icon": "icons/logo32.png",
@@ -28,7 +35,7 @@
       "js": ["scripts/utils/jquery.min.js", "scripts/content/content_script.js"],
       "css": ["scripts/content/content.css"],
       "all_frames": true,
-      "exclude_matches": ["https://dropit-app.netlify.app/*"]
+      "exclude_matches": ["https://eidetically.vercel.app/*"]
     }
   ],
 
@@ -46,5 +53,7 @@
     ]
   },
 
-  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://securetoken.googleapis.com https://apis.google.com https://www.gstatic.com; object-src 'self'"
+  "content_security_policy": {
+    "sandbox": "script-src 'self' https://cdn.firebase.com https://securetoken.googleapis.com https://apis.google.com https://www.gstatic.com; object-src 'self'"
+  }
 }
