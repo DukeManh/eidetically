@@ -4,22 +4,23 @@ $(() => {
   });
 
   const bg = chrome.extension.getBackgroundPage();
-  if (!bg?.auth?.currentUser) {
-    $('.loginProvider').on('click', function () {
-      const providerId = $(this).attr('data-provider-id');
+  chrome.storage.local.get(['auth'], ({ auth }) => {
+    if (auth?.currentUser) {
+      $('.loginProvider').on('click', function () {
+        const providerId = $(this).attr('data-provider-id');
 
-      chrome.runtime.sendMessage({
-        command: 'signIn',
-        payload: {
-          providerId,
-        },
+        chrome.runtime.sendMessage({
+          command: 'signIn',
+          payload: {
+            providerId,
+          },
+        });
       });
-    });
-  } else {
-    const user = bg.auth.currentUser;
-    $('#signInProvider').hide();
+    } else {
+      const user = bg.auth.currentUser;
+      $('#signInProvider').hide();
 
-    const userCard = `
+      const userCard = `
     <div class='userCard'>
       <div class='avatar'>
         <img src="${user.photoURL}" alt="${user.displayName}'s avatar" /> 
@@ -35,11 +36,12 @@ $(() => {
     </div>
   `;
 
-    $('#userInfo').html(userCard);
+      $('#userInfo').html(userCard);
 
-    $('.signOutButton').on('click', () => {
-      bg.auth?.signOut();
-      window.location.reload();
-    });
-  }
+      $('.signOutButton').on('click', () => {
+        bg.auth?.signOut();
+        window.location.reload();
+      });
+    }
+  });
 });

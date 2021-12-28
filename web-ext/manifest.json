@@ -18,12 +18,17 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["icons/*", "scripts/content/content.js", "scripts/content/lib.js"],
-      "matches": ["https://*/"]
+      "resources": [
+        "icons/*",
+        "scripts/content/content.js",
+        "scripts/content/lib.js",
+        "scripts/utils/*"
+      ],
+      "matches": ["<all_urls>"]
     }
   ],
 
-  "browser_action": {
+  "action": {
     "default_icon": "icons/logo32.png",
     "default_title": "Eidetically",
     "default_popup": "popup/popup.html"
@@ -40,20 +45,12 @@
   ],
 
   "background": {
-    "persistent": true,
-    "scripts": [
-      "scripts/utils/jwt-decode.js",
-      "scripts/utils/firebase-app.js",
-      "scripts/utils/firebase-auth.js",
-      "scripts/utils/firebase-firestore.js",
-      "scripts/utils/firebase-storage.js",
-      "scripts/utils/uuidv4.min.js",
-      "scripts/utils/image-blob-reduce.js",
-      "background.js"
-    ]
+    "service_worker": "background.js",
+    "type": "module"
   },
 
   "content_security_policy": {
-    "sandbox": "script-src 'self' https://cdn.firebase.com https://securetoken.googleapis.com https://apis.google.com https://www.gstatic.com; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' https://cdn.firebase.com https://securetoken.googleapis.com https://apis.google.com https://www.gstatic.com; object-src 'self'"
   }
 }

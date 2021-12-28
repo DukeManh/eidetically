@@ -1,23 +1,32 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-var */
+import { uuidv4 } from './scripts/utils/jwt-decode.js';
+import firebase from './scripts/utils/firebase-app.js';
+import { ImageBlobReduce } from './scripts/utils/image-blob-reduce.js';
+import './scripts/utils/firebase-auth.js';
+import './scripts/utils/firebase-firestore.js';
+import './scripts/utils/firebase-storage.js';
 
-/* Using var to make background variables available to the popup script */
-var firebaseConfig = {
-  apiKey: 'AIzaSyCUgKWDq2dxiXW3SYBFknfXka7DpYMGacw',
-  authDomain: 'dropit-7ae30.firebaseapp.com',
-  projectId: 'dropit-7ae30',
-  storageBucket: 'dropit-7ae30.appspot.com',
-  messagingSenderId: '675893299238',
-  appId: '1:675893299238:web:c9c4c45ba367eb019ebee7',
-  measurementId: 'G-WG0RKKDP9F',
-};
+function initialize() {
+  const firebaseConfig = {
+    apiKey: 'AIzaSyCUgKWDq2dxiXW3SYBFknfXka7DpYMGacw',
+    authDomain: 'dropit-7ae30.firebaseapp.com',
+    projectId: 'dropit-7ae30',
+    storageBucket: 'dropit-7ae30.appspot.com',
+    messagingSenderId: '675893299238',
+    appId: '1:675893299238:web:c9c4c45ba367eb019ebee7',
+    measurementId: 'G-WG0RKKDP9F',
+  };
 
-var app = firebase.initializeApp(firebaseConfig);
-var auth = app.auth();
-var storage = app.storage();
-var db = app.firestore();
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = app.auth();
+  const storage = app.storage();
+  const db = app.firestore();
 
-function signInWithPopup(providerId) {
+  chrome.storage.local.set({ app, auth, storage, db });
+}
+
+async function signInWithPopup(providerId) {
+  initialize();
+
   let provider;
   switch (providerId) {
     case 'google.com':
@@ -34,10 +43,16 @@ function signInWithPopup(providerId) {
   }
 
   if (provider) {
+    const { auth } = await chrome.storage.local.get(['auth']);
     auth.signInWithPopup(provider).catch((error) => {
       console.error(error);
     });
   }
+}
+
+async function getUser() {
+  const { auth } = await chrome.storage.local.get(['auth']);
+  return auth?.currentUser;
 }
 
 async function uploadImage(image, source, libraryId) {
@@ -102,22 +117,22 @@ async function fileFromUrl(url, name) {
 chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
   switch (message.command) {
     case 'getUser':
-      if (!auth.currentUser) {
-        sendMessage({
-          status: 'failed',
-          message: "Please sign in to start 'Dragging 'n Dropping'",
-          payload: {
-            user: null,
-          },
+      getUser()
+        .then((user) => {
+          sendMessage({
+            status: 'success',
+            payload: {
+              user,
+            },
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+          sendMessage({
+            status: 'failed',
+            message: "Please sign in to start 'Dragging 'n Dropping'",
+          });
         });
-      } else {
-        sendMessage({
-          status: 'success',
-          payload: {
-            user: auth.currentUser,
-          },
-        });
-      }
       break;
     case 'signIn':
       signInWithPopup(message.payload.providerId);
