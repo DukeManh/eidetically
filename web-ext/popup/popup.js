@@ -2,10 +2,8 @@ $(() => {
   $('.wrapper').css({
     'max-height': '1000px',
   });
-
-  const bg = chrome.extension.getBackgroundPage();
   chrome.storage.local.get(['auth'], ({ auth }) => {
-    if (auth?.currentUser) {
+    if (!auth || !auth.currentUser) {
       $('.loginProvider').on('click', function () {
         const providerId = $(this).attr('data-provider-id');
 
@@ -17,7 +15,7 @@ $(() => {
         });
       });
     } else {
-      const user = bg.auth.currentUser;
+      const user = auth.currentUser;
       $('#signInProvider').hide();
 
       const userCard = `
@@ -39,7 +37,7 @@ $(() => {
       $('#userInfo').html(userCard);
 
       $('.signOutButton').on('click', () => {
-        bg.auth?.signOut();
+        auth?.signOut();
         window.location.reload();
       });
     }

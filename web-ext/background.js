@@ -1,11 +1,11 @@
-import { uuidv4 } from './scripts/utils/jwt-decode.js';
-import firebase from './scripts/utils/firebase-app.js';
-import { ImageBlobReduce } from './scripts/utils/image-blob-reduce.js';
-import './scripts/utils/firebase-auth.js';
-import './scripts/utils/firebase-firestore.js';
-import './scripts/utils/firebase-storage.js';
+/* eslint-disable no-undef */
 
-function initialize() {
+let app;
+let auth;
+let storage;
+let db;
+
+async function initialize() {
   const firebaseConfig = {
     apiKey: 'AIzaSyCUgKWDq2dxiXW3SYBFknfXka7DpYMGacw',
     authDomain: 'dropit-7ae30.firebaseapp.com',
@@ -16,17 +16,16 @@ function initialize() {
     measurementId: 'G-WG0RKKDP9F',
   };
 
-  const app = firebase.initializeApp(firebaseConfig);
-  const auth = app.auth();
-  const storage = app.storage();
-  const db = app.firestore();
-
-  chrome.storage.local.set({ app, auth, storage, db });
+  app = firebase.initializeApp(firebaseConfig);
+  auth = app.auth();
+  storage = app.storage();
+  db = app.firestore();
 }
 
 async function signInWithPopup(providerId) {
-  initialize();
-
+  if (!auth) {
+    initialize();
+  }
   let provider;
   switch (providerId) {
     case 'google.com':
@@ -42,17 +41,32 @@ async function signInWithPopup(providerId) {
       break;
   }
 
+  chrome.tabs.query({ url: 'https://eidetically.vercel.app/*' }, (tabs) => {
+    if (tabs.length) {
+      console.log(tabs[0].url);
+    }
+  });
+
   if (provider) {
-    const { auth } = await chrome.storage.local.get(['auth']);
-    auth.signInWithPopup(provider).catch((error) => {
-      console.error(error);
-    });
+    console.log(app);
+    auth
+      .signInWithPopup(provider)
+      .then((authObj) => {
+        console.log(authObj);
+        console.log(firebase.auth.AuthCredential);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
 
-async function getUser() {
-  const { auth } = await chrome.storage.local.get(['auth']);
-  return auth?.currentUser;
+function getUser() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(['auth', 'saved'], (res) => {
+      resolve(res?.auth?.currentUser);
+    });
+  });
 }
 
 async function uploadImage(image, source, libraryId) {
@@ -114,81 +128,101 @@ async function fileFromUrl(url, name) {
   });
 }
 
-chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
-  switch (message.command) {
-    case 'getUser':
-      getUser()
-        .then((user) => {
-          sendMessage({
-            status: 'success',
-            payload: {
-              user,
-            },
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          sendMessage({
-            status: 'failed',
-            message: "Please sign in to start 'Dragging 'n Dropping'",
-          });
-        });
-      break;
-    case 'signIn':
-      signInWithPopup(message.payload.providerId);
-      break;
-    case 'signOut':
-      auth.signOut();
-      sendMessage({ status: 'success' });
-      break;
-    case 'getLibs':
-      getLibraries()
-        .then((libs) => {
-          sendMessage({
-            status: 'success',
-            payload: {
-              libs,
-            },
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          sendMessage({
-            status: 'failure',
-            message: error.message,
-            payload: {
-              libs: null,
-            },
-          });
-        });
-      break;
-    case 'uploadImage':
-      fileFromUrl(message.payload.url, message.payload.name)
-        .then((file) => {
-          uploadImage(file, message.payload.url, message.payload.libraryId)
-            .then(() => {
-              sendMessage({
-                status: 'success',
-              });
-            })
-            .catch((error) => {
-              console.error(error);
-              sendMessage({
-                status: 'failure',
-                message: error.message,
-              });
+try {
+  importScripts(
+    './scripts/utils/uuidv4.min.js',
+    './scripts/utils/image-blob-reduce.js',
+    './scripts/utils/firebase-app.js',
+    './scripts/utils/firebase-auth.js',
+    './scripts/utils/firebase-firestore.js',
+    './scripts/utils/firebase-storage.js'
+  );
+
+  initialize();
+} catch (e) {
+  console.log(e);
+}
+
+// Catch unhandled service worker registration error
+try {
+  chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
+    switch (message.command) {
+      case 'getUser':
+        getUser()
+          .then((user) => {
+            sendMessage({
+              status: 'success',
+              payload: {
+                user,
+              },
             });
-        })
-        .catch((error) => {
-          console.error(error);
-          sendMessage({
-            status: 'failure',
-            message: error.message,
+          })
+          .catch((error) => {
+            console.error(error);
+            sendMessage({
+              status: 'failed',
+              message: 'Error fetching user information',
+            });
           });
-        });
-      break;
-    default:
-      break;
-  }
-  return true;
-});
+        break;
+      case 'signIn':
+        signInWithPopup(message.payload.providerId);
+        break;
+      case 'signOut':
+        auth.signOut();
+        sendMessage({ status: 'success' });
+        break;
+      case 'getLibs':
+        getLibraries()
+          .then((libs) => {
+            sendMessage({
+              status: 'success',
+              payload: {
+                libs,
+              },
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            sendMessage({
+              status: 'failure',
+              message: error.message,
+              payload: {
+                libs: null,
+              },
+            });
+          });
+        break;
+      case 'uploadImage':
+        fileFromUrl(message.payload.url, message.payload.name)
+          .then((file) => {
+            uploadImage(file, message.payload.url, message.payload.libraryId)
+              .then(() => {
+                sendMessage({
+                  status: 'success',
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+                sendMessage({
+                  status: 'failure',
+                  message: error.message,
+                });
+              });
+          })
+          .catch((error) => {
+            console.error(error);
+            sendMessage({
+              status: 'failure',
+              message: error.message,
+            });
+          });
+        break;
+      default:
+        break;
+    }
+    return true;
+  });
+} catch (error) {
+  console.error(error);
+}
