@@ -6,9 +6,13 @@ import { ProviderProps } from '../../interfaces';
 import { auth } from '../../server/firebase';
 import { LoginPopup } from '../../components/Login';
 
-export default function StorageProvider({ children }: ProviderProps) {
+export default function AuthProvider({ children }: ProviderProps) {
   const [user, setUser] = useState(auth.currentUser);
   const [loginVisible, setLoginVisible] = useState(false);
+
+  if (typeof chrome !== 'undefined') {
+    console.log(chrome.runtime);
+  }
 
   const logout = () => {
     auth.signOut();

@@ -5,10 +5,11 @@ import { CSSTransition } from 'react-transition-group';
 
 import { authUI } from '../../server/firebase';
 import { useAuth } from '../../contexts';
+import authui from 'firebaseui';
 
 import Mask from '../Mask';
 
-const authUIConfig = {
+const authUIConfig: authui.auth.Config = {
   signInOptions: [
     GoogleAuthProvider.PROVIDER_ID,
     GithubAuthProvider.PROVIDER_ID,
@@ -16,13 +17,21 @@ const authUIConfig = {
   ],
   signInFlow: 'popup',
   callbacks: {
-    signInSuccessWithAuthResult: () => true,
+    signInSuccessWithAuthResult: () => {
+      return true;
+    },
   },
 };
 
 export default function LoginPopup() {
   const { loginVisible, setLoginVisible } = useAuth();
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      setLoginVisible(true);
+    }
+  }, [setLoginVisible, user]);
 
   useEffect(() => {
     if (!user && loginVisible) {
