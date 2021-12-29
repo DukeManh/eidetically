@@ -12,7 +12,7 @@ const DefaultSidebarWidth = 300;
 
 export default function LayoutProvider({ children }: ProviderProps) {
   const isMobile = useMedia(`(max-width: ${BreakPoints.lg}px)`);
-  const defaultZoom = isMobile ? 1 : 3;
+  const defaultZoom = isMobile ? 9 : 8;
   const [detailsVisible, toggleDetails] = useLocalStorage('detailsVisible', !isMobile);
   const [navigationVisible, toggleNavigation] = useLocalStorage('navigationVisible', !isMobile);
   const [navigationWidth, setNavigationWidth] = useLocalStorage(
@@ -67,7 +67,16 @@ export default function LayoutProvider({ children }: ProviderProps) {
     <LayoutContext.Provider
       value={{
         layout: layout ?? 'Waterfall',
-        setLayout,
+        setLayout: (newLayout: Layout) => {
+          if (newLayout !== layout) {
+            if (newLayout === 'Justified') {
+              setZoom(4);
+            } else {
+              setZoom(defaultZoom);
+            }
+            setLayout(newLayout);
+          }
+        },
         navigationWidth: navigationWidth ?? DefaultSidebarWidth,
         setNavigationWidth,
         navigationVisible: navigationVisible ?? !isMobile,

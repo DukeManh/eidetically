@@ -168,7 +168,7 @@ export default function ImageContainer() {
   };
 
   return (
-    <div className="overflow-y-scroll flex-grow min-h-0 px-4" {...getRootProps()}>
+    <div className="overflow-y-scroll flex-grow min-h-0 px-1 md:px-4" {...getRootProps()}>
       <div className="relative w-full p-2 h-full">
         <div
           className="relative"
