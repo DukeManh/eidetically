@@ -462,3 +462,17 @@ $mobile_row_gap: 0.75rem;
   opacity: 1 !important;
   background: $mask !important;
 }
+
+.agreements {
+  font: 16px Roboto, arial, sans-serif;
+  box-sizing: border-box;
+  color: #757575;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  margin-top: 10px;
+}
+.agreements a {
+  color: #0288d1;
+  font-size: 11px;
+}

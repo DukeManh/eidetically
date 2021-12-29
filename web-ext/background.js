@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* global firebase, ImageBlobReduce, uuidv4 */
 /* eslint-disable no-var */
 
 /* Using var to make background variables available to the popup script */
@@ -77,7 +77,7 @@ async function uploadImage(image, source, libraryId) {
 
 async function getLibraries() {
   if (!auth.currentUser) {
-    throw new Error('Please login');
+    throw new Error('Please login and reload window');
   }
 
   const librariesRef = db
@@ -101,24 +101,6 @@ async function fileFromUrl(url, name) {
 
 chrome.runtime.onMessage.addListener((message, _, sendMessage) => {
   switch (message.command) {
-    case 'getUser':
-      if (!auth.currentUser) {
-        sendMessage({
-          status: 'failed',
-          message: "Please sign in to start 'Dragging 'n Dropping'",
-          payload: {
-            user: null,
-          },
-        });
-      } else {
-        sendMessage({
-          status: 'success',
-          payload: {
-            user: auth.currentUser,
-          },
-        });
-      }
-      break;
     case 'signIn':
       signInWithPopup(message.payload.providerId);
       break;

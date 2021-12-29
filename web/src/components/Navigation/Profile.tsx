@@ -9,10 +9,12 @@ export default function Profile() {
   const { user } = useAuth();
   const { libraries } = useLibrary();
   return (
-    <div className="flex flex-row flex-wrap justify-center items-center space-y-1">
+    <div className="flex flex-row flex-wrap justify-center items-center">
       <div>
         <Avatar />
-        <div className="font-medium text-lg mt-1">{user ? user.displayName : 'Anonymous'}</div>
+        <div className="text-center font-medium text-lg mt-1">
+          {user ? user.displayName : 'Guest'}
+        </div>
       </div>
       <div className="flex flex-col items-center space-y-2">
         <LoginButton />
