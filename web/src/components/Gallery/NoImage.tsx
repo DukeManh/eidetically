@@ -4,7 +4,7 @@ export default function NoImage() {
       <div className="w-3/4 sm:w-1/3">
         <img src={`${process.env.PUBLIC_URL}/uploadMedia.svg`} alt="No Results"></img>
       </div>
-      <div className="font-medium text-lg font-serif">Upload or import here</div>
+      <div className="font-medium text-lg font-serif">Upload or Drop here</div>
     </div>
   );
 }

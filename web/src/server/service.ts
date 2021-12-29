@@ -11,6 +11,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { collection, serverTimestamp } from 'firebase/firestore';
 import { ref, updateMetadata, uploadBytesResumable } from 'firebase/storage';
+import JSZip from 'jszip';
 
 import task from '../components/UploadProgress/task';
 import { auth, db, storage } from './firebase';
@@ -19,7 +20,7 @@ import { createImagePreview } from '../utilities';
 
 const errors = {
   libExists: new Error('Library exists, choose a different name'),
-  unauthenticated: new Error('Please sign in'),
+  unauthenticated: new Error('Please sign in to continue'),
   invalidName: new Error('Choose a library name'),
 };
 
@@ -53,7 +54,8 @@ export async function deleteLibrary(libID: string) {
       const libRef = doc(db.libraries(), libID);
       await deleteDoc(libRef);
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      throw error;
     }
   } else {
     throw errors.unauthenticated;
@@ -189,8 +191,8 @@ export async function updateImageProperties(
 }
 
 export function updateImageSource(image: Image, file: File): Promise<void> {
-  if (auth.currentUser) {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    if (auth.currentUser) {
       uploadImage(file, image.library.id, image.fullPath)
         .then((uploads) => {
           Promise.all(uploads)
@@ -204,7 +206,40 @@ export function updateImageSource(image: Image, file: File): Promise<void> {
         .catch((error) => {
           reject(error);
         });
-    });
+    } else {
+      reject(errors.unauthenticated.message);
+    }
+  });
+}
+
+export async function downloadImages(libraryName: string, images: Image[]) {
+  if (auth.currentUser) {
+    const zip = new JSZip();
+
+    const promises = images.map(
+      (image, i) =>
+        new Promise<void>((resolve) => {
+          fetch(image.downloadURL).then((response) => {
+            response.blob().then((blob) => {
+              zip.file(`${image.name}_${i + 1}.${image.contentType.split('/').pop()}`, blob);
+              resolve();
+            });
+          });
+        })
+    );
+
+    try {
+      await Promise.all(promises);
+      zip.generateAsync({ type: 'blob' }).then((blob_1) => {
+        const url = window.URL.createObjectURL(blob_1);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${libraryName}.zip`;
+        a.click();
+      });
+    } catch (error) {
+      console.error(error);
+    }
   } else {
     throw errors.unauthenticated;
   }

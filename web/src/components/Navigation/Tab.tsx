@@ -71,7 +71,7 @@ export default function Tab({ lib, renaming, setRenaming }: TabProps) {
       setError('');
     } catch (error) {
       if (error instanceof Error) {
-        toast.error(error.message);
+        toast.error(`Insufficent rights: ${error.message}`);
         setError(error.message);
       }
     }

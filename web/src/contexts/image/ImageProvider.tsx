@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import toast from 'react-hot-toast';
 
 import { ProviderProps, Image, ImageMap, ImageFile } from '../../interfaces';
 import { ImageContext } from './ImageContext';
@@ -42,7 +43,9 @@ export default function ImageProvider({ children }: ProviderProps) {
   const deleteSelection = useCallback(() => {
     const images = Object.values(selection);
     if (images.length) {
-      deleteImages(images);
+      deleteImages(images).catch((error: Error) => {
+        toast.error(`Insufficient rights: ${error.message}`);
+      });
       cancelSelecting();
     }
   }, [cancelSelecting, selection]);
@@ -85,13 +88,19 @@ export default function ImageProvider({ children }: ProviderProps) {
 
         await Promise.all(fetches)
           .then((files) => {
-            uploadImages(files, toLibrary);
+            uploadImages(files, toLibrary)
+              .then(() => {
+                if (clipboard.operation === 'cut') {
+                  deleteImages(clipboard.clipboard).catch((error: Error) => {
+                    toast.error(`Insufficient rights: ${error.message}`);
+                  });
+                }
+              })
+              .catch((error: Error) => {
+                toast.error(`Insufficient rights: ${error.message}`);
+              });
           })
           .catch(() => console.error('Error fetching medias'));
-
-        if (clipboard.operation === 'cut') {
-          await deleteImages(clipboard.clipboard);
-        }
 
         setClipBoard(undefined);
       }

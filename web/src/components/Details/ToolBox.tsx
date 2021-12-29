@@ -1,7 +1,5 @@
 import { IconContext } from 'react-icons';
 import ReactTooltip from 'react-tooltip';
-import JSZip from 'jszip';
-import toast from 'react-hot-toast';
 
 import { MdContentPaste } from 'react-icons/md';
 import { BiCut, BiSelectMultiple } from 'react-icons/bi';
@@ -12,38 +10,8 @@ import { ImCloudDownload } from 'react-icons/im';
 import Separator from './Separator';
 
 import { useImage, useLibrary } from '../../contexts';
-import { Image } from '../../interfaces';
-
-const downloadImages = (libraryName: string, images: Image[]) => {
-  const zip = new JSZip();
-
-  const promises = images.map(
-    (image, i) =>
-      new Promise<void>((resolve) => {
-        fetch(image.downloadURL).then((response) => {
-          response.blob().then((blob) => {
-            zip.file(`${image.name}_${i + 1}.${image.contentType.split('/').pop()}`, blob);
-            resolve();
-          });
-        });
-      })
-  );
-
-  Promise.all(promises)
-    .then(() => {
-      zip.generateAsync({ type: 'blob' }).then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${libraryName}.zip`;
-        a.click();
-      });
-    })
-    .catch((error) => {
-      console.error(error);
-      toast.error('Error downloading images');
-    });
-};
+import { downloadImages } from '../../server/service';
+import toast from 'react-hot-toast';
 
 export default function ToolBox() {
   const {
@@ -121,7 +89,9 @@ export default function ToolBox() {
       name: 'Save',
       handleClick: () => {
         if (activeLibrary) {
-          downloadImages(activeLibrary?.name, Object.values(selection));
+          downloadImages(activeLibrary?.name, Object.values(selection)).catch((error: Error) => {
+            toast.error(`Can't download images: ${error.message}`);
+          });
           cancelSelecting();
         }
       },
@@ -143,7 +113,7 @@ export default function ToolBox() {
             >
               {!hidden && (
                 <>
-                  <button disabled={!activeLibrary || disabled} onClick={() => handleClick()}>
+                  <button disabled={!activeLibrary || disabled} onClick={handleClick}>
                     {children}
                   </button>
                   <ReactTooltip

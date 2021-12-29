@@ -20,6 +20,7 @@ const {
   REACT_APP_MESSAGING_SENDER_ID,
   REACT_APP_APP_ID,
   REACT_APP_MEASUREMENT_ID,
+  REACT_APP_PREVIEW_USER_ID,
 } = process.env;
 
 const firebaseConfig = {
@@ -46,21 +47,17 @@ export const storage = getStorage(firebaseApp);
 
 export const db = {
   libraries: () => {
-    if (!auth?.currentUser?.uid) {
-      throw new Error('Please sign in');
-    }
     return collection(
       firestore,
-      `firebase_users/${auth.currentUser.uid}/libraries`
+      `firebase_users/${auth?.currentUser?.uid || REACT_APP_PREVIEW_USER_ID}/libraries`
     ).withConverter<Library>(typeConverter<Library>());
   },
   images: (libID: string) => {
-    if (!auth?.currentUser?.uid) {
-      throw new Error('Please sign in');
-    }
     return collection(
       firestore,
-      `firebase_users/${auth.currentUser.uid}/libraries/${libID}/images`
+      `firebase_users/${
+        auth?.currentUser?.uid || REACT_APP_PREVIEW_USER_ID
+      }/libraries/${libID}/images`
     ).withConverter<Image>(typeConverter<Image>());
   },
 };
