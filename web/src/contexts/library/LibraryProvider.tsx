@@ -7,6 +7,7 @@ import { useAuth } from '../auth';
 import { db } from '../../server/firebase';
 import { uploadImages } from '../../server/service';
 import { onSnapshot, orderBy, query } from 'firebase/firestore';
+import toast from 'react-hot-toast';
 
 export default function LibraryProvider({ children }: ProviderProps) {
   const { user } = useAuth();
@@ -29,9 +30,13 @@ export default function LibraryProvider({ children }: ProviderProps) {
   const upload = useCallback(
     (acceptedFiles: File[], libraryID?: string) => {
       if (libraryID) {
-        uploadImages(acceptedFiles, libraryID);
+        uploadImages(acceptedFiles, libraryID).catch((error) => {
+          toast.error(`Error uploading files: ${error.message}`);
+        });
       } else if (activeLibrary?.id) {
-        uploadImages(acceptedFiles, activeLibrary.id);
+        uploadImages(acceptedFiles, activeLibrary.id).catch((error) => {
+          toast.error(`Error uploading files: ${error.message}`);
+        });
       }
     },
     [activeLibrary]
@@ -47,24 +52,15 @@ export default function LibraryProvider({ children }: ProviderProps) {
   };
 
   useEffect(() => {
-    let unsubscribe;
-    if (user) {
-      setLoading(true);
-      const librariesRef = query(db.libraries(), orderBy('name'));
-      unsubscribe = onSnapshot(librariesRef, (snapshot) => {
-        const nextLibraries = snapshot.docs.map(
-          (lib) => ({ ...lib.data(), id: lib.id } as Library)
-        );
-        setLibraries(nextLibraries);
-        setLoading(false);
-      });
-    } else {
-      setLibraries([]);
-      setActiveLibrary('');
-    }
+    setLoading(true);
+    const librariesRef = query(db.libraries(), orderBy('name'));
+    const unsubscribe = onSnapshot(librariesRef, (snapshot) => {
+      const nextLibraries = snapshot.docs.map((lib) => ({ ...lib.data(), id: lib.id } as Library));
+      setLibraries(nextLibraries);
+      setLoading(false);
+    });
 
     return unsubscribe;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (
