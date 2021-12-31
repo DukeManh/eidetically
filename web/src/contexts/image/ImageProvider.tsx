@@ -44,7 +44,7 @@ export default function ImageProvider({ children }: ProviderProps) {
     const images = Object.values(selection);
     if (images.length) {
       deleteImages(images).catch((error: Error) => {
-        toast.error(`Insufficient rights: ${error.message}`);
+        toast.error(error.message);
       });
       cancelSelecting();
     }
@@ -92,12 +92,12 @@ export default function ImageProvider({ children }: ProviderProps) {
               .then(() => {
                 if (clipboard.operation === 'cut') {
                   deleteImages(clipboard.clipboard).catch((error: Error) => {
-                    toast.error(`Insufficient rights: ${error.message}`);
+                    toast.error(error.message);
                   });
                 }
               })
               .catch((error: Error) => {
-                toast.error(`Insufficient rights: ${error.message}`);
+                toast.error(error.message);
               });
           })
           .catch(() => console.error('Error fetching medias'));
