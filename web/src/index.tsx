@@ -7,6 +7,7 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'firebaseui/dist/firebaseui.css';
 import './styles/index.scss';
+import 'fitty/dist/fitty.min.js';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -86,6 +86,7 @@ importers:
       filerobot-image-editor: 3.12.17
       firebase: 9.6.1
       firebaseui: 6.0.0
+      fitty: ^2.3.5
       fuse.js: 6.4.6
       jszip: 3.7.1
       node-sass: 6.0.1
@@ -123,6 +124,7 @@ importers:
       filerobot-image-editor: 3.12.17_react-is@16.13.1
       firebase: 9.6.1
       firebaseui: 6.0.0_firebase@9.6.1
+      fitty: 2.3.5
       fuse.js: 6.4.6
       jszip: 3.7.1
       node-sass: 6.0.1
@@ -7264,6 +7266,10 @@ packages:
       dialog-polyfill: 0.4.10
       firebase: 9.6.1
       material-design-lite: 1.3.0
+    dev: false
+
+  /fitty/2.3.5:
+    resolution: {integrity: sha512-ZC/GQBxpcexh2/CGpeBcWwbZIE92Br1smrYZ+kYtoxjeXM09zCjCijpP39plKVcArImnUV3T1/DpZNIAwzmT8w==}
     dev: false
 
   /flat-cache/3.0.4:
