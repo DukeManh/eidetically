@@ -139,6 +139,6 @@ export interface MenuItem {
   handler: () => void;
   subMenu?: MenuItem;
   content: JSX.Element | string;
-  icon?: JSX.Element;
+  icon?: ReactNode;
   confirm?: ConfirmProps;
 }

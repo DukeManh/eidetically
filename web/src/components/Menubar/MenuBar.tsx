@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { BiCheck } from 'react-icons/bi';
 
@@ -8,6 +8,8 @@ import { useLayout } from '../../contexts';
 
 import Menu from '../Menu';
 import FileUploadButton from '../FileUploadButton';
+
+import { noop } from '../../utilities';
 
 export default function MenuBar() {
   const [activeItem, setActiveItem] = useState('');
@@ -34,13 +36,13 @@ export default function MenuBar() {
       button: 'Layout',
       items: [
         {
-          name: 'Waterfall',
+          name: 'waterfall',
           handler: () => setLayout('Waterfall'),
           icon: layout === 'Waterfall' ? <BiCheck /> : <></>,
           content: 'Waterfall',
         },
         {
-          name: 'Justified',
+          name: 'justified',
           handler: () => setLayout('Justified'),
           icon: layout === 'Justified' ? <BiCheck /> : <></>,
           content: 'Justified',
@@ -50,9 +52,25 @@ export default function MenuBar() {
     {
       name: 'about',
       button: 'About',
-      items: [],
+      items: [
+        {
+          name: 'version',
+          handler: noop,
+          icon: <span className="text-gray-300">1.0.0</span>,
+          content: 'Version',
+        },
+      ],
     },
   ];
+
+  const onMouseOver = useCallback(
+    (item: string) => {
+      if (activeItem && activeItem !== item) {
+        setActiveItem(item);
+      }
+    },
+    [activeItem]
+  );
 
   return (
     <nav className="h-9 p-1 bg-secondary relative text-gray-100 border-b border-gray-600 z-50 flex flex-row items-center">
@@ -71,7 +89,12 @@ export default function MenuBar() {
             key={item.name}
           >
             <div className={activeItem === item.name ? 'menu-item active' : 'menu-item'}>
-              <button onClick={() => setActiveItem(item.name)}>{item.button}</button>
+              <button
+                onClick={() => setActiveItem(item.name)}
+                onMouseEnter={() => onMouseOver(item.name)}
+              >
+                {item.button}
+              </button>
             </div>
           </Trigger>
         ))}
