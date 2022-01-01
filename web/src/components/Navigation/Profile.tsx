@@ -31,7 +31,7 @@ export default function Profile() {
           <div className="w-[1px] bg-gray-300"></div>
           <div className="profile-stat">
             <VscAccount className="h-full" />
-            <div>Premium</div>
+            <div>{user ? <span className="text-yellow-300">Premium</span> : 'Free'}</div>
           </div>
         </div>
       </div>

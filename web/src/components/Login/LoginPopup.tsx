@@ -40,13 +40,13 @@ export default function LoginPopup() {
   return (
     <>
       <Mask visible={loginVisible} zIndex={100} />
-      <Transition in={loginVisible} timeout={200} unmountOnExit exit enter>
+      <Transition in={loginVisible} timeout={300} unmountOnExit exit enter>
         {(state) => (
           <div
             className="fixed h-full w-full flex justify-center items-center z-[100]"
             style={{
               transitionProperty: 'transform, opacity',
-              transitionDuration: '200ms',
+              transitionDuration: '300ms',
               transitionTimingFunction: 'ease-in-out',
               opacity: 1,
               transform: 'translate(0, 0) scale(1) ',
