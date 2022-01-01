@@ -6,12 +6,12 @@ import { BiCut, BiSelectMultiple } from 'react-icons/bi';
 import { IoIosCloseCircle, IoIosCopy } from 'react-icons/io';
 import { RiDeleteBin7Fill, RiSlideshow2Fill, RiImageEditFill } from 'react-icons/ri';
 import { ImCloudDownload } from 'react-icons/im';
+import toast from 'react-hot-toast';
 
 import Separator from './Separator';
 
 import { useImage, useLibrary } from '../../contexts';
 import { downloadImages } from '../../server/service';
-import toast from 'react-hot-toast';
 
 export default function ToolBox() {
   const {

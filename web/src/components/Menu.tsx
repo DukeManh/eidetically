@@ -59,7 +59,10 @@ export default function Menu({ items, style, className }: ContextMenuProps) {
           ) : (
             <button
               className="text-left px-4 hover:bg-blue-500 items-center"
-              onClick={handler}
+              onClick={(e) => {
+                e.stopPropagation();
+                handler();
+              }}
               key={name}
             >
               <div className="flex flex-row space-x-2">

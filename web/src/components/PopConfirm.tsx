@@ -46,7 +46,8 @@ export default function PopConfirm({
         </button>
         <button
           className="px-2 py-1 bg-purple-600 hover:bg-purple-500 hover:shadow-md rounded-sm"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setVisible(false);
             (onConfirm || noop)();
           }}
