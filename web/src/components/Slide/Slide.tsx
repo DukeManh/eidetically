@@ -12,7 +12,7 @@ export default function Slides() {
   const { focused, toggleSlide, slideVisible, flattenArray, selecting, selection } = useImage();
   const imageRef = useRef<HTMLImageElement | null>(null);
 
-  const Buttons = [
+  const buttons = [
     {
       name: 'zoom-in',
       content: <ImZoomIn />,
@@ -68,6 +68,7 @@ export default function Slides() {
           spaceBetween={50}
           slidesPerView={1}
           navigation
+          lazy
         >
           {(selecting ? Object.values(selection) : flattenArray).map((image) => (
             <SwiperSlide key={image.id}>
@@ -86,8 +87,12 @@ export default function Slides() {
         </Swiper>
         <div className="fixed top-0 left-1/2 -translate-x-1/2 w-80 h-12 bg-black bg-opacity-60 z-[99]">
           <div className="slides-button w-full h-full flex flex-row justify-around space-3 text-gray-100">
-            {Buttons.map(({ name, onClick, content }) => (
-              <button onClick={onClick} key={name} className="h-full hover:bg-primary flex-grow">
+            {buttons.map(({ name, onClick, content }) => (
+              <button
+                onClick={onClick}
+                key={name}
+                className="h-full hover:bg-primary flex-grow rounded-md"
+              >
                 {content}
               </button>
             ))}
