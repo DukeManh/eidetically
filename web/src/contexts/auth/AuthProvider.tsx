@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useDebounce } from 'react-use';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { AuthContext } from './AuthContext';
@@ -18,11 +19,15 @@ export default function AuthProvider({ children }: ProviderProps) {
     });
   };
 
-  useEffect(() => {
-    if (!user) {
-      setLoginVisible(true);
-    }
-  }, [user]);
+  useDebounce(
+    () => {
+      if (!user) {
+        setLoginVisible(true);
+      }
+    },
+    3000,
+    [user]
+  );
 
   useEffect(() => {
     onAuthStateChanged(auth, (firebaseUser) => {
