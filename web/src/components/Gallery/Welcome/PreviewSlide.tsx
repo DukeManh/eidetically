@@ -24,9 +24,6 @@ export default function PreviewSlide() {
         lazy
         setWrapperSize
         autoHeight
-        autoplay={{
-          delay: 5000,
-        }}
         style={{ zIndex: 10 }}
       >
         {previews.map((preview) => (
@@ -53,7 +50,6 @@ export default function PreviewSlide() {
         lazy
         setWrapperSize
         threshold={1000}
-        autoplay
         breakpoints={{
           678: {
             slidesPerView: 8,
