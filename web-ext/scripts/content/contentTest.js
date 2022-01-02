@@ -6,6 +6,20 @@ $(() => {
   const container = document.createElement('div');
   container.classList.add('ei-drop-container');
 
+  (function listSrcOfExampleImage() {
+    const draggedImage = $('#dragged-image').children('img')[0];
+    console.log(draggedImage);
+    const srcset = draggedImage.srcset.split(/,\s+/).map((src) => src.trim().split(/\s+/));
+    const srcsetArr = filterSrcset(srcset);
+    console.log(srcset);
+    srcsetArr.forEach((src) => {
+      $('#srcset-list').append(`<li>
+          <a href="${src[0]}" > ${src[1]}</a>
+        </li>
+      `);
+    });
+  })();
+
   const libsContainer = $('.ei-libs-container');
   const libBoxes = $('.ei-lib-box');
 

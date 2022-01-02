@@ -1,7 +1,7 @@
 function validateUrl(url) {
   try {
     const newUrl = new URL(url);
-    if (newUrl.protocol !== 'https') {
+    if (newUrl.protocol !== 'https:') {
       return undefined;
     }
     return newUrl.href;
