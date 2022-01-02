@@ -4,7 +4,7 @@ overrides:
   ansi-regex@>2.1.1 <5.0.1: '>=5.0.1'
   nth-check@<2.0.1: '>=2.0.1'
   immer@<9.0.6: '>=9.0.6'
-  ansi-html@<=0.0.7: <0.0.7
+  ansi-html@<=0.0.7: '>=0.0.7'
   glob-parent@<5.1.2: '>=5.1.2'
   browserslist@>=4.0.0 <4.16.5: '>=4.16.5'
 
@@ -3894,12 +3894,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       type-fest: 0.21.3
-
-  /ansi-html/0.0.6:
-    resolution: {integrity: sha1-vajjPdLuHCD1TAjrQFcTy/wO2A4=}
-    engines: {'0': node >= 0.8.0}
-    hasBin: true
-    dev: false
 
   /ansi-html/0.0.7:
     resolution: {integrity: sha1-gTWEAhliqenm/QOflA0S9WynhZ4=}
@@ -14716,7 +14710,7 @@ packages:
       webpack-cli:
         optional: true
     dependencies:
-      ansi-html: 0.0.6
+      ansi-html: 0.0.7
       bonjour: 3.5.0
       chokidar: 2.1.8
       compression: 1.7.4
