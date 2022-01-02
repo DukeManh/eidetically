@@ -7,11 +7,6 @@ admin.initializeApp();
 const db = admin.firestore();
 const storage = admin.storage();
 
-/**
- *  if preivew => upload previewURL
- *  if image  => upload download Uurl, full image doc
- */
-
 exports.generateImageDocument = functions.storage.object().onFinalize(async (object) => {
   const { name: fullName, metadata, contentType, size } = object;
   if (fullName && metadata) {
@@ -64,22 +59,40 @@ exports.generateImageDocument = functions.storage.object().onFinalize(async (obj
     }
 
     functions.logger.log(`updating image document`);
+
     // New upload
-    imageRef.set(
-      {
-        note,
-        library: libRef,
-        upload_date: admin.firestore.FieldValue.serverTimestamp(),
-        last_updated: admin.firestore.FieldValue.serverTimestamp(),
-        name: imageName,
-        source,
-        ...(!isPreview && { contentType }),
-        ...(!isPreview && { size }),
-        fullPath: fullName,
-        ...(isPreview ? { previewURL: downloadURL } : { downloadURL }),
-      },
-      { merge: true }
-    );
+    if (isPreview) {
+      imageRef.set(
+        {
+          note,
+          library: libRef,
+          upload_date: admin.firestore.FieldValue.serverTimestamp(),
+          last_updated: admin.firestore.FieldValue.serverTimestamp(),
+          name: imageName,
+          source,
+          previewURL: downloadURL,
+          previewPath: fullName,
+          previewSize: size,
+        },
+        { merge: true }
+      );
+    } else {
+      imageRef.set(
+        {
+          note,
+          library: libRef,
+          upload_date: admin.firestore.FieldValue.serverTimestamp(),
+          last_updated: admin.firestore.FieldValue.serverTimestamp(),
+          name: imageName,
+          source,
+          contentType,
+          size,
+          fullPath: fullName,
+          downloadURL,
+        },
+        { merge: true }
+      );
+    }
 
     if (!isPreview) {
       functions.logger.log(`updating image count`);
@@ -97,8 +110,8 @@ exports.deleteImageStorage = functions.firestore
 
     try {
       const lib = await libRef.get();
-      storage.bucket().file(fullPath).delete({ ignoreNotFound: true });
-      storage.bucket().file(`${fullPath}-preview`).delete({ ignoreNotFound: true });
+      await storage.bucket().file(fullPath).delete({ ignoreNotFound: true });
+      await storage.bucket().file(`${fullPath}-preview`).delete({ ignoreNotFound: true });
       if (lib.exists) {
         libRef.update({
           image_count: admin.firestore.FieldValue.increment(-1),
