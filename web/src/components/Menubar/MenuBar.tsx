@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
-import { BiCheck } from 'react-icons/bi';
+import { BiCheck, BiMailSend } from 'react-icons/bi';
 
 import Trigger from '../Trigger';
 import { MenuItem } from '../../interfaces';
@@ -58,6 +58,16 @@ export default function MenuBar() {
           handler: noop,
           icon: <span className="text-gray-300">1.0.0</span>,
           content: 'Version',
+        },
+        {
+          name: 'contact',
+          handler: noop,
+          icon: <BiMailSend />,
+          content: (
+            <a href="mailto:mysecondhandemail@gmail.com" className="block w-full">
+              Contact
+            </a>
+          ),
         },
       ],
     },

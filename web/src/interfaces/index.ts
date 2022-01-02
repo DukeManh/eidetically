@@ -115,7 +115,7 @@ export interface AuthContextType {
   user: User | null;
 
   loginVisible: boolean;
-  setLoginVisible: Dispatch<SetStateAction<boolean>>;
+  setLoginVisible: (val: boolean) => void;
 
   logout: () => void;
 }

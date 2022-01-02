@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDebounce } from 'react-use';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -9,7 +9,15 @@ import { LoginPopup } from '../../components/Login';
 
 export default function AuthProvider({ children }: ProviderProps) {
   const [user, setUser] = useState(auth.currentUser);
-  const [loginVisible, setLoginVisible] = useState(false);
+  const [loginVisible, setLogin] = useState(false);
+  const [showOnce, setShowOnce] = useState(false);
+
+  const setLoginVisible = useCallback((val: boolean) => {
+    if (val) {
+      setShowOnce(true);
+    }
+    setLogin(val);
+  }, []);
 
   const logout = async () => {
     auth.signOut().then(() => {
@@ -21,12 +29,12 @@ export default function AuthProvider({ children }: ProviderProps) {
 
   useDebounce(
     () => {
-      if (!user) {
+      if (!user && !showOnce) {
         setLoginVisible(true);
       }
     },
-    3000,
-    [user]
+    6000,
+    [user, showOnce]
   );
 
   useEffect(() => {
@@ -36,7 +44,7 @@ export default function AuthProvider({ children }: ProviderProps) {
         setLoginVisible(false);
       }
     });
-  }, []);
+  }, [setLoginVisible]);
 
   return (
     <AuthContext.Provider value={{ user, loginVisible, setLoginVisible, logout }}>

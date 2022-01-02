@@ -48,7 +48,7 @@ export default function Slides() {
 
   return (
     <CSSTransition in={slideVisible} timeout={200} classNames="fade-transition" unmountOnExit>
-      <div className="slides">
+      <div className="slide-show slides">
         <Mask
           setVisible={toggleSlide}
           visible

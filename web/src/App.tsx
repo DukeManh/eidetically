@@ -1,11 +1,11 @@
 import { BrowserRouter } from 'react-router-dom';
 import { IconContext } from 'react-icons';
-import SwiperCore, { Navigation, Pagination, A11y, Keyboard, Thumbs } from 'swiper';
+import SwiperCore, { Navigation, Pagination, A11y, Keyboard, Thumbs, Autoplay } from 'swiper';
 
 import { LayoutProvider, LibraryProvider, AuthProvider, ImageProvider } from './contexts';
 import Home from './pages/Home';
 
-SwiperCore.use([Navigation, Pagination, A11y, Keyboard, Thumbs]);
+SwiperCore.use([Navigation, Pagination, A11y, Keyboard, Thumbs, Autoplay]);
 
 const IconStyles = {
   color: 'white',

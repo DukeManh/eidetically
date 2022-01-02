@@ -53,7 +53,7 @@ export default function LibraryProvider({ children }: ProviderProps) {
 
   useEffect(() => {
     setLoading(true);
-    const librariesRef = query(db.libraries(), orderBy('name'));
+    const librariesRef = query(db.libraries(), orderBy('name', 'desc'));
     const unsubscribe = onSnapshot(librariesRef, (snapshot) => {
       const nextLibraries = snapshot.docs.map((lib) => ({ ...lib.data(), id: lib.id } as Library));
       setLibraries(nextLibraries);
