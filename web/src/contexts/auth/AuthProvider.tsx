@@ -33,7 +33,7 @@ export default function AuthProvider({ children }: ProviderProps) {
         setLoginVisible(true);
       }
     },
-    6000,
+    15000,
     [user, showOnce]
   );
 

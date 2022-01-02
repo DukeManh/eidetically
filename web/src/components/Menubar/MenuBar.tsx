@@ -64,7 +64,7 @@ export default function MenuBar() {
           handler: noop,
           icon: <BiMailSend />,
           content: (
-            <a href="mailto:mysecondhandemail@gmail.com" className="block w-full">
+            <a href="mailto:manhducdkcb@gmail.com" className="block w-full">
               Contact
             </a>
           ),
