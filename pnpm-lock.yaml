@@ -14,6 +14,7 @@ importers:
     specifiers:
       '@typescript-eslint/eslint-plugin': 5.7.0
       '@typescript-eslint/parser': 5.7.0
+      cross-env: ^7.0.3
       eslint: 7.32.0
       eslint-config-airbnb-base: 15.0.0
       eslint-config-prettier: 8.3.0
@@ -27,6 +28,7 @@ importers:
     devDependencies:
       '@typescript-eslint/eslint-plugin': 5.7.0_c4bea763eb4ed28c020b4d51c0804f1f
       '@typescript-eslint/parser': 5.7.0_eslint@7.32.0+typescript@4.4.4
+      cross-env: 7.0.3
       eslint: 7.32.0
       eslint-config-airbnb-base: 15.0.0_a820dc868cc8cd66d8297be6779b9035
       eslint-config-prettier: 8.3.0_eslint@7.32.0
@@ -5450,6 +5452,14 @@ packages:
   /cropperjs/1.5.12:
     resolution: {integrity: sha512-re7UdjE5UnwdrovyhNzZ6gathI4Rs3KGCBSc8HCIjUo5hO42CtzyblmWLj6QWVw7huHyDMfpKxhiO2II77nhDw==}
     dev: false
+
+  /cross-env/7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: true
 
   /cross-spawn/6.0.5:
     resolution: {integrity: sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ==}
