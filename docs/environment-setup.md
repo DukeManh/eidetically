@@ -20,7 +20,8 @@
 
 ### Install pnpm
 
-We use `pnpm` because ton of benefit that it brought to the table ([More on the benefits of pnpm](https://pnpm.io/motivation)).
+We use `pnpm` as our package manager. 
+Learn more about [pnpm](https://pnpm.io/motivation)
 
 Installing `pnpm` globally:
 
