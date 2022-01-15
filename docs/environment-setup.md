@@ -8,8 +8,8 @@
 
 [After installing the prerequisites and pnpm:](#after-installing-the-prerequisites-and-pnpm)
 
-- [Instal project dependencies](#install-project-dependencies)
 - [Install WSL2 on Window](#install-wsl2-on-window)
+- [Instal project dependencies](#install-project-dependencies)
 
 <hr>
 
