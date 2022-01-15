@@ -4,8 +4,8 @@
 
 [Prerequisites:](#prerequisites)
 
-- [Install pnpm](#install-pnpm)
 - [Install WSL2 on Window](#install-wsl2-on-window)
+- [Install pnpm](#install-pnpm)
 
 [Start the Frontend development server:](#Start-the-Frontend-development-server:)
 - [Instal project dependencies](#install-project-dependencies)
