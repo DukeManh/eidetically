@@ -1,13 +1,13 @@
 # Environment Setup
 
-### Table of Contents
+## Table of Contents
 
 [Prerequisites:](#prerequisites)
 
 - [Install pnpm](#install-pnpm)
-- - [Install WSL2 on Window](#install-wsl2-on-window)
+- [Install WSL2 on Window](#install-wsl2-on-window)
 
-[After installing the prerequisites and pnpm:](#after-installing-the-prerequisites-and-pnpm)
+[Start the Frontend development server:](#Start-the-Frontend-development-server:)
 - [Instal project dependencies](#install-project-dependencies)
 
 <hr>
@@ -17,7 +17,7 @@
 - [Node.js](https://nodejs.org/en/download/)
 - [Npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-## Install WSL2 on Window
+### Install WSL2 on Window
 
 Follow Microsoft WSL2 [installation guide](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to complete the installation. Suggest to run the following commands once in the WSL2 environment.
 
@@ -44,9 +44,9 @@ npm install -g pnpm
 
 <hr>
 
-## After installing the prerequisites and pnpm:
+## Start the Frontend development server
 
-## Install project dependencies
+### Install project dependencies
 
 To install all of the dependencies
 
