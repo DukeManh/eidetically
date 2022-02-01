@@ -37,7 +37,7 @@
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-prettier": "4.0.0",
     "husky": "7.0.4",
-    "lint-staged": "12.1.2",
+    "lint-staged": "12.3.3",
     "only-allow": "1.0.0",
     "prettier": "2.5.1",
     "typescript": "4.4.4"
