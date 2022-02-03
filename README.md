@@ -1,3 +1,5 @@
+# Pixel Perfect Cloud
+
 The goal of this project is to create a web app/web extension that will allow users to drag and drop images from the web and save them on right the cloud.
 This gives users access to all their images in one place and allow them to acesss them through desktop and mobile devices.
 Images can take up a lot of space and storing them on your own device can prove a hassle as storing a lot of images can get disoragnized quickly and will eat up quite a bit of storage space.
