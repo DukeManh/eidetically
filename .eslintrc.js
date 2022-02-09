@@ -10,7 +10,12 @@ module.exports = {
   },
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
     'func-names': 'off',
     'no-console': 'off',
     'prefer-arrow-callback': 'warn',
