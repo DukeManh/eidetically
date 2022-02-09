@@ -12,7 +12,7 @@
     "filerobot-image-editor": "3.12.17",
     "firebase": "9.6.1",
     "firebaseui": "6.0.0",
-    "fitty": "^2.3.5",
+    "fitty": "2.3.6",
     "fuse.js": "6.4.6",
     "jszip": "3.7.1",
     "node-sass": "6.0.1",
