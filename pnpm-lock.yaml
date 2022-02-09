@@ -86,7 +86,7 @@ importers:
       filerobot-image-editor: 3.12.17
       firebase: 9.6.1
       firebaseui: 6.0.0
-      fitty: ^2.3.5
+      fitty: 2.3.6
       fuse.js: 6.4.6
       jszip: 3.7.1
       node-sass: 6.0.1
@@ -124,7 +124,7 @@ importers:
       filerobot-image-editor: 3.12.17_react-is@16.13.1
       firebase: 9.6.1
       firebaseui: 6.0.0_firebase@9.6.1
-      fitty: 2.3.5
+      fitty: 2.3.6
       fuse.js: 6.4.6
       jszip: 3.7.1
       node-sass: 6.0.1
@@ -4961,7 +4961,7 @@ packages:
 
   /chokidar/2.1.8:
     resolution: {integrity: sha512-ZmZUazfOzf0Nve7duiCKD23PFSCs4JPoYyccjUFF3aQkQadqBhfzhjkwBH2mNOG9cTBwhamM37EIsIkZw3nRgg==}
-    deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+    deprecated: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
     dependencies:
       anymatch: 2.0.0
       async-each: 1.0.3
@@ -7262,8 +7262,8 @@ packages:
       material-design-lite: 1.3.0
     dev: false
 
-  /fitty/2.3.5:
-    resolution: {integrity: sha512-ZC/GQBxpcexh2/CGpeBcWwbZIE92Br1smrYZ+kYtoxjeXM09zCjCijpP39plKVcArImnUV3T1/DpZNIAwzmT8w==}
+  /fitty/2.3.6:
+    resolution: {integrity: sha512-ENp/+MqqYmXBGHC0dlltCX75+5zL5m0uiIGCgYdoThao99BrJpNYzEh3xrvhiy4b7O5X82CQT7dPTiB53H6stw==}
     dev: false
 
   /flat-cache/3.0.4:
