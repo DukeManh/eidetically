@@ -89,7 +89,7 @@ importers:
       fitty: 2.3.6
       fuse.js: 6.4.6
       jszip: 3.7.1
-      node-sass: 6.0.1
+      node-sass: 7.0.0
       npm: file:tailwindcss/postcss7-compat@^2.1.2
       postcss: 8.4.5
       postcss-import: 14.0.2
@@ -127,7 +127,7 @@ importers:
       fitty: 2.3.6
       fuse.js: 6.4.6
       jszip: 3.7.1
-      node-sass: 6.0.1
+      node-sass: 7.0.0
       postcss-import: 14.0.2_postcss@8.4.5
       postcss-nested: 4.2.3
       rc-dropdown: 3.2.0_react-dom@17.0.2+react@17.0.2
@@ -141,7 +141,7 @@ importers:
       react-is: 16.13.1
       react-rnd: 10.3.5_react-dom@17.0.2+react@17.0.2
       react-router-dom: 5.3.0_react@17.0.2
-      react-scripts: 4.0.3_7ab31f2f5b54652336e9cd60188f20ef
+      react-scripts: 4.0.3_13d14db03174ebb1a7d8c1e1b34a2b2d
       react-tooltip: 4.2.21_react-dom@17.0.2+react@17.0.2
       react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
       react-use: 17.3.1_react-dom@17.0.2+react@17.0.2
@@ -1682,7 +1682,7 @@ packages:
       cosmiconfig-typescript-loader: 1.0.1_00264fd83560919cd06c986889baae0a
       cross-spawn: 7.0.3
       lodash: 4.17.21
-      react-scripts: 4.0.3_7ab31f2f5b54652336e9cd60188f20ef
+      react-scripts: 4.0.3_13d14db03174ebb1a7d8c1e1b34a2b2d
       semver: 7.3.5
       webpack-merge: 4.2.2
     transitivePeerDependencies:
@@ -3965,6 +3965,14 @@ packages:
       readable-stream: 2.3.7
     dev: false
 
+  /are-we-there-yet/2.0.0:
+    resolution: {integrity: sha512-Ci/qENmwHnsYo9xKIcUJN5LeDKdJ6R1Z1j9V/J5wyq8nh/mYPEpIKJbBZXtZjG04HiK7zV/p6Vs9952MrMeUIw==}
+    engines: {node: '>=10'}
+    dependencies:
+      delegates: 1.0.0
+      readable-stream: 3.6.0
+    dev: false
+
   /arg/4.1.3:
     resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
     dev: false
@@ -5151,6 +5159,11 @@ packages:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
+
+  /color-support/1.1.3:
+    resolution: {integrity: sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==}
+    hasBin: true
+    dev: false
 
   /color/3.2.1:
     resolution: {integrity: sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==}
@@ -7460,6 +7473,21 @@ packages:
       signal-exit: 3.0.3
       string-width: 1.0.2
       strip-ansi: 3.0.1
+      wide-align: 1.1.5
+    dev: false
+
+  /gauge/3.0.2:
+    resolution: {integrity: sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==}
+    engines: {node: '>=10'}
+    dependencies:
+      aproba: 1.2.0
+      color-support: 1.1.3
+      console-control-strings: 1.1.0
+      has-unicode: 2.0.1
+      object-assign: 4.1.1
+      signal-exit: 3.0.3
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
       wide-align: 1.1.5
     dev: false
 
@@ -10380,23 +10408,23 @@ packages:
   /node-releases/2.0.1:
     resolution: {integrity: sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==}
 
-  /node-sass/6.0.1:
-    resolution: {integrity: sha512-f+Rbqt92Ful9gX0cGtdYwjTrWAaGURgaK5rZCWOgCNyGWusFYHhbqCCBoFBeat+HKETOU02AyTxNhJV0YZf2jQ==}
+  /node-sass/7.0.0:
+    resolution: {integrity: sha512-6yUnsD3L8fVbgMX6nKQqZkjRcG7a/PpmF0pEyeWf+BgbTj2ToJlCYrnUifL2KbjV5gIY22I3oppahBWA3B+jUg==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
     dependencies:
       async-foreach: 0.1.3
-      chalk: 1.1.3
+      chalk: 4.1.2
       cross-spawn: 7.0.3
       gaze: 1.1.3
       get-stdin: 4.0.1
-      glob: 7.1.7
+      glob: 7.2.0
       lodash: 4.17.21
       meow: 9.0.0
       nan: 2.15.0
       node-gyp: 7.1.2
-      npmlog: 4.1.2
+      npmlog: 5.0.1
       request: 2.88.2
       sass-graph: 2.2.5
       stdout-stream: 1.4.1
@@ -10479,6 +10507,15 @@ packages:
       are-we-there-yet: 1.1.7
       console-control-strings: 1.1.0
       gauge: 2.7.4
+      set-blocking: 2.0.0
+    dev: false
+
+  /npmlog/5.0.1:
+    resolution: {integrity: sha512-AqZtDUWOMKs1G/8lwylVjrdYgqA4d9nu8hc+0gzRxlDb1I10+FHBGMXs6aiQHFdCUUlqH99MUMuLfzWDNDtfxw==}
+    dependencies:
+      are-we-there-yet: 2.0.0
+      console-control-strings: 1.1.0
+      gauge: 3.0.2
       set-blocking: 2.0.0
     dev: false
 
@@ -12275,7 +12312,7 @@ packages:
       tiny-warning: 1.0.3
     dev: false
 
-  /react-scripts/4.0.3_7ab31f2f5b54652336e9cd60188f20ef:
+  /react-scripts/4.0.3_13d14db03174ebb1a7d8c1e1b34a2b2d:
     resolution: {integrity: sha512-S5eO4vjUzUisvkIPB7jVsKtuH2HhWcASREYWHAQ1FP5HyCv3xgn+wpILAEWkmy+A+tTNbSZClhxjT3qz6g4L1A==}
     engines: {node: ^10.12.0 || >=12.0.0}
     hasBin: true
@@ -12335,7 +12372,7 @@ packages:
       react-refresh: 0.8.3
       resolve: 1.18.1
       resolve-url-loader: 3.1.4
-      sass-loader: 10.2.0_node-sass@6.0.1+webpack@4.44.2
+      sass-loader: 10.2.0_node-sass@7.0.0+webpack@4.44.2
       semver: 7.3.2
       style-loader: 1.3.0_webpack@4.44.2
       terser-webpack-plugin: 4.2.3_webpack@4.44.2
@@ -12936,7 +12973,7 @@ packages:
       yargs: 13.3.2
     dev: false
 
-  /sass-loader/10.2.0_node-sass@6.0.1+webpack@4.44.2:
+  /sass-loader/10.2.0_node-sass@7.0.0+webpack@4.44.2:
     resolution: {integrity: sha512-kUceLzC1gIHz0zNJPpqRsJyisWatGYNFRmv2CKZK2/ngMJgLqxTbXwe/hJ85luyvZkgqU3VlJ33UVF2T/0g6mw==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -12955,7 +12992,7 @@ packages:
       klona: 2.0.5
       loader-utils: 2.0.2
       neo-async: 2.6.2
-      node-sass: 6.0.1
+      node-sass: 7.0.0
       schema-utils: 3.1.1
       semver: 7.3.5
       webpack: 4.44.2
