@@ -39,7 +39,7 @@
     "web-vitals": "1.1.2"
   },
   "scripts": {
-    "start": "PORT=8000 TAILWIND_MODE=watch craco start",
+    "start": "cross-env PORT=8000 TAILWIND_MODE=watch craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
