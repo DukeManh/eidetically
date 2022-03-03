@@ -82,7 +82,7 @@ importers:
       '@types/tailwindcss': 2.2.4
       '@types/uuid': 8.3.3
       css-unit-converter: 1.1.2
-      csstype: 2.6.2
+      csstype: 2.6.20
       filerobot-image-editor: 3.12.17
       firebase: 9.6.1
       firebaseui: 6.0.0
@@ -120,7 +120,7 @@ importers:
       '@tailwindcss/line-clamp': 0.3.0_00c8fcea36e7ebb784460590946ebc50
       '@testing-library/dom': 8.11.1
       css-unit-converter: 1.1.2
-      csstype: 2.6.2
+      csstype: 2.6.20
       filerobot-image-editor: 3.12.17_react-is@16.13.1
       firebase: 9.6.1
       firebaseui: 6.0.0_firebase@9.6.1
@@ -135,7 +135,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-dropzone: 11.4.2_react@17.0.2
-      react-hot-toast: 2.1.1_83aecc314a46186883faa129c0399856
+      react-hot-toast: 2.1.1_82297f1e4fcb457d4badadeea3f45709
       react-icons: 4.3.1_react@17.0.2
       react-image-file-resizer: 0.4.7
       react-is: 16.13.1
@@ -5752,8 +5752,8 @@ packages:
       cssom: 0.3.8
     dev: false
 
-  /csstype/2.6.2:
-    resolution: {integrity: sha512-Rl7PvTae0pflc1YtxtKbiSqq20Ts6vpIYOD5WBafl4y123DyHUeLrRdQP66sQW8/6gmX8jrYJLXwNeMqYVJcow==}
+  /csstype/2.6.20:
+    resolution: {integrity: sha512-/WwNkdXfckNgw6S5R125rrW8ez139lBHWouiBvX8dfMFtcn6V81REDqnH7+CRpRipfYlyU1CmOnOxrmGcFOjeA==}
     dev: false
 
   /csstype/3.0.10:
@@ -7694,12 +7694,12 @@ packages:
       minimatch: 3.0.4
     dev: false
 
-  /goober/2.1.1_csstype@2.6.2:
+  /goober/2.1.1_csstype@2.6.20:
     resolution: {integrity: sha512-TkGCqHxE4g5DtdpwxFCi53bXRtvw0BoSgCihVSIOioe9kfkqin5wXG8BQKykN0tjzmxZJ81qU2KWinZf5qKVlw==}
     peerDependencies:
       csstype: ^2.6.2
     dependencies:
-      csstype: 2.6.2
+      csstype: 2.6.20
     dev: false
 
   /google-auth-library/7.11.0:
@@ -12203,14 +12203,14 @@ packages:
     resolution: {integrity: sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA==}
     dev: false
 
-  /react-hot-toast/2.1.1_83aecc314a46186883faa129c0399856:
+  /react-hot-toast/2.1.1_82297f1e4fcb457d4badadeea3f45709:
     resolution: {integrity: sha512-Odrp4wue0fHh0pOfZt5H+9nWCMtqs3wdlFSzZPp7qsxfzmbE26QmGWIh6hG43CukiPeOjA8WQhBJU8JwtWvWbQ==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
     dependencies:
-      goober: 2.1.1_csstype@2.6.2
+      goober: 2.1.1_csstype@2.6.20
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     transitivePeerDependencies:
