@@ -65,7 +65,7 @@ importers:
     specifiers:
       '@craco/craco': 6.4.3
       '@squoosh/lib': 0.4.0
-      '@tailwindcss/line-clamp': 0.3.0
+      '@tailwindcss/line-clamp': 0.3.1
       '@testing-library/dom': 8.11.1
       '@testing-library/jest-dom': 5.16.1
       '@testing-library/react': 12.1.2
@@ -117,7 +117,7 @@ importers:
     dependencies:
       '@craco/craco': 6.4.3_3f600e4d0887717f3e0bdabde3547997
       '@squoosh/lib': 0.4.0
-      '@tailwindcss/line-clamp': 0.3.0_00c8fcea36e7ebb784460590946ebc50
+      '@tailwindcss/line-clamp': 0.3.1_00c8fcea36e7ebb784460590946ebc50
       '@testing-library/dom': 8.11.1
       css-unit-converter: 1.1.2
       csstype: 2.6.2
@@ -2864,8 +2864,8 @@ packages:
       - supports-color
     dev: false
 
-  /@tailwindcss/line-clamp/0.3.0_00c8fcea36e7ebb784460590946ebc50:
-    resolution: {integrity: sha512-ffDDclrqr3sy8cpChCozedDUAN8enxqAiWeH8d4dGQ2hcXlxf51+7KleveFi/n/TxEuRVApoL7hICeDOdYPKpg==}
+  /@tailwindcss/line-clamp/0.3.1_00c8fcea36e7ebb784460590946ebc50:
+    resolution: {integrity: sha512-pNr0T8LAc3TUx/gxCfQZRe9NB2dPEo/cedPHzUGIPxqDMhgjwNm6jYxww4W5l0zAsAddxr+XfZcqttGiFDgrGg==}
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
