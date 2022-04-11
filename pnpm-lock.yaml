@@ -68,7 +68,7 @@ importers:
       '@tailwindcss/line-clamp': 0.3.1
       '@testing-library/dom': 8.11.1
       '@testing-library/jest-dom': 5.16.1
-      '@testing-library/react': 12.1.2
+      '@testing-library/react': 12.1.5
       '@testing-library/user-event': 12.8.3
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.178
@@ -151,7 +151,7 @@ importers:
       web-vitals: 1.1.2
     devDependencies:
       '@testing-library/jest-dom': 5.16.1
-      '@testing-library/react': 12.1.2_react-dom@17.0.2+react@17.0.2
+      '@testing-library/react': 12.1.5_react-dom@17.0.2+react@17.0.2
       '@testing-library/user-event': 12.8.3_@testing-library+dom@8.11.1
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.178
@@ -2944,15 +2944,16 @@ packages:
       redent: 3.0.0
     dev: true
 
-  /@testing-library/react/12.1.2_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-ihQiEOklNyHIpo2Y8FREkyD1QAea054U0MVbwH1m8N9TxeFz+KoJ9LkqoKqJlzx2JDm56DVwaJ1r36JYxZM05g==}
+  /@testing-library/react/12.1.5_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-OfTXCJUFgjd/digLUuPxa0+/3ZxsQmE7ub9kcbW/wi96Bh3o/p5vrETcBGfP17NWPGqeYYl5LTRpwyGoMC4ysg==}
     engines: {node: '>=12'}
     peerDependencies:
-      react: '*'
-      react-dom: '*'
+      react: <18.0.0
+      react-dom: <18.0.0
     dependencies:
       '@babel/runtime': 7.16.5
       '@testing-library/dom': 8.11.1
+      '@types/react-dom': 17.0.11
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: true
