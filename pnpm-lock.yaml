@@ -67,7 +67,7 @@ importers:
       '@squoosh/lib': 0.4.0
       '@tailwindcss/line-clamp': 0.3.1
       '@testing-library/dom': 8.11.1
-      '@testing-library/jest-dom': 5.16.1
+      '@testing-library/jest-dom': 5.16.4
       '@testing-library/react': 12.1.2
       '@testing-library/user-event': 12.8.3
       '@types/jest': 27.0.3
@@ -150,7 +150,7 @@ importers:
       uuid: 8.3.2
       web-vitals: 1.1.2
     devDependencies:
-      '@testing-library/jest-dom': 5.16.1
+      '@testing-library/jest-dom': 5.16.4
       '@testing-library/react': 12.1.2_react-dom@17.0.2+react@17.0.2
       '@testing-library/user-event': 12.8.3_@testing-library+dom@8.11.1
       '@types/jest': 27.0.3
@@ -2929,8 +2929,8 @@ packages:
       lz-string: 1.4.4
       pretty-format: 27.4.2
 
-  /@testing-library/jest-dom/5.16.1:
-    resolution: {integrity: sha512-ajUJdfDIuTCadB79ukO+0l8O+QwN0LiSxDaYUTI4LndbbUsGi6rWU1SCexXzBA2NSjlVB9/vbkasQIL3tmPBjw==}
+  /@testing-library/jest-dom/5.16.4:
+    resolution: {integrity: sha512-Gy+IoFutbMQcky0k+bqqumXZ1cTGswLsFqmNLzNdSKkU9KGV2u9oXhukCbbJ9/LRPKiqwxEE8VpV/+YZlfkPUA==}
     engines: {node: '>=8', npm: '>=6', yarn: '>=1'}
     dependencies:
       '@babel/runtime': 7.16.5
@@ -13342,6 +13342,7 @@ packages:
 
   /source-map-resolve/0.5.3:
     resolution: {integrity: sha512-Htz+RnsXWk5+P2slx5Jh3Q66vhQj1Cllm0zvnaY98+NFx+Dv2CF/f5O/t8x+KaNdrdIAsruNzoh/KpialbqAnw==}
+    deprecated: See https://github.com/lydell/source-map-resolve#deprecated
     dependencies:
       atob: 2.1.2
       decode-uri-component: 0.2.0
@@ -13352,6 +13353,7 @@ packages:
 
   /source-map-resolve/0.6.0:
     resolution: {integrity: sha512-KXBr9d/fO/bWo97NXsPIAW1bFSBOuCnjbNTBMO7N59hsv5i9yzRDfcYwwt0l04+VqnKC+EwzvJZIP/qkuMgR/w==}
+    deprecated: See https://github.com/lydell/source-map-resolve#deprecated
     dependencies:
       atob: 2.1.2
       decode-uri-component: 0.2.0
