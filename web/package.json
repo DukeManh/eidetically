@@ -71,7 +71,7 @@
     "@types/react-transition-group": "4.4.4",
     "@types/react-window": "1.8.5",
     "@types/tailwindcss": "2.2.4",
-    "@types/uuid": "8.3.3",
+    "@types/uuid": "8.3.4",
     "npm": "file:tailwindcss/postcss7-compat@^2.1.2",
     "postcss": "8.4.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@2.2.17"
